@@ -27,8 +27,16 @@ chrome.storage.sync.get(null, function (data) {
     for (let i = 1; i < Object.keys(data).length + 1; i++) {
         todosWrapper.innerHTML += `
         <div class="todos-wrapper">
-            <div class="todos-left-wrapper"></div>
-            <div class="todos-right-wrapper"></div>
+            <div class="todos-left-wrapper">
+                <input type="checkbox" class="todos-checkbox">
+            </div>
+            <div class="todos-right-wrapper">
+                <div class="todos-right-image-wrapper">
+                    <div class="todos-image-wrapper"></div>
+                </div>
+                <div class="todos-right-main-wrapper"></div>
+                <div class="todos-right-time-wrapper"></div>
+            </div>
         </div>
         `
     }

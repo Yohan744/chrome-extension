@@ -1,10 +1,10 @@
 const deleteButton = document.querySelector("#delete")
 deleteButton.onclick = () => {
     chrome.storage.sync.clear()
-    console.log("The storage is clear !")
 }
 
 ////////////////////////////////////////// GET ALL TODOS ///////////////////////////////////////////////
+
 
 const todosWrapper = document.querySelector("#todos-global-wrapper")
 
@@ -29,17 +29,19 @@ chrome.storage.sync.get(null, function (data) {
     }
 });
 
+
 /////////////////////////////////////////////// ADD TODOS  ///////////////////////////////////////////////////
+
 
 document.querySelector('form').addEventListener('submit', (e) => {
     e.preventDefault();
     chrome.storage.sync.get(null, function (data) {
-        console.log(data)
-        let count = Object.keys(data).length - 1
-        let number = Object.keys(data)[count]
+        let getLastChild = document.querySelector("#todos-global-wrapper").lastElementChild
+        console.log(getLastChild)
+        let number = Number(getLastChild.classList[1]) + 1
         const formData = new FormData(e.target);
         const search = formData.get("search")
-        chrome.storage.sync.set({[number + 1]: search}, function () {
+        chrome.storage.sync.set({[number]: search}, function () {
             todosWrapper.innerHTML += `
             <div class="todos-wrapper ${number}">
                 <div class="todos-left-wrapper">
@@ -57,6 +59,7 @@ document.querySelector('form').addEventListener('submit', (e) => {
             </div>
         `
         });
+
     })
 })
 
@@ -64,13 +67,10 @@ document.querySelector('form').addEventListener('submit', (e) => {
 
 
 document.addEventListener("click", e => {
-    if (e.target.classList.contains("todos-checkbox")){
+    if (e.target.classList.contains("todos-checkbox")) {
         let todosCount = e.target.parentElement.parentElement.className.split(' ')
-        console.log("la div a comme classe " + todosCount[1])
         e.target.parentElement.parentElement.remove()
-        chrome.storage.sync.remove(todosCount[1], function (){})
-        chrome.storage.sync.get(null, function (data) {
-            console.log(data)
+        chrome.storage.sync.remove(todosCount[1], function () {
         })
     }
 })

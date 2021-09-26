@@ -1,8 +1,3 @@
-const deleteButton = document.querySelector("#delete")
-deleteButton.onclick = () => {
-    chrome.storage.sync.clear()
-}
-
 ////////////////////////////////////////// GET ALL TODOS ///////////////////////////////////////////////
 
 
@@ -31,6 +26,16 @@ chrome.storage.sync.get(null, function (data) {
         `
     }
 });
+
+
+////////////////////////////////////////// DELETE ALL TODOS ///////////////////////////////////////////////
+
+
+const deleteButton = document.querySelector("#delete")
+deleteButton.onclick = () => {
+    chrome.storage.sync.clear()
+    todosWrapper.innerHTML = `<div class="blankTodo 0"></div>`
+}
 
 
 /////////////////////////////////////////////// ADD TODOS  ///////////////////////////////////////////////////

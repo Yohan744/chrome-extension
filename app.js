@@ -9,9 +9,12 @@ deleteButton.onclick = () => {
 const todosWrapper = document.querySelector("#todos-global-wrapper")
 
 chrome.storage.sync.get(null, function (data) {
-    for (let i = 1; i < Object.keys(data).length + 1; i++) {
+    console.log(data)
+    console.log(Object.keys(data))
+    console.log("la longeur est de " + Object.keys(data).length)
+    for (let i = 0; i < Object.keys(data).length ; i++) {
         todosWrapper.innerHTML += `
-        <div class="todos-wrapper ${i}">
+        <div class="todos-wrapper ${Object.keys(data)[i]}">
             <div class="todos-left-wrapper">
                 <input type="checkbox" class="todos-checkbox">
             </div>
@@ -20,7 +23,7 @@ chrome.storage.sync.get(null, function (data) {
                     <div class="todos-image-wrapper"></div>
                 </div>
                 <div class="todos-right-main-wrapper">
-                    <h1 class="todos-h1">${data[i]}</h1>
+                    <h1 class="todos-h1">${Object.values(data)[i]}</h1>
                 </div>
                 <div class="todos-right-time-wrapper"></div>
             </div>

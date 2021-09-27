@@ -12,22 +12,23 @@ body {
   background-color: #07060F;
 }
 
-.image {
-  position: relative;
-  height: 100%;
-}
-
-#main {
+#main-global-wrapper {
   position: absolute;
   top: 0;
   right: 0;
   height: 100%;
   width: 100%;
+  opacity: 1;
   background-image: linear-gradient(#262135 0, #251a2d 0, #07060F 40%);
 }
-#main::-webkit-scrollbar {
+#main-global-wrapper::-webkit-scrollbar {
   width: 0;
   background: transparent;
+}
+#main-global-wrapper.active {
+  opacity: 0;
+  transition: opacity 0.35s ease-in-out;
+  background: #07060F;
 }
 
 #todos-global-wrapper {
@@ -149,8 +150,7 @@ input[type=checkbox]:checked {
   background-color: #07060F;
   z-index: 10;
 }
-
-#icon-wrapper {
+#footer #icon-wrapper {
   position: relative;
   top: 50%;
   left: 50%;
@@ -162,8 +162,11 @@ input[type=checkbox]:checked {
   justify-content: space-between;
   align-items: center;
 }
-
-#add-wrapper {
+#footer #icon-wrapper .image {
+  position: relative;
+  height: 100%;
+}
+#footer #icon-wrapper #add-wrapper {
   position: relative;
   height: 40px;
   width: 40px;
@@ -173,11 +176,28 @@ input[type=checkbox]:checked {
   justify-content: center;
   align-items: center;
 }
-
-#image-plus {
+#footer #icon-wrapper #add-wrapper .image-plus {
   position: relative;
   height: 15px;
   width: 15px;
+}
+
+#add-global-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  background: #07060F;
+}
+#add-global-wrapper.active {
+  visibility: visible;
+  opacity: 1;
+  background-image: linear-gradient(#262135 0, #251a2d 0, #07060F 40%);
+  transition: opacity 0.35s ease-in-out;
+  transition-delay: 0.35s;
 }
 
 /*# sourceMappingURL=style.css.map */

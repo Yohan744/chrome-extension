@@ -27,19 +27,25 @@ body {
 }
 #main-global-wrapper.active {
   opacity: 0;
-  transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
   background: #07060F;
 }
-
-#todos-global-wrapper {
+#main-global-wrapper form #delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 30px;
+  width: 75px;
+  cursor: pointer;
+}
+#main-global-wrapper #todos-global-wrapper {
   position: absolute;
   top: 125px;
   left: 5px;
   height: 625px;
   width: 330px;
 }
-
-.todos-wrapper {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper {
   position: relative;
   top: 0;
   left: 0;
@@ -49,8 +55,7 @@ body {
   flex-direction: row;
   margin-bottom: 8.5px;
 }
-
-.todos-left-wrapper {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-left-wrapper {
   position: relative;
   top: 0;
   left: 0;
@@ -60,8 +65,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-
-input[type=checkbox] {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-left-wrapper input[type=checkbox] {
   height: 18px;
   width: 18px;
   appearance: none;
@@ -69,11 +73,10 @@ input[type=checkbox] {
   outline: none;
   border-radius: 5px;
 }
-input[type=checkbox]:checked {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-left-wrapper input[type=checkbox]:checked {
   background: yellowgreen;
 }
-
-.todos-right-wrapper {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper {
   position: relative;
   top: 0;
   left: 0;
@@ -84,8 +87,7 @@ input[type=checkbox]:checked {
   flex-direction: row;
   background: rgba(104, 100, 107, 0.35);
 }
-
-.todos-right-image-wrapper {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-image-wrapper {
   position: relative;
   top: 0;
   left: 0;
@@ -96,16 +98,14 @@ input[type=checkbox]:checked {
   align-items: center;
   justify-content: center;
 }
-
-.todos-image-wrapper {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-image-wrapper .todos-image-wrapper {
   position: relative;
   height: 30px;
   width: 30px;
   background-color: #9542ee;
   border-radius: 7.5px;
 }
-
-.todos-right-main-wrapper {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-main-wrapper {
   position: relative;
   height: 60px;
   width: 190px;
@@ -113,16 +113,14 @@ input[type=checkbox]:checked {
   align-items: center;
   justify-content: left;
 }
-
-.todos-h1 {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-main-wrapper .todos-h1 {
   position: relative;
   color: white;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 600;
 }
-
-.todos-right-time-wrapper {
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-time-wrapper {
   position: relative;
   top: 0;
   left: 0;
@@ -131,17 +129,7 @@ input[type=checkbox]:checked {
   background-color: deeppink;
   border-radius: 0 12.5px 12.5px 0;
 }
-
-#delete {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 30px;
-  width: 75px;
-  cursor: pointer;
-}
-
-#footer {
+#main-global-wrapper #footer {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -150,7 +138,7 @@ input[type=checkbox]:checked {
   background-color: #07060F;
   z-index: 10;
 }
-#footer #icon-wrapper {
+#main-global-wrapper #footer #icon-wrapper {
   position: relative;
   top: 50%;
   left: 50%;
@@ -162,11 +150,11 @@ input[type=checkbox]:checked {
   justify-content: space-between;
   align-items: center;
 }
-#footer #icon-wrapper .image {
+#main-global-wrapper #footer #icon-wrapper .image {
   position: relative;
   height: 100%;
 }
-#footer #icon-wrapper #add-wrapper {
+#main-global-wrapper #footer #icon-wrapper #add-wrapper {
   position: relative;
   height: 40px;
   width: 40px;
@@ -176,7 +164,7 @@ input[type=checkbox]:checked {
   justify-content: center;
   align-items: center;
 }
-#footer #icon-wrapper #add-wrapper .image-plus {
+#main-global-wrapper #footer #icon-wrapper #add-wrapper .image-plus {
   position: relative;
   height: 15px;
   width: 15px;
@@ -196,7 +184,7 @@ input[type=checkbox]:checked {
   visibility: visible;
   opacity: 1;
   background-image: linear-gradient(#262135 0, #251a2d 0, #07060F 40%);
-  transition: opacity 0.35s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
   transition-delay: 0.35s;
 }
 

@@ -34,7 +34,6 @@ body {
   position: absolute;
   top: 125px;
   left: 5px;
-  height: 625px;
   width: 330px;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper {
@@ -129,6 +128,7 @@ body {
   width: 100%;
   background-color: #07060F;
   z-index: 10;
+  box-shadow: 0px -20px 75px 5px rgba(0, 0, 0, 0.85);
 }
 #main-global-wrapper #footer #icon-wrapper {
   position: relative;

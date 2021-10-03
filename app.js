@@ -4,9 +4,6 @@
 const todosWrapper = document.querySelector("#todos-global-wrapper")
 
 chrome.storage.sync.get(null, function (data) {
-    console.log(data)
-    console.log(Object.keys(data))
-    console.log("la longeur est de " + Object.keys(data).length)
     for (let i = 0; i < Object.keys(data).length ; i++) {
         todosWrapper.innerHTML += `
         <div class="todos-wrapper ${Object.keys(data)[i]}">
@@ -83,22 +80,8 @@ document.addEventListener("click", e => {
     }
 })
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////// Animation ////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-const addTodoButton = document.querySelector("#add-wrapper")
-const mainGlobalWrapper = document.querySelector("#main-global-wrapper")
-const AddGlobalWrapper = document.querySelector("#add-global-wrapper")
-addTodoButton.onclick = () => {
-    mainGlobalWrapper.classList.toggle("active")
-    AddGlobalWrapper.classList.toggle("active")
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////// DATE ////////////////////////////////////////////////////
+///////////////////////////////////////////////// Date /////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 let actualDay = new Date().getDay()
@@ -106,3 +89,28 @@ let dayOfTheWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday",
 
 let actualDate = new Date().getDate()
 console.log("Nous sommes le " + dayOfTheWeek[actualDay] + " " + actualDate)
+
+const titleWrapper = document.querySelector(".main-title-wrapper")
+titleWrapper.innerHTML += `<p>${dayOfTheWeek[actualDay] + " " + actualDate}</p>`
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// Switch between sections  ///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// main -> add
+const addTodoButton = document.querySelector("#add-wrapper")
+const mainGlobalWrapper = document.querySelector("#main-global-wrapper")
+const AddGlobalWrapper = document.querySelector("#add-global-wrapper")
+
+addTodoButton.onclick = () => {
+    mainGlobalWrapper.classList.toggle("active")
+    AddGlobalWrapper.classList.toggle("active")
+}
+
+// add -> main
+const backArrow = document.querySelector(".back-arrow-wrapper")
+
+backArrow.onclick = () => {
+    AddGlobalWrapper.classList.toggle("active")
+    mainGlobalWrapper.classList.toggle("active")
+}

@@ -8,7 +8,7 @@
 body {
   position: relative;
   height: 600px;
-  width: 350px;
+  width: 320px;
   background-color: #07060F;
 }
 
@@ -64,7 +64,7 @@ body {
     position: absolute;
     top: 140px;
     left: 5px;
-    width: 330px;
+    width: 280px;
 
     .todos-wrapper {
       position: relative;
@@ -80,7 +80,7 @@ body {
         top: 0;
         left: 0;
         height: 60px;
-        width: 40px;
+        width: 70px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -105,7 +105,7 @@ body {
         top: 0;
         left: 0;
         height: 60px;
-        width: 290px;
+        width: 270px;
         border-radius: 12px;
         display: flex;
         flex-direction: row;
@@ -126,8 +126,16 @@ body {
             position: relative;
             height: 30px;
             width: 30px;
-            background-color: #9542ee;
             border-radius: 7.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+              position: relative;
+              height: 65%;
+            }
+
           }
 
         }
@@ -156,8 +164,19 @@ body {
           left: 0;
           height: 60px;
           width: 80px;
-          background-color: deeppink;
           border-radius: 0 12.5px 12.5px 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          p {
+            position: relative;
+            color: white;
+            font-family: ubuntu, serif;
+            font-size: 14px;
+            font-weight: 100;
+          }
+
         }
 
       }
@@ -202,6 +221,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
 
         .image-plus {
           position: relative;
@@ -232,7 +252,7 @@ body {
   opacity: 0;
   visibility: hidden;
   background: #07060F;
-  padding: 0 15px;
+  padding: 0 17.5px;
 
   &.active {
     visibility: visible;
@@ -249,6 +269,7 @@ body {
     height: 20px;
     width: 30px;
     background: url("image/right-arrow.png") center/cover no-repeat;
+    cursor: pointer;
   }
 
   .add-title-wrapper {
@@ -258,7 +279,7 @@ body {
     h3 {
       font-family: ubuntu, serif;
       letter-spacing: 0.3px;
-      font-size: 23px;
+      font-size: 30px;
       font-weight: 600;
       line-height: 32px;
       color: white;
@@ -268,7 +289,7 @@ body {
 
   form {
 
-    #search {
+    #searchInput {
       position: relative;
       margin-top: 30px;
       left: 0;
@@ -295,13 +316,98 @@ body {
 
     #delete {
       position: relative;
-      top: 300px;
+      top: 200px;
       margin: 0 auto;
       height: 30px;
       width: 75px;
       cursor: pointer;
     }
 
+  }
+
+  .category-wrapper {
+    position: relative;
+    margin-top: 110px;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      position: relative;
+      margin-bottom: 15px;
+      font-family: ubuntu, serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: white;
+    }
+
+    .all-categories-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 250px;
+
+
+      div {
+        position: relative;
+        border-radius: 7px;
+        padding: 10px 15px;
+        font-family: ubuntu, serif;
+        font-size: 14px;
+        font-weight: 300;
+        color: white;
+        cursor: pointer;
+        transition: 0.35s all ease-in-out;
+
+        &.active {
+          filter: grayscale(80%);
+          transition: 0.35s all ease-in-out;
+        }
+
+      }
+
+      .food {
+        background: #f4686a;
+        margin-right: 10px;
+      }
+
+      .workout {
+        background: #e79131;
+        margin-right: 10px;
+      }
+
+      .work {
+        background: #6254f4;
+      }
+
+      .education {
+        background: #234cb5;
+        margin-top: 10px;
+        margin-right: 10px;
+      }
+
+      .others {
+        margin-top: 10px;
+        background: #2abfd0;
+      }
+
+    }
+
+  }
+
+  #createTaskButton {
+    position: absolute;
+    cursor: pointer;
+    bottom: 32px;
+    width: calc(100% - 30px);
+    padding: 12.5px 0;
+    border: none;
+    background: linear-gradient(30deg, rgb(102, 50, 203) 0%, rgb(171, 49, 237) 70%);
+    border-radius: 7px;
+    font-family: ubuntu, serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
   }
 
 }

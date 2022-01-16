@@ -8,7 +8,7 @@
 body {
   position: relative;
   height: 600px;
-  width: 350px;
+  width: 320px;
   background-color: #07060F;
 }
 
@@ -52,7 +52,7 @@ body {
   position: absolute;
   top: 140px;
   left: 5px;
-  width: 330px;
+  width: 280px;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper {
   position: relative;
@@ -68,7 +68,7 @@ body {
   top: 0;
   left: 0;
   height: 60px;
-  width: 40px;
+  width: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,7 +89,7 @@ body {
   top: 0;
   left: 0;
   height: 60px;
-  width: 290px;
+  width: 270px;
   border-radius: 12px;
   display: flex;
   flex-direction: row;
@@ -110,8 +110,14 @@ body {
   position: relative;
   height: 30px;
   width: 30px;
-  background-color: #9542ee;
   border-radius: 7.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-image-wrapper .todos-image-wrapper img {
+  position: relative;
+  height: 65%;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-main-wrapper {
   position: relative;
@@ -134,8 +140,17 @@ body {
   left: 0;
   height: 60px;
   width: 80px;
-  background-color: deeppink;
   border-radius: 0 12.5px 12.5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-time-wrapper p {
+  position: relative;
+  color: white;
+  font-family: ubuntu, serif;
+  font-size: 14px;
+  font-weight: 100;
 }
 #main-global-wrapper #footer {
   position: fixed;
@@ -172,6 +187,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 #main-global-wrapper #footer #icon-wrapper #add-wrapper .image-plus {
   position: relative;
@@ -188,7 +204,7 @@ body {
   opacity: 0;
   visibility: hidden;
   background: #07060F;
-  padding: 0 15px;
+  padding: 0 17.5px;
 }
 #add-global-wrapper.active {
   visibility: visible;
@@ -204,6 +220,7 @@ body {
   height: 20px;
   width: 30px;
   background: url("image/right-arrow.png") center/cover no-repeat;
+  cursor: pointer;
 }
 #add-global-wrapper .add-title-wrapper {
   position: relative;
@@ -212,12 +229,12 @@ body {
 #add-global-wrapper .add-title-wrapper h3 {
   font-family: ubuntu, serif;
   letter-spacing: 0.3px;
-  font-size: 23px;
+  font-size: 30px;
   font-weight: 600;
   line-height: 32px;
   color: white;
 }
-#add-global-wrapper form #search {
+#add-global-wrapper form #searchInput {
   position: relative;
   margin-top: 30px;
   left: 0;
@@ -229,22 +246,92 @@ body {
   color: #FFFFFF;
   text-indent: 15px;
 }
-#add-global-wrapper form #search:focus {
+#add-global-wrapper form #searchInput:focus {
   border: none;
   outline: none;
   text-indent: 15px;
 }
-#add-global-wrapper form #search::placeholder {
+#add-global-wrapper form #searchInput::placeholder {
   text-indent: 15px;
   color: #FFFFFF60;
 }
 #add-global-wrapper form #delete {
   position: relative;
-  top: 300px;
+  top: 200px;
   margin: 0 auto;
   height: 30px;
   width: 75px;
   cursor: pointer;
+}
+#add-global-wrapper .category-wrapper {
+  position: relative;
+  margin-top: 110px;
+  display: flex;
+  flex-direction: column;
+}
+#add-global-wrapper .category-wrapper h3 {
+  position: relative;
+  margin-bottom: 15px;
+  font-family: ubuntu, serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 250px;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper div {
+  position: relative;
+  border-radius: 7px;
+  padding: 10px 15px;
+  font-family: ubuntu, serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: white;
+  cursor: pointer;
+  transition: 0.35s all ease-in-out;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper div.active {
+  filter: grayscale(80%);
+  transition: 0.35s all ease-in-out;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .food {
+  background: #f4686a;
+  margin-right: 10px;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .workout {
+  background: #e79131;
+  margin-right: 10px;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .work {
+  background: #6254f4;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .education {
+  background: #234cb5;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .others {
+  margin-top: 10px;
+  background: #2abfd0;
+}
+#add-global-wrapper #createTaskButton {
+  position: absolute;
+  cursor: pointer;
+  bottom: 32px;
+  width: calc(100% - 30px);
+  padding: 12.5px 0;
+  border: none;
+  background: linear-gradient(30deg, #6632cb 0%, #ab31ed 70%);
+  border-radius: 7px;
+  font-family: ubuntu, serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
 }
 
 /*# sourceMappingURL=style.css.map */

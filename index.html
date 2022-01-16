@@ -42,17 +42,32 @@
     <div class="back-arrow-wrapper"></div>
 
     <div class="add-title-wrapper">
-        <h3>Create<br> New Task</h3>
+        <h3>Create<br>New Task</h3>
     </div>
 
-    <form method="post">
-        <input type="text" name="search" id="search" autocomplete="off" placeholder="Task Title">
-        <input type="button" id="delete">
+    <form id="formAdd">
+        <label><input type="text" name="search" id="searchInput" autocomplete="off" placeholder="Task Title"></label>
+        <label><input type="date" name="date" id="dateInput"></label>
+        <label><input type="time" name="time" id="timeInput" step="1800" min="07:00" max="23:00"></label>
     </form>
+
+    <div class="category-wrapper">
+        <h3>Category</h3>
+        <div class="all-categories-wrapper">
+            <div class="food">Food</div>
+            <div class="workout">Workout</div>
+            <div class="work">Work</div>
+            <div class="education">Education</div>
+            <div class="others">Other</div>
+        </div>
+    </div>
+
+
+    <input type="submit" form="formAdd" value="Create Task" id="createTaskButton">
 
 </div>
 
-
+<script src="other.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

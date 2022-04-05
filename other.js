@@ -36,6 +36,38 @@ function switchBetweenSections () {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////// Toggle active class for buttons / delete date and time  //////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const taskTypeButtons = document.querySelector(".type-wrapper .button-wrapper")
+
+taskTypeButtons.addEventListener("click", e => {
+    let taskTypeButton = taskTypeButtons.querySelector(".active")
+    taskTypeButton.classList.remove("active")
+    e.target.classList.add('active')
+
+    hideDateTime()
+
+})
+
+function hideDateTime() {
+    const taskTypeButtonPlanned = document.querySelector('#taskTypeButtonPlanned')
+    const taskTypeButtonImportant= document.querySelector('#taskTypeButtonImportant')
+    const plannedWrapper = document.querySelector('.planned-wrapper')
+
+    if (taskTypeButtonPlanned.classList.contains('active')) {
+        plannedWrapper.classList.remove('hided')
+    }
+
+    if (taskTypeButtonImportant.classList.contains('active')) {
+        plannedWrapper.classList.add('hided')
+        // need to reset input before adding todos
+    }
+
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////// Clean up the add sections  ///////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

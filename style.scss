@@ -287,52 +287,121 @@ body {
 
   }
 
-  form {
+  #searchInput {
+    position: relative;
+    margin-top: 30px;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    border-radius: 12px;
+    border: none;
+    background: #4c485870;
+    color: #FFFFFF;
+    text-indent: 15px;
 
-    #searchInput {
-      position: relative;
-      margin-top: 30px;
-      left: 0;
-      height: 50px;
-      width: 100%;
-      border-radius: 12px;
+    &:focus {
       border: none;
-      background: #4c485870;
-      color: #FFFFFF;
+      outline: none;
       text-indent: 15px;
+    }
 
-      &:focus {
-        border: none;
-        outline: none;
-        text-indent: 15px;
-      }
+    &::placeholder {
+      text-indent: 15px;
+      color: #FFFFFF60;
+    }
 
-      &::placeholder {
-        text-indent: 15px;
-        color: #FFFFFF60;
+  }
+
+
+
+  .type-wrapper {
+
+    h3 {
+      position: relative;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      font-family: ubuntu, serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: white;
+    }
+
+    .button-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+
+      button {
+        position: relative;
+        border-radius: 7px;
+        padding: 6px 12px;
+        font-family: ubuntu, serif;
+        font-size: 14px;
+        font-weight: 300;
+        color: white;
+        cursor: pointer;
+        transition: 0.35s all ease-in-out;
+        background: transparent;
+        border: 1.5px solid #2661ef;
+        filter: grayscale(100%);
+
+        &.active {
+          background: #2661ef;
+          filter: grayscale(0);
+          transition: 0.35s all ease-in-out;
+        }
+
       }
 
     }
 
-    #delete {
+  }
+
+  .planned-wrapper {
+    transition: 0.60s all ease-in-out;
+    visibility: initial;
+    opacity: 1;
+    height: 60px;
+
+    &.hided {
+      transition: 0.60s all ease-in-out;
+      visibility: hidden;
+      opacity: 0;
+      height: 0;
+    }
+
+    h3 {
       position: relative;
-      top: 200px;
-      margin: 0 auto;
-      height: 30px;
-      width: 75px;
-      cursor: pointer;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      font-family: ubuntu, serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: white;
+    }
+
+    input[type=time]{
+      border: none;
+      outline: none;
+      font-family: ubuntu, serif;
+      color: red;
+
+      &::-webkit-calendar-picker-indicator {
+        display: none;
+      }
+
     }
 
   }
 
   .category-wrapper {
     position: relative;
-    margin-top: 110px;
     display: flex;
     flex-direction: column;
 
     h3 {
       position: relative;
+      margin-top: 20px;
       margin-bottom: 15px;
       font-family: ubuntu, serif;
       font-size: 18px;
@@ -396,7 +465,7 @@ body {
   }
 
   #createTaskButton {
-    position: absolute;
+    position: fixed;
     cursor: pointer;
     bottom: 32px;
     width: calc(100% - 30px);

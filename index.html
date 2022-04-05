@@ -45,12 +45,22 @@
         <h3>Create<br>New Task</h3>
     </div>
 
-    <form id="formAdd">
-        <label><input type="text" name="search" id="searchInput" autocomplete="off" placeholder="Task Title"></label>
-        <label><input type="date" name="date" id="dateInput"></label>
-        <label><input type="time" name="time" id="timeInput" step="1800" min="07:00" max="23:00"></label>
-    </form>
+    <label><input type="text" name="search" id="searchInput" autocomplete="off" placeholder="Task Title"></label>
 
+    <div class="type-wrapper">
+        <h3>Task type</h3>
+        <div class="button-wrapper">
+            <button id="taskTypeButtonPlanned" class="active">Planned</button>
+            <button id="taskTypeButtonImportant" style="margin-left: 10px">Important</button>
+        </div>
+    </div>
+
+    <div class="planned-wrapper">
+        <h3>Choose date & time</h3>
+        <label><input type="date" name="date" id="dateInput"></label>
+        <label><input type="time" name="time" id="timeInput" step="1800" min="07:00" max="23:00" style="margin-left: 10px"></label>
+    </div>
+    
     <div class="category-wrapper">
         <h3>Category</h3>
         <div class="all-categories-wrapper">
@@ -63,7 +73,7 @@
     </div>
 
 
-    <input type="submit" form="formAdd" value="Create Task" id="createTaskButton">
+    <input type="submit" value="Create Task" id="createTaskButton">
 
 </div>
 

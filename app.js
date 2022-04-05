@@ -62,7 +62,7 @@ let verifCategory = false
 categoriesWrapper.addEventListener("click", e => {
     category = e.target.innerText
     let element = getComputedStyle(e.target)
-    elementColor= element.backgroundColor
+    elementColor = element.backgroundColor
 
     verifCategory = true
 

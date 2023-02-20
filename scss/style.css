@@ -1,0 +1,23 @@
+@import "main.css";
+@import "add.css";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html {
+  background: black;
+}
+
+html, body {
+  position: relative;
+  height: 510px;
+  width: 370px;
+  background-color: #07060F;
+  border-radius: 20px;
+}
+
+/*# sourceMappingURL=style.css.map */

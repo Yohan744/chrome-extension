@@ -1,0 +1,156 @@
+#add-global-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  background-image: linear-gradient(#262135 0, #251a2d 0, #07060F 40%);
+  padding: 0 20px;
+
+  .back-arrow-wrapper {
+    position: relative;
+    margin-top: 45px;
+    height: 25px;
+    width: 25px;
+    background: url("../image/back-arrow.png") center/cover no-repeat;
+    cursor: pointer;
+  }
+
+  .add-title-wrapper {
+    position: relative;
+    margin-top: 30px;
+
+    h3 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 36px;
+      letter-spacing: 0;
+      text-align: left;
+      color: white;
+    }
+
+  }
+
+  #searchInput {
+    position: relative;
+    margin-top: 30px;
+    height: 50px;
+    width: 100%;
+    border-radius: 7px;
+    border: none;
+    background: #4c485870;
+    color: #FFFFFF;
+    text-indent: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+
+    &:focus {
+      border: none;
+      outline: none;
+      text-indent: 15px;
+    }
+
+    &::placeholder {
+      text-indent: 15px;
+      color: #FFFFFF60;
+      font-size: 15px;
+    }
+
+  }
+
+  .category-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      position: relative;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 25px;
+      letter-spacing: 0;
+      text-align: left;
+      color: white;
+    }
+
+    .all-categories-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 250px;
+
+      &.preActive div:not(.active) {
+        filter: grayscale(100%);
+        transition: 0.35s all ease-in-out;
+      }
+
+
+      div {
+        position: relative;
+        border-radius: 7px;
+        padding: 10px 15px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        color: white;
+        cursor: pointer;
+        transition: 0.35s all ease-in-out;
+
+        &.active {
+          filter: grayscale(0);
+          transition: 0.35s all ease-in-out;
+        }
+
+      }
+
+      .food {
+        background: #f4686a;
+        margin-right: 10px;
+      }
+
+      .workout {
+        background: #e79131;
+        margin-right: 10px;
+      }
+
+      .work {
+        background: #6254f4;
+      }
+
+      .education {
+        background: #234cb5;
+        margin-top: 10px;
+        margin-right: 10px;
+      }
+
+      .others {
+        margin-top: 10px;
+        background: #2abfd0;
+      }
+
+    }
+
+  }
+
+  #createTaskButton {
+    position: relative;
+    margin-top: 40px;
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    background: linear-gradient(30deg, rgb(102, 50, 203) 0%, rgb(171, 49, 237) 70%);
+    border-radius: 7px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: white;
+  }
+
+}

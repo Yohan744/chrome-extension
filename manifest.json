@@ -1,16 +1,24 @@
 {
-  "manifest_version": 2,
-  "name": "Task Reminder",
-  "description": "This is a test",
-  "version": "1.0.0",
-  "icons": {"256":  "image/list.png"},
-  "browser_action": {
-    "default_icon": "image/list.png",
-    "default_popup": "index.html"
+  "name": "To do list - Keep it simple",
+  "description": "Just a simple to do list extension",
+  "version": "0.1.0",
+  "manifest_version": 3,
+  "icons": {
+    "256": "image/logo.png"
   },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "256": "image/logo.png"
+    }
+  },
+  "options_page": "index.html",
   "permissions": [
     "activeTab",
     "storage",
     "declarativeContent"
+  ],
+  "host_permissions": [
+    "https://www.google.com/*"
   ]
 }

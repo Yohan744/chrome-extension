@@ -1,0 +1,133 @@
+#add-global-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  background-image: linear-gradient(#262135 0, #251a2d 0, #07060F 40%);
+  padding: 0 20px;
+}
+#add-global-wrapper .back-arrow-wrapper {
+  position: relative;
+  margin-top: 45px;
+  height: 25px;
+  width: 25px;
+  background: url("../image/back-arrow.png") center/cover no-repeat;
+  cursor: pointer;
+}
+#add-global-wrapper .add-title-wrapper {
+  position: relative;
+  margin-top: 30px;
+}
+#add-global-wrapper .add-title-wrapper h3 {
+  font-family: "Roboto", sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 0;
+  text-align: left;
+  color: white;
+}
+#add-global-wrapper #searchInput {
+  position: relative;
+  margin-top: 30px;
+  height: 50px;
+  width: 100%;
+  border-radius: 7px;
+  border: none;
+  background: #4c485870;
+  color: #FFFFFF;
+  text-indent: 15px;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+}
+#add-global-wrapper #searchInput:focus {
+  border: none;
+  outline: none;
+  text-indent: 15px;
+}
+#add-global-wrapper #searchInput::placeholder {
+  text-indent: 15px;
+  color: #FFFFFF60;
+  font-size: 15px;
+}
+#add-global-wrapper .category-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+#add-global-wrapper .category-wrapper h3 {
+  position: relative;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-family: "Roboto", sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 25px;
+  letter-spacing: 0;
+  text-align: left;
+  color: white;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 250px;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper.preActive div:not(.active) {
+  filter: grayscale(100%);
+  transition: 0.35s all ease-in-out;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper div {
+  position: relative;
+  border-radius: 7px;
+  padding: 10px 15px;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: white;
+  cursor: pointer;
+  transition: 0.35s all ease-in-out;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper div.active {
+  filter: grayscale(0);
+  transition: 0.35s all ease-in-out;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .food {
+  background: #f4686a;
+  margin-right: 10px;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .workout {
+  background: #e79131;
+  margin-right: 10px;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .work {
+  background: #6254f4;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .education {
+  background: #234cb5;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+#add-global-wrapper .category-wrapper .all-categories-wrapper .others {
+  margin-top: 10px;
+  background: #2abfd0;
+}
+#add-global-wrapper #createTaskButton {
+  position: relative;
+  margin-top: 40px;
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  background: linear-gradient(30deg, #6632cb 0%, #ab31ed 70%);
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: white;
+}
+
+/*# sourceMappingURL=add.css.map */

@@ -14,9 +14,7 @@
   },
   "options_page": "index.html",
   "permissions": [
-    "activeTab",
-    "storage",
-    "declarativeContent"
+    "storage"
   ],
   "host_permissions": [
     "https://www.google.com/*"

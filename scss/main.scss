@@ -25,6 +25,7 @@
         letter-spacing: 0;
         text-align: left;
         color: white;
+        white-space: nowrap;
 
         &::first-line {
           color: #9542ee;

@@ -30,6 +30,8 @@ chrome.storage.sync.get(null, function (data) {
 
     }
 
+    updateBadgeText(1)
+
 });
 
 
@@ -118,7 +120,6 @@ createTaskButton.addEventListener('click', (e) => {
             </div>
         `
             });
-            console.log(data)
         })
 
         switchSections("#add-global-wrapper", "#main-global-wrapper")
@@ -130,6 +131,7 @@ createTaskButton.addEventListener('click', (e) => {
         verifCategory = false
 
         cleanAddSection()
+        updateBadgeText(0)
 
     }
 
@@ -184,6 +186,7 @@ document.addEventListener("click", e => {
 
         let todosCount = e.target.parentElement.parentElement.className.split(' ')
         chrome.storage.sync.remove(todosCount[1], function () {})
+        updateBadgeText(2)
 
         setTimeout(() => {
             e.target.parentElement.parentElement.remove()
@@ -191,4 +194,16 @@ document.addEventListener("click", e => {
 
     }
 })
+
+function updateBadgeText(number) {
+    const numberOfTodos = document.querySelector("#todos-global-wrapper")
+    if (numberOfTodos) {
+        const count = numberOfTodos.children.length - number
+        const value = Number(count) > 0 ? String(count) : ""
+        chrome.action.setBadgeText(
+            {text: value }
+        )
+        chrome.action.setBadgeBackgroundColor({ color: '#AB31EDFF' })
+    }
+}
 

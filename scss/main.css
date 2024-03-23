@@ -160,6 +160,7 @@
   display: flex;
   align-items: center;
   justify-content: left;
+  overflow: hidden;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-main-wrapper .todos-h1 {
   position: relative;

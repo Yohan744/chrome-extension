@@ -1,7 +1,7 @@
 {
   "name": "To do list - Keep it simple",
   "description": "Just a simple to do list extension with a simple design.",
-  "version": "1.5",
+  "version": "1.6",
   "manifest_version": 3,
   "icons": {
     "128": "image/logo/logo-128.png",

@@ -101,7 +101,7 @@ createTaskButton.addEventListener('click', (e) => {
 
             chrome.storage.sync.set({[number]: curentData}, function () {
                 todosWrapper.innerHTML += `
-            <div class="todos-wrapper ${number}">
+            <div class="todos-wrapper ${number} no-margin">
                 <label class="todos-checkbox">
                     <input class="checkbox_input" type="checkbox">
                     <svg class="checkbox_check" width="25" height="25">
@@ -148,7 +148,11 @@ document.addEventListener("click", e => {
         todosRightWrapper.classList.add("checked")
         todosRightWrapper.children[2].classList.add("checked")
 
-        let deleteTimeLine = gsap.timeline()
+        let deleteTimeLine = gsap.timeline({
+            onComplete: () => {
+                deleteTimeLine.kill()
+            }
+        })
 
         setTimeout(() => {
             deleteTimeLine.to(parentTodos, {

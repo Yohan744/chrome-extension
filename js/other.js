@@ -16,14 +16,14 @@ setTimeout(() => {
 function animateAllTodos() {
 
     setTimeout(() => {
-        gsap.from(".todos-wrapper", {
-            duration: 0.5,
-            y: 20,
-            opacity: 0,
-            stagger: 0.15,
-            ease: "power2.inOut",
+        gsap.to(".todos-wrapper", {
+            duration: 0.75,
+            y: 0,
+            opacity: 1,
+            stagger: 0.125,
+            ease: "power3.inOut",
         })
-    }, 1)
+    }, 100)
 
 }
 
@@ -31,7 +31,15 @@ animateAllTodos()
 
 function switchSections(sectionToRemove, sectionToSee) {
 
-    const timeLineSwitchSections = gsap.timeline()
+    const timeLineSwitchSections = gsap.timeline({
+        defaults: {
+            ease: "power2.inOut"
+        },
+        onComplete: () => {
+            timeLineSwitchSections.clear()
+            timeLineSwitchSections.kill()
+        }
+    })
 
     timeLineSwitchSections.to(
         sectionToRemove, {opacity: 0, zIndex: 0, duration: 0.5}
@@ -65,6 +73,7 @@ addTodoButton.onclick = () => {
 backArrow.onclick = () => {
     switchSections("#add-global-wrapper", "#main-global-wrapper")
     setTimeout(() => {
+        gsap.set(".todos-wrapper", {y: 25, opacity: 0})
         animateAllTodos()
     }, 450)
 

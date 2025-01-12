@@ -13,6 +13,7 @@
   padding: 0 20px;
   display: flex;
   flex-direction: row;
+  user-select: none;
 }
 #main-global-wrapper .main-title-wrapper .left-part {
   position: relative;
@@ -48,6 +49,11 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.35s ease-out;
+}
+#main-global-wrapper .main-title-wrapper .right-part #add-wrapper:hover {
+  opacity: 0.75;
 }
 #main-global-wrapper .main-title-wrapper .right-part #add-wrapper .image-plus {
   position: relative;
@@ -63,15 +69,6 @@
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 0 20px 0 15px;
-  /*
-  position: relative;
-  height: 373px;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  padding: 35px 20px 20px 15px;
-   */
 }
 #main-global-wrapper #todos-global-wrapper::-webkit-scrollbar {
   width: 0;
@@ -86,16 +83,21 @@
   align-items: center;
   flex-direction: row;
   margin-bottom: 15px;
+  transform: translateY(30px);
+  opacity: 0;
+}
+#main-global-wrapper #todos-global-wrapper .todos-wrapper.no-margin {
+  transform: none;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-checkbox {
   cursor: pointer;
   transform: scale(0.72);
-  transition: 0.35s all ease-in-out;
+  transition: 0.35s all ease-out;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-checkbox:hover .checkbox_check {
   background: #9542ee;
   border: 0.2rem solid #9542ee;
-  transition: 0.35s all ease-in-out;
+  transition: 0.35s all ease-out;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-checkbox .checkbox_input {
   width: 0;
@@ -117,7 +119,7 @@
   stroke-width: 0.2em;
   border-radius: 0.2em;
   fill: none;
-  transition: 0.35s all ease-in-out;
+  transition: 0.35s all ease-out;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper {
   position: relative;
@@ -131,12 +133,12 @@
   flex-direction: row;
   flex-grow: 1;
   background: #4c485870;
-  transition: 0.35s all ease-in-out;
+  transition: 0.35s all ease-out;
   box-shadow: 0 13.1px 6.1px -33px rgba(0, 0, 0, 0.027), 0px 26.3px 12.1px -33px rgba(0, 0, 0, 0.054), 0px 40.3px 18.3px -33px rgba(0, 0, 0, 0.084), 0px 53.2px 24.7px -33px rgba(0, 0, 0, 0.112), 0px 66px 31px -33px rgba(0, 0, 0, 0.14);
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper.checked {
   background: #336AF1;
-  transition: 0.35s all ease-in-out;
+  transition: 0.35s all ease-out;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-image-wrapper {
   position: relative;
@@ -148,6 +150,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-image-wrapper img {
   position: relative;
@@ -155,7 +158,7 @@
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-main-wrapper {
   position: relative;
-  width: 210px;
+  width: 215px;
   margin-right: 15px;
   display: flex;
   align-items: center;
@@ -171,9 +174,6 @@
   letter-spacing: 0;
   text-align: left;
   color: white;
-}
-#main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-main-wrapper .todos-h1:first-letter {
-  text-transform: uppercase;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-time-wrapper {
   position: relative;
@@ -197,12 +197,12 @@
   position: absolute;
   right: 0;
   height: 100%;
-  width: 10px;
+  width: 8px;
   border-radius: 0 7px 7px 0;
 }
 #main-global-wrapper #todos-global-wrapper .todos-wrapper .todos-right-wrapper .todos-right-color-wrapper.checked {
   background: #336AF1 !important;
-  transition: 0.35s all ease-in-out;
+  transition: 0.35s all ease-out;
 }
 #main-global-wrapper .hide-last-todo {
   position: absolute;

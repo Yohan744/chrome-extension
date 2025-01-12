@@ -6,7 +6,6 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  user-select: none;
 }
 
 html {
@@ -19,4 +18,10 @@ html, body {
   width: 370px;
   background-color: #07060F;
   border-radius: 20px;
+
+  *::selection {
+    background: #9542ee;
+    color: white;
+  }
+
 }

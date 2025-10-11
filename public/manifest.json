@@ -1,0 +1,25 @@
+{
+  "name": "To do list - Keep it simple",
+  "short_name": "To-Do List",
+  "description": "Just a simple to do list extension with a simple design.",
+  "version": "2.0",
+  "manifest_version": 3,
+  "icons": {
+    "128": "logo-icons/logo-128.png",
+    "256": "logo-icons/logo-256.png",
+    "512": "logo-icons/logo-512.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "To do list - Keep it simple",
+    "default_icon": {
+      "128": "logo-icons/logo-128.png",
+      "256": "logo-icons/logo-256.png",
+      "512": "logo-icons/logo-512.png"
+    }
+  },
+  "permissions": ["storage"],
+  "host_permissions": [],
+  "author": "Yohan744",
+  "homepage_url": "https://github.com/Yohan744"
+}

@@ -2,7 +2,7 @@
   "name": "chrome-extension",
   "private": true,
   "scripts": {
-    "build": "BUILD_PRESET=prod nuxt build",
+    "build": "BUILD_PRESET=prod nuxt build && node scripts/fix-extension-build.js",
     "dev": "nuxt dev --host --open",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

@@ -8,10 +8,11 @@ dotenv.config({ path: './.env' });
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/fonts', '@nuxtjs/fontaine'],
 
-  ssr: true,
-  devtools: { enabled: true },
+  ssr: false,
+  devtools: { enabled: false },
 
   app: {
+    buildAssetsDir: '/nuxt/',
     head: {
       title: 'Chrome extension',
       htmlAttrs: {
@@ -68,7 +69,7 @@ export default defineNuxtConfig({
   experimental: {
     payloadExtraction: true, // Extract payload for better SSG
     componentIslands: true, // Better lazy loading
-    viewTransition: true // Native view transitions
+    viewTransition: false // Native view transitions
   },
   compatibilityDate: '2025-07-15',
 
@@ -89,7 +90,7 @@ export default defineNuxtConfig({
   vite: {
     server: {
       hmr: {
-        overlay: true
+        overlay: false
       },
       fs: {
         strict: false
@@ -104,19 +105,19 @@ export default defineNuxtConfig({
     },
 
     plugins: [
-      checker({
-        vueTsc: {
-          tsconfigPath: 'tsconfig.json',
-          root: '.'
-        },
-        enableBuild: true,
-        overlay: {
-          position: 'bl',
-          badgeStyle: 'z-index: 9999; background-color: #e74c3c; color: white; font-weight: bold;',
-          panelStyle: 'z-index: 9999; max-height: 50vh; overflow-y: auto; border: 2px solid #e74c3c;'
-        },
-        terminal: true
-      }),
+      ...(process.env.BUILD_PRESET !== 'prod'
+        ? [
+            checker({
+              vueTsc: {
+                tsconfigPath: 'tsconfig.json',
+                root: '.'
+              },
+              enableBuild: false,
+              overlay: false,
+              terminal: true
+            })
+          ]
+        : []),
 
       svgLoader({
         defaultImport: 'raw'

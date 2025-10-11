@@ -48,5 +48,8 @@
     "not dead",
     "not IE 11",
     "iOS >= 12"
-  ]
+  ],
+  "overrides": {
+    "vite": "npm:rolldown-vite@latest"
+  }
 }

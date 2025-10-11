@@ -1,0 +1,55 @@
+{
+  "name": "chrome-extension",
+  "private": true,
+  "scripts": {
+    "build": "BUILD_PRESET=prod nuxt build",
+    "dev": "nuxt dev --host --open",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "prepare": "husky",
+    "cache": "rm -rf .nuxt .output node_modules/.vite node_modules/.cache && rm -rf node_modules/.vite/ && npm cache clean --force"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "^1.9.0",
+    "@nuxt/fonts": "^0.11.4",
+    "@nuxt/image": "^1.7.0",
+    "nuxt": "^4.1.2",
+    "vue": "^3.5.21",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@nuxtjs/fontaine": "^0.5.0",
+    "@nuxtjs/robots": "^5.5.5",
+    "@nuxtjs/sitemap": "^7.4.7",
+    "@types/node": "^24.6.0",
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.1.1",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-vue": "^10.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.3",
+    "postcss-html": "^1.8.0",
+    "prettier": "^3.6.2",
+    "sass": "^1.93.2",
+    "typescript": "^5.9.2",
+    "vite-plugin-checker": "^0.11.0",
+    "vite-svg-loader": "^5.1.0",
+    "vue-eslint-parser": "^10.2.0",
+    "vue-tsc": "^3.1.0"
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown",
+    "*.{js,ts,vue}": "eslint --fix"
+  },
+  "browserslist": [
+    ">0.5%",
+    "last 2 versions",
+    "not dead",
+    "not IE 11",
+    "iOS >= 12"
+  ]
+}

@@ -1,0 +1,13 @@
+@use 'eases';
+@use 'sass:map';
+
+$transition-time: 0.65s;
+$default-ease: eases.$easePower3Out;
+$z-index: (
+  'header': 10,
+  'sidebar': 9
+);
+
+@function z($key) {
+  @return map.get($z-index, $key);
+}

@@ -13,7 +13,7 @@ export default defineNuxtConfig({
 
   app: {
     baseURL: './',
-    buildAssetsDir: '/nuxt/',
+    buildAssetsDir: 'nuxt/',
     head: {
       title: 'Chrome extension',
       htmlAttrs: {

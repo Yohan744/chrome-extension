@@ -15,7 +15,7 @@ if (m) {
   const importMapJson = m[1].trim();
   const importMapPath = path.join(outDir, 'nuxt.importmap.json');
   fs.writeFileSync(importMapPath, importMapJson, 'utf8');
-  html = html.replace(importMapRe, '<script type="importmap" src="/nuxt.importmap.json"></script>');
+  html = html.replace(importMapRe, '<script type="importmap" src="./nuxt.importmap.json"></script>');
 }
 
 const nuxtCfgRe = /<script>([\s\S]*?window\.__NUXT__[\s\S]*?)<\/script>/i;
@@ -24,7 +24,7 @@ if (n) {
   const js = n[1].trim();
   const nuxtCfgPath = path.join(outDir, 'nuxt-config.js');
   fs.writeFileSync(nuxtCfgPath, js + '\n', 'utf8');
-  html = html.replace(nuxtCfgRe, '<script src="/nuxt-config.js"></script>');
+  html = html.replace(nuxtCfgRe, '<script src="./nuxt-config.js"></script>');
 }
 
 fs.writeFileSync(indexPath, html, 'utf8');

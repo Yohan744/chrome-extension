@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
 
   app: {
+    baseURL: './',
     buildAssetsDir: '/nuxt/',
     head: {
       title: 'Chrome extension',

@@ -4,12 +4,11 @@
 $transition-time: 0.65s;
 $default-ease: eases.$easePower3Out;
 
-$global-height: 510px;
-$global-width: 370px;
+$global-height: 600px;
+$global-width: 400px;
 
 $z-index: (
-  'header': 10,
-  'sidebar': 9
+  'header': 10
 );
 
 @function z($key) {

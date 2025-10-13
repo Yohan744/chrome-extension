@@ -1,5 +1,23 @@
 <template>
-  <h1>hello dzdzdzzd</h1>
+  <main>
+    <MainWrapper />
+    <AddWrapper />
+  </main>
 </template>
 
-<script setup></script>
+<script setup>
+  import MainWrapper from '~/components/MainWrapper.vue';
+  import AddWrapper from '~/components/AddWrapper.vue';
+</script>
+
+<style scoped lang="scss">
+  main {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
+</style>

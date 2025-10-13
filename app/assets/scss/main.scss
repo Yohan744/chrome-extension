@@ -18,11 +18,11 @@ html {
   width: $global-width;
   touch-action: manipulation !important; // disable double tap zoom
   background: $color-white;
-  color: $color-black;
+  color: $color-white;
 
   *::selection,
   *::target-text {
-    background-color: $color-black;
+    background-color: $color-magenta;
     color: $color-white;
   }
 }
@@ -32,9 +32,9 @@ body,
   position: relative;
   height: $global-height;
   width: $global-width;
-  background: green;
   overflow: hidden;
   font-family: 'stolzlregular', sans-serif;
   overscroll-behavior: none;
   font-size: 15rem; // default
+  background: $color-black;
 }

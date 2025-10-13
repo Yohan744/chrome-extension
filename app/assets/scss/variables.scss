@@ -3,6 +3,10 @@
 
 $transition-time: 0.65s;
 $default-ease: eases.$easePower3Out;
+
+$global-height: 510px;
+$global-width: 370px;
+
 $z-index: (
   'header': 10,
   'sidebar': 9

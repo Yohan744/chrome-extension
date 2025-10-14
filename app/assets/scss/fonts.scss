@@ -1,10 +1,7 @@
 @font-face {
-  font-family: 'stolzlregular';
-  src:
-    url('../fonts/stolzl_regular.woff2') format('woff2'),
-    url('../fonts/stolzl_regular.woff') format('woff'),
-    url('../fonts/stolzl_regular.ttf') format('truetype');
-  font-weight: 400;
+  font-family: 'sora';
+  src: url('../fonts/sora.ttf') format('truetype');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }

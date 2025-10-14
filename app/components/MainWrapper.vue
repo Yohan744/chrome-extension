@@ -1,21 +1,20 @@
 <template>
   <section id="main-wrapper">
-    <h1>Main wrapper</h1>
-    <button @click="onClick">switch</button>
+    <MainWrapperTopPart />
+    <MainWrapperTodosWrapper />
   </section>
 </template>
 
 <script setup lang="ts">
-  import switchBetweenSections from '~/composables/switchBetweenSections';
-
-  const onClick = () => {
-    switchBetweenSections('forward');
-  };
+  import MainWrapperTopPart from '~/components/mainWrapper/TopPart.vue';
+  import MainWrapperTodosWrapper from '~/components/mainWrapper/TodosWrapper.vue';
 </script>
 
 <style scoped lang="scss">
   #main-wrapper {
     position: absolute;
+    gap: 50px;
+    padding: 20px;
     inset: 0;
     height: 100%;
     width: 100%;

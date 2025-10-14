@@ -5,7 +5,7 @@
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import MainWrapper from '~/components/MainWrapper.vue';
   import AddWrapper from '~/components/AddWrapper.vue';
 </script>

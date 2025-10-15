@@ -5,7 +5,7 @@
       <p class="description">0 tasks</p>
     </div>
 
-    <div class="add-todo-button" @click="switchBetweenSections('forward')"></div>
+    <div class="add-todo-button" @click="switchBetweenSections('add')"></div>
   </div>
 </template>
 

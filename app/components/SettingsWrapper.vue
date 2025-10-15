@@ -1,13 +1,13 @@
 <template>
-  <section id="add-wrapper">
-    <h1>add wrapper</h1>
+  <section id="settings-wrapper">
+    <h1>settings wrapper</h1>
   </section>
 </template>
 
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-  #add-wrapper {
+  #settings-wrapper {
     position: absolute;
     inset: 0;
     height: 100%;

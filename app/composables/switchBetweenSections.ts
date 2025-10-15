@@ -2,25 +2,46 @@ import gsap from 'gsap';
 
 let isAnimating: boolean = false;
 
-const switchBetweenSections = (direction: 'forward' | 'backward') => {
+const switchBetweenSections = (show: 'main' | 'add' | 'settings') => {
+  if (isAnimating) return;
+
   const mainWrapper = document.querySelector('#main-wrapper') as HTMLElement;
   const addWrapper = document.querySelector('#add-wrapper') as HTMLElement;
+  const settingsWrapper = document.querySelector('#settings-wrapper') as HTMLElement;
 
-  const show = direction === 'forward' ? addWrapper : mainWrapper;
-  const leave = direction === 'forward' ? mainWrapper : addWrapper;
+  const sectionToHide = [mainWrapper, addWrapper, settingsWrapper].find(wrapper =>
+    wrapper.classList.contains('active')
+  );
 
-  if (isAnimating) return;
+  const sectionToShow = {
+    main: mainWrapper,
+    add: addWrapper,
+    settings: settingsWrapper
+  }[show];
+
+  if (
+    !mainWrapper ||
+    !addWrapper ||
+    !settingsWrapper ||
+    !sectionToHide ||
+    !sectionToShow ||
+    sectionToHide === sectionToShow
+  )
+    return;
+
   isAnimating = true;
 
   const tl = gsap.timeline({
     onComplete: () => {
       isAnimating = false;
+      sectionToHide.classList.remove('active');
+      sectionToShow.classList.add('active');
       tl.kill();
     }
   });
 
   tl.fromTo(
-    leave,
+    sectionToHide,
     {
       opacity: 1,
       pointerEvents: 'all'
@@ -34,7 +55,7 @@ const switchBetweenSections = (direction: 'forward' | 'backward') => {
   );
 
   tl.fromTo(
-    show,
+    sectionToShow,
     {
       opacity: 0,
       pointerEvents: 'none'

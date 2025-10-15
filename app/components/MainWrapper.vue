@@ -1,5 +1,5 @@
 <template>
-  <section id="main-wrapper">
+  <section id="main-wrapper" class="active">
     <MainWrapperTopPart />
     <MainWrapperTodosWrapper />
   </section>
@@ -14,7 +14,7 @@
   #main-wrapper {
     position: absolute;
     gap: 50px;
-    padding: 20px;
+    padding: 20px 20px calc($footer-height + 20px);
     inset: 0;
     height: 100%;
     width: 100%;

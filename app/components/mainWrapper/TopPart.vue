@@ -2,19 +2,32 @@
   <div class="top-part">
     <div class="left-part">
       <h1 class="title">{{ dayOfTheWeek[actualDay] + ' ' + actualDate }}</h1>
-      <p class="description">0 tasks</p>
+      <p class="month">{{ monthOfTheYear[actualMonth] }}</p>
     </div>
 
-    <div class="add-todo-button" @click="switchBetweenSections('add')"></div>
+    <h4 class="task-count">0 tasks</h4>
   </div>
 </template>
 
 <script setup lang="ts">
-  import switchBetweenSections from '~/composables/switchBetweenSections';
-
   const actualDay: number = new Date().getDay();
   const actualDate: number = new Date().getDate();
+  const actualMonth: number = new Date().getMonth();
   const dayOfTheWeek: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const monthOfTheYear: string[] = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
 </script>
 
 <style scoped lang="scss">
@@ -24,7 +37,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-start;
     width: 100%;
 
     .left-part {
@@ -37,38 +50,26 @@
 
       .title {
         position: relative;
-        font-size: 30px;
-        font-variation-settings: 'wght' 700;
+        font-size: 23px;
+        font-variation-settings: 'wght' 800;
         color: $color-white;
       }
 
-      .description {
+      .month {
         position: relative;
-        margin-left: 5px;
-        font-size: 15px;
+        margin-left: 3px;
+        font-size: 13px;
         font-variation-settings: 'wght' 500;
-        color: rgba($color-white, 0.6);
+        color: rgba($color-white, 0.55);
       }
     }
 
-    .add-todo-button {
+    .task-count {
       position: relative;
-      height: 40px;
-      width: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      opacity: 1;
-      border-radius: 7px;
-      transition: opacity $transition-time $default-ease;
-      background: linear-gradient(50deg, $color-blue-violet 0%, $color-magenta 70%);
-
-      @include has-hover {
-        &:hover {
-          opacity: 0.75;
-        }
-      }
+      margin-top: 3px;
+      font-size: 16px;
+      font-variation-settings: 'wght' 500;
+      color: rgba($color-white, 0.85);
     }
   }
 </style>

@@ -13,7 +13,7 @@
 <style scoped lang="scss">
   #main-wrapper {
     position: absolute;
-    gap: 50px;
+    gap: 30px;
     padding: 20px 20px calc($footer-height + 20px);
     inset: 0;
     height: 100%;

@@ -1,8 +1,12 @@
 <template>
-  <div class="todos-wrapper"></div>
+  <div class="todos-wrapper">
+    <SingleTodo v-for="n in 15" :key="n" :index="n" />
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import SingleTodo from '~/components/mainWrapper/SingleTodo.vue';
+</script>
 
 <style scoped lang="scss">
   .todos-wrapper {
@@ -12,8 +16,12 @@
     display: flex;
     flex-grow: 1;
     flex-direction: column;
-    justify-content: center;
-    align-content: flex-start;
-    background: yellow;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 </style>

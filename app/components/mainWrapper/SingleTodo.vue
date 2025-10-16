@@ -1,12 +1,16 @@
 <template>
   <div class="single-todo">
-    <TodoCheckbox />
+    <TodoCheckbox @checked="handleCheckboxClick" />
     <div class="right-part">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, quisquam!</div>
   </div>
 </template>
 
 <script setup lang="ts">
   import TodoCheckbox from '~/components/mainWrapper/TodoCheckbox.vue';
+
+  const handleCheckboxClick = () => {
+    console.log('Checkbox checked!');
+  };
 </script>
 
 <style scoped lang="scss">

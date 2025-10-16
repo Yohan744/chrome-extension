@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
   import SingleTodo from '~/components/mainWrapper/SingleTodo.vue';
 </script>
 

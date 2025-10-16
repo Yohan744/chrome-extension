@@ -1,13 +1,22 @@
 <template>
   <label class="todo-checkbox">
-    <input type="checkbox" />
+    <input ref="inputRef" type="checkbox" @click="handleClick" />
     <svg width="25" height="25">
       <polyline points="16 3 7 15 2 10" />
     </svg>
   </label>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  const emit = defineEmits(['checked']);
+
+  const inputRef = ref<HTMLInputElement | null>(null);
+
+  const handleClick = () => {
+    if (!inputRef.value || !inputRef.value.checked) return;
+    emit('checked');
+  };
+</script>
 
 <style scoped lang="scss">
   .todo-checkbox {
@@ -43,9 +52,9 @@
       fill: none;
       background: transparent;
       transition:
-        border calc($transition-time * 0.85) $easePower2Out,
-        background calc($transition-time * 0.85) $easePower2Out,
-        stroke-dashoffset calc($transition-time * 0.85) $easePower2Out;
+        border calc($transition-time * 0.85) $easePower4Out,
+        background calc($transition-time * 0.85) $easePower4Out,
+        stroke-dashoffset calc($transition-time * 0.85) $easePower4Out;
 
       polyline {
         transform: scale(0.775) translate(2px, 1px);

@@ -39,6 +39,11 @@ const customConfigs = [
       prettier,
       vue
     },
+    languageOptions: {
+      globals: {
+        chrome: 'readonly'
+      }
+    },
     rules: {
       'prettier/prettier': [
         'warn',

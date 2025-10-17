@@ -1,5 +1,6 @@
 <template>
   <section id="main-wrapper" class="active">
+    <ChromeStorageDebug />
     <MainWrapperTopPart />
     <MainWrapperTodosWrapper />
   </section>
@@ -8,6 +9,7 @@
 <script setup lang="ts">
   import MainWrapperTopPart from '~/components/mainWrapper/TopPart.vue';
   import MainWrapperTodosWrapper from '~/components/mainWrapper/TodosWrapper.vue';
+  import ChromeStorageDebug from '~/components/ChromeStorageDebug.vue';
 </script>
 
 <style scoped lang="scss">

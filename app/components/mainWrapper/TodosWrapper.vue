@@ -6,6 +6,9 @@
 
 <script setup>
   import SingleTodo from '~/components/mainWrapper/SingleTodo.vue';
+  import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+
+  ChromeStorageHelper.getInstance().initDefaultStorage();
 </script>
 
 <style scoped lang="scss">

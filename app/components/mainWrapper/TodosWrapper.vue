@@ -8,7 +8,8 @@
   import SingleTodo from '~/components/mainWrapper/SingleTodo.vue';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
 
-  ChromeStorageHelper.getInstance().initDefaultStorage();
+  await ChromeStorageHelper.getInstance().initDefaultStorage();
+  await ChromeStorageHelper.getInstance().migrateOldTodos();
 </script>
 
 <style scoped lang="scss">

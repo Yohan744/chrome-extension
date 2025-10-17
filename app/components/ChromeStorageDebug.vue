@@ -1,6 +1,8 @@
 <template>
   <div class="debug">
     <div @click="handleAdd">add</div>
+    <div @click="handleAddOld">add old</div>
+    <div @click="handleMigrate">migrate</div>
     <div @click="handleGet">get</div>
     <div @click="handleClear">clear</div>
   </div>
@@ -19,6 +21,34 @@
       order: 1
     });
     console.log('Added a test todo');
+  };
+
+  const handleAddOld = async () => {
+    const storage = ChromeStorageHelper.getInstance();
+    await storage.addOldTodo({
+      category: 'workout',
+      color: '#ff0000',
+      task: 'test'
+    });
+
+    await storage.addOldTodo({
+      category: 'others',
+      color: '#19b44a',
+      task: 'vdhzvdzhd'
+    });
+
+    await storage.addOldTodo({
+      category: 'work',
+      color: '#111252',
+      task: 'dzndzdazjbdzdzdzzdz'
+    });
+
+    console.log('Added an old type todo');
+  };
+
+  const handleMigrate = async () => {
+    const storage = ChromeStorageHelper.getInstance();
+    await storage.migrateOldTodos();
   };
 
   const handleGet = async () => {

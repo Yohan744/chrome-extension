@@ -3,7 +3,7 @@ import type { ITodoType } from '~/types/ITodoType';
 import type { ICategoryType } from '~/types/ICategoryType';
 import defaultCategoriesData from '~/data/defaultCategoriesData';
 import type { IOldTodoType } from '~/types/IOldTodoType';
-import oldCategoriesData from '~/data/oldCategoriesData';
+import oldCategoriesNameData from '~/data/oldCategoriesNameData';
 
 function getChromeStorage(): chrome.storage.StorageArea | null {
   const hasChrome = typeof chrome !== 'undefined' && !!chrome.storage?.sync;
@@ -116,6 +116,12 @@ class ChromeStorageHelper {
     return Array.isArray(categories) ? categories : [];
   }
 
+  public async getCategoryById(id: ICategoryType['id']): Promise<ICategoryType | null> {
+    const categories = await this.getCategories();
+    const category = categories.find(c => c.id === id);
+    return category || null;
+  }
+
   public async setCategories(next: ICategoryType[]): Promise<void> {
     await storageSet({ categories: next });
   }
@@ -160,8 +166,8 @@ class ChromeStorageHelper {
       if (
         val &&
         typeof val === 'object' &&
-        Array.isArray(oldCategoriesData) &&
-        oldCategoriesData.includes(val.category.toLowerCase() as string)
+        Array.isArray(oldCategoriesNameData) &&
+        oldCategoriesNameData.includes(val.category.toLowerCase() as string)
       ) {
         oldKeys.push(key);
         oldItems.push(val as IOldTodoType);

@@ -1,12 +1,25 @@
 <template>
   <div class="single-todo">
     <TodoCheckbox @checked="handleCheckboxClick" />
-    <div class="right-part">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, quisquam!</div>
+    <div class="right-part">
+      {{ props.todoItem.task }}
+      {{ category?.name }}
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import TodoCheckbox from '~/components/mainWrapper/TodoCheckbox.vue';
+  import type { ITodoType } from '~/types/ITodoType';
+  import type { ICategoryType } from '~/types/ICategoryType';
+
+  const props = defineProps<{
+    todoItem: ITodoType;
+  }>();
+
+  const category = ref<ICategoryType | null>(
+    await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId)
+  );
 
   const handleCheckboxClick = () => {
     console.log('Checkbox checked!');

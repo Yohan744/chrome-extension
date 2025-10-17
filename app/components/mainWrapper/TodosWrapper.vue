@@ -1,15 +1,18 @@
 <template>
   <div class="todos-wrapper">
-    <SingleTodo v-for="n in 15" :key="n" :index="n" />
+    <SingleTodo v-for="todo in todos" :key="todo.id" :todo-item="todo" />
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import SingleTodo from '~/components/mainWrapper/SingleTodo.vue';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+  import type { ITodoType } from '~/types/ITodoType';
 
   await ChromeStorageHelper.getInstance().initDefaultStorage();
   await ChromeStorageHelper.getInstance().migrateOldTodos();
+
+  const todos = ref<ITodoType[]>(await ChromeStorageHelper.getInstance().getTodos());
 </script>
 
 <style scoped lang="scss">

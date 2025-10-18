@@ -1,14 +1,22 @@
 <template>
   <section id="add-wrapper">
-    <h1 class="title">Create new task</h1>
+    <h1 class="title">
+      Create new
+      <br />
+      task
+    </h1>
 
-    <label><input class="taskInput" type="text" autocomplete="off" placeholder="Task Title" /></label>
+    <label><input class="task-input" type="text" autocomplete="off" placeholder="Task Title" /></label>
 
-    <button class="createTaskButton">Create task</button>
+    <AddWrapperCategories />
+
+    <button class="create-task-button">Create task</button>
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import AddWrapperCategories from '~/components/addWrapper/Categories.vue';
+</script>
 
 <style scoped lang="scss">
   #add-wrapper {
@@ -29,10 +37,11 @@
     .title {
       position: relative;
       font-size: 28px;
+      line-height: 1.25;
       font-variation-settings: 'wght' 800;
     }
 
-    .taskInput {
+    .task-input {
       position: relative;
       margin-top: 30px;
       padding: 15px;
@@ -54,7 +63,7 @@
       }
     }
 
-    .createTaskButton {
+    .create-task-button {
       position: relative;
       margin-top: auto;
       width: 100%;

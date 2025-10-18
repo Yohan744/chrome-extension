@@ -12,6 +12,12 @@
   import AddWrapper from '~/components/AddWrapper.vue';
   import SettingsWrapper from '~/components/SettingsWrapper.vue';
   import Footer from '~/components/Footer.vue';
+  import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+
+  onBeforeMount(async () => {
+    await ChromeStorageHelper.getInstance().initDefaultStorage();
+    await ChromeStorageHelper.getInstance().migrateOldTodos();
+  });
 </script>
 
 <style scoped lang="scss">

@@ -9,9 +9,6 @@
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import type { ITodoType } from '~/types/ITodoType';
 
-  await ChromeStorageHelper.getInstance().initDefaultStorage();
-  await ChromeStorageHelper.getInstance().migrateOldTodos();
-
   const todos = ref<ITodoType[]>(await ChromeStorageHelper.getInstance().getTodos());
 </script>
 

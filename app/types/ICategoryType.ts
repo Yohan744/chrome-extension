@@ -1,7 +1,5 @@
-import type { UUID } from 'node:crypto';
-
 export type ICategoryType = {
-  id: UUID;
+  id: string;
   name: string;
   iconName: string;
   color: string;

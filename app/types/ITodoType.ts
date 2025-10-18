@@ -1,9 +1,7 @@
-import type { UUID } from 'node:crypto';
-
 export type ITodoType = {
-  id: UUID;
+  id: string;
   task: string;
-  categoryId: UUID;
+  categoryId: string;
   order: number;
   hour?: string;
 };

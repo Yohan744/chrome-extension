@@ -16,7 +16,7 @@
     await storage.addTodo({
       id: crypto.randomUUID(),
       task: 'test',
-      categoryId: crypto.randomUUID(),
+      categoryId: '0010f75f-a962-4084-9680-06e9d18a7707',
       hour: '12',
       order: 1
     });
@@ -77,6 +77,7 @@
     align-items: center;
     background: $color-indigo;
     z-index: 1;
+    opacity: 0.25;
 
     div {
       position: relative;

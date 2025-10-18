@@ -33,7 +33,6 @@
 <style scoped lang="scss">
   .top-part {
     position: relative;
-    padding-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

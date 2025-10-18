@@ -30,5 +30,7 @@
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    background: $color-magenta;
+    opacity: 0.3;
   }
 </style>

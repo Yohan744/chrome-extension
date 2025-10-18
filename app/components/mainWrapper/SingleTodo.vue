@@ -1,9 +1,8 @@
 <template>
   <div class="single-todo">
     <TodoCheckbox @checked="handleCheckboxClick" />
-    <div class="right-part">
+    <div class="right-part" :style="{ background: category?.color }">
       {{ props.todoItem.task }}
-      {{ category?.name }}
     </div>
   </div>
 </template>

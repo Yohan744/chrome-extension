@@ -18,6 +18,10 @@
     events.on(ICustomEventsType.taskCreated, async () => {
       todos.value = await ChromeStorageHelper.getInstance().getTodos();
     });
+
+    events.on(ICustomEventsType.storageInitiated, async () => {
+      todos.value = await ChromeStorageHelper.getInstance().getTodos();
+    });
   });
 </script>
 

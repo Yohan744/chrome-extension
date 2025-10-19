@@ -4,6 +4,10 @@ import type { ICategoryType } from '~/types/ICategoryType';
 import defaultCategoriesData from '~/data/defaultCategoriesData';
 import type { IOldTodoType } from '~/types/IOldTodoType';
 import oldCategoriesNameData from '~/data/oldCategoriesNameData';
+import { useGlobalEvents } from '~/composables/GlobalEvents';
+import { ICustomEventsType } from '~/types/ICustomEventsType';
+
+const events = useGlobalEvents();
 
 function getChromeStorage(): chrome.storage.StorageArea | null {
   const hasChrome = typeof chrome !== 'undefined' && !!chrome.storage?.sync;
@@ -78,6 +82,8 @@ class ChromeStorageHelper {
     if (Object.keys(updates).length > 0) {
       await storageSet(updates);
     }
+
+    events.trigger(ICustomEventsType.storageInitiated);
   }
 
   public async getAllStorage(): Promise<{ todos: ITodoType[]; categories: ICategoryType[] }> {

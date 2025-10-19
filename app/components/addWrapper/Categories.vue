@@ -23,6 +23,8 @@
   import type { ICategoryType } from '~/types/ICategoryType';
   import PlusIcon from '~/assets/icons/plus.svg?component';
   import switchBetweenSections from '~/composables/SwitchBetweenSections';
+  import { ICustomEventsType } from '~/types/ICustomEventsType';
+  import { useGlobalEvents } from '~/composables/GlobalEvents';
 
   const cleanUpCategoriesSelection = () => {
     const categoryElements = categoriesWrapper.value?.querySelectorAll('.category');
@@ -37,6 +39,8 @@
   });
 
   const emit = defineEmits(['categoryIsSelected']);
+
+  const events = useGlobalEvents();
 
   const categoriesWrapper = ref<HTMLElement | null>(null);
   const categories = ref<ICategoryType[] | null>(await ChromeStorageHelper.getInstance().getCategories());
@@ -55,6 +59,12 @@
       }
     });
   };
+
+  onMounted(async () => {
+    events.on(ICustomEventsType.storageInitiated, async () => {
+      categories.value = await ChromeStorageHelper.getInstance().getCategories();
+    });
+  });
 </script>
 
 <style scoped lang="scss">

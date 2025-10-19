@@ -6,16 +6,65 @@
       task
     </h1>
 
-    <label><input class="task-input" type="text" autocomplete="off" placeholder="Task Title" /></label>
+    <label>
+      <input
+        ref="taskInputRef"
+        class="task-input"
+        type="text"
+        autocomplete="off"
+        placeholder="Task Title"
+        @input="handleInput"
+      />
+    </label>
 
-    <AddWrapperCategories />
+    <AddWrapperCategories @category-is-selected="handleCategorySelected" />
 
-    <button class="create-task-button">Create task</button>
+    <button class="create-task-button" @click="handleTaskCreation">Create task</button>
   </section>
 </template>
 
 <script setup lang="ts">
   import AddWrapperCategories from '~/components/addWrapper/Categories.vue';
+  import DOMPurify from 'dompurify';
+  import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+  import type { ICategoryType } from '~/types/ICategoryType';
+
+  const storage = ChromeStorageHelper.getInstance();
+
+  const taskInputRef = ref<HTMLInputElement | null>(null);
+  const task = ref<string | null>(null);
+  const actualCategory = ref<string | null>(null);
+
+  const handleInput = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    const inputValue = target.value;
+
+    task.value = DOMPurify.sanitize(inputValue)
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ');
+  };
+
+  const handleCategorySelected = (categoryName: string) => {
+    actualCategory.value = categoryName;
+  };
+
+  const handleTaskCreation = async () => {
+    if (!actualCategory.value || !task.value || task.value === '') return;
+
+    const category: ICategoryType | null = await storage.getCategoryByName(actualCategory.value);
+    const order = await storage.getBiggestOrderNumberInTodos();
+
+    if (!category || !order) return;
+
+    await storage.addTodo({
+      id: crypto.randomUUID(),
+      task: task.value,
+      categoryId: category.id,
+      order: order
+    });
+
+    console.log(category.id, order);
+  };
 </script>
 
 <style scoped lang="scss">

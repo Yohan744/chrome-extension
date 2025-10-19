@@ -17,7 +17,6 @@
       id: crypto.randomUUID(),
       task: 'test',
       categoryId: '0010f75f-a962-4084-9680-06e9d18a7707',
-      hour: '12',
       order: 1
     });
     console.log('Added a test todo');

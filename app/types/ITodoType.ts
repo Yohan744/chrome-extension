@@ -3,5 +3,4 @@ export type ITodoType = {
   task: string;
   categoryId: string;
   order: number;
-  hour?: string;
 };

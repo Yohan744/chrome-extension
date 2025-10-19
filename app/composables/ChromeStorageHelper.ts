@@ -91,6 +91,12 @@ class ChromeStorageHelper {
     return Array.isArray(todos) ? todos : [];
   }
 
+  public async getBiggestOrderNumberInTodos(): Promise<number> {
+    const todos = await this.getTodos();
+    if (todos.length === 0) return 0;
+    return Math.max(...todos.map(t => t.order || 0));
+  }
+
   public async setTodos(next: ITodoType[]): Promise<void> {
     await storageSet({ todos: next });
   }
@@ -119,6 +125,12 @@ class ChromeStorageHelper {
   public async getCategoryById(id: ICategoryType['id']): Promise<ICategoryType | null> {
     const categories = await this.getCategories();
     const category = categories.find(c => c.id === id);
+    return category || null;
+  }
+
+  public async getCategoryByName(name: ICategoryType['name']): Promise<ICategoryType | null> {
+    const categories = await this.getCategories();
+    const category = categories.find(c => c.name === name);
     return category || null;
   }
 

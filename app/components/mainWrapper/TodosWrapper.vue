@@ -8,8 +8,17 @@
   import SingleTodo from '~/components/mainWrapper/SingleTodo.vue';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import type { ITodoType } from '~/types/ITodoType';
+  import { useGlobalEvents } from '~/composables/GlobalEvents';
+  import { ICustomEventsType } from '~/types/ICustomEventsType';
 
+  const events = useGlobalEvents();
   const todos = ref<ITodoType[]>(await ChromeStorageHelper.getInstance().getTodos());
+
+  onMounted(async () => {
+    events.on(ICustomEventsType.taskCreated, async () => {
+      todos.value = await ChromeStorageHelper.getInstance().getTodos();
+    });
+  });
 </script>
 
 <style scoped lang="scss">
@@ -27,7 +36,5 @@
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    background: $color-magenta;
-    opacity: 0.3;
   }
 </style>

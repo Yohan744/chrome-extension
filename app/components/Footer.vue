@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-  import switchBetweenSections from '~/composables/switchBetweenSections';
+  import switchBetweenSections from '~/composables/SwitchBetweenSections';
 </script>
 
 <style scoped lang="scss">

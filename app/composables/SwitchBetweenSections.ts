@@ -2,7 +2,7 @@ import gsap from 'gsap';
 
 let isAnimating: boolean = false;
 
-const switchBetweenSections = (show: 'main' | 'add' | 'settings') => {
+const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: () => void) => {
   if (isAnimating) return;
 
   const mainWrapper = document.querySelector('#main-wrapper') as HTMLElement;
@@ -37,6 +37,7 @@ const switchBetweenSections = (show: 'main' | 'add' | 'settings') => {
       sectionToHide.classList.remove('active');
       sectionToShow.classList.add('active');
       tl.kill();
+      if (onComplete) onComplete();
     }
   });
 

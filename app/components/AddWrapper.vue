@@ -17,7 +17,7 @@
       />
     </label>
 
-    <AddWrapperCategories @category-is-selected="handleCategorySelected" />
+    <AddWrapperCategories ref="addWrapperRef" @category-is-selected="handleCategorySelected" />
 
     <button class="create-task-button" @click="handleTaskCreation">Create task</button>
   </section>
@@ -28,10 +28,16 @@
   import DOMPurify from 'dompurify';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import type { ICategoryType } from '~/types/ICategoryType';
+  import switchBetweenSections from '~/composables/SwitchBetweenSections';
+  import { useGlobalEvents } from '~/composables/GlobalEvents';
+  import { ICustomEventsType } from '~/types/ICustomEventsType';
 
   const storage = ChromeStorageHelper.getInstance();
+  const events = useGlobalEvents();
 
+  const isTaskAlreadyCreated = ref<boolean>(false);
   const taskInputRef = ref<HTMLInputElement | null>(null);
+  const addWrapperRef = ref<InstanceType<typeof AddWrapperCategories> | null>(null);
   const task = ref<string | null>(null);
   const actualCategory = ref<string | null>(null);
 
@@ -49,12 +55,12 @@
   };
 
   const handleTaskCreation = async () => {
-    if (!actualCategory.value || !task.value || task.value === '') return;
+    if (!actualCategory.value || !task.value || task.value === '' || isTaskAlreadyCreated.value) return;
 
     const category: ICategoryType | null = await storage.getCategoryByName(actualCategory.value);
-    const order = await storage.getBiggestOrderNumberInTodos();
+    const order = (await storage.getBiggestOrderNumberInTodos()) + 1;
 
-    if (!category || !order) return;
+    if (!category) return;
 
     await storage.addTodo({
       id: crypto.randomUUID(),
@@ -63,7 +69,17 @@
       order: order
     });
 
-    console.log(category.id, order);
+    events.trigger(ICustomEventsType.taskCreated);
+    isTaskAlreadyCreated.value = true;
+    switchSectionAndCleanUpAddWrapper();
+  };
+
+  const switchSectionAndCleanUpAddWrapper = () => {
+    switchBetweenSections('main', () => {
+      isTaskAlreadyCreated.value = false;
+      taskInputRef.value!.value = '';
+      addWrapperRef.value?.cleanUpCategoriesSelection();
+    });
   };
 </script>
 

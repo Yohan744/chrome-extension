@@ -22,7 +22,19 @@
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import type { ICategoryType } from '~/types/ICategoryType';
   import PlusIcon from '~/assets/icons/plus.svg?component';
-  import switchBetweenSections from '~/composables/switchBetweenSections';
+  import switchBetweenSections from '~/composables/SwitchBetweenSections';
+
+  const cleanUpCategoriesSelection = () => {
+    const categoryElements = categoriesWrapper.value?.querySelectorAll('.category');
+    if (!categoryElements || categoryElements.length === 0) return;
+    categoryElements.forEach(el => {
+      el.classList.remove('disabled');
+    });
+  };
+
+  defineExpose({
+    cleanUpCategoriesSelection
+  });
 
   const emit = defineEmits(['categoryIsSelected']);
 

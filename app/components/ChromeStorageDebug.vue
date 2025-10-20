@@ -26,19 +26,19 @@
     const storage = ChromeStorageHelper.getInstance();
     await storage.addOldTodo({
       category: 'workout',
-      color: '#ff0000',
+      color: '#e79131',
       task: 'test'
     });
 
     await storage.addOldTodo({
-      category: 'others',
-      color: '#19b44a',
+      category: 'other',
+      color: '#2abfd0',
       task: 'vdhzvdzhd'
     });
 
     await storage.addOldTodo({
       category: 'work',
-      color: '#111252',
+      color: '#6254f4',
       task: 'dzndzdazjbdzdzdzzdz'
     });
 

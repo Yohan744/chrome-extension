@@ -203,7 +203,7 @@ class ChromeStorageHelper {
 
     for (const item of oldItems) {
       const catName = (item.category || '').toLowerCase();
-      const categoryId = nameToId.get(catName) ?? nameToId.get('others') ?? crypto.randomUUID();
+      const categoryId = nameToId.get(catName) ?? nameToId.get('other') ?? crypto.randomUUID();
       next.push({
         id: crypto.randomUUID(),
         task: item.task,
@@ -214,6 +214,8 @@ class ChromeStorageHelper {
 
     await this.setTodos(next);
     await storageRemove(oldKeys);
+
+    events.trigger(ICustomEventsType.migrationDone);
 
     console.log(`Migrated ${oldItems.length} old todos.`);
     console.log(`Removed old keys: ${oldKeys.join(', ')}`);

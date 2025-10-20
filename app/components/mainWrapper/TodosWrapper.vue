@@ -22,6 +22,10 @@
     events.on(ICustomEventsType.storageInitiated, async () => {
       todos.value = await ChromeStorageHelper.getInstance().getTodos();
     });
+
+    events.on(ICustomEventsType.migrationDone, async () => {
+      todos.value = await ChromeStorageHelper.getInstance().getTodos();
+    });
   });
 </script>
 

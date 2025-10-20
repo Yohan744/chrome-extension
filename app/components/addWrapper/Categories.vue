@@ -121,19 +121,24 @@
 
       @include has-hover {
         &:hover {
-          border-color: rgba($color-white, 0.85);
+          border-color: rgba($color-white, 0.75);
 
           svg {
-            color: rgba($color-white, 0.85);
+            color: rgba($color-white, 0.75);
+            transform: scale3d(0.85, 0.85, 0.85);
           }
         }
       }
 
       svg {
         position: relative;
-        height: 15px;
+        height: 18px;
+        stroke-width: 2px;
         color: $color-gray;
-        transition: color $transition-time $default-ease;
+        transform: scale3d(1, 1, 1);
+        transition:
+          color $transition-time $default-ease,
+          transform calc($transition-time * 0.75) $default-ease;
       }
     }
   }

@@ -76,7 +76,7 @@
     align-items: center;
     background: $color-indigo;
     z-index: 1;
-    opacity: 0.25;
+    opacity: 0.075;
 
     div {
       position: relative;

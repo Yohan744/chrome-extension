@@ -23,7 +23,7 @@
   import type { ICategoryType } from '~/types/ICategoryType';
   import PlusIcon from '~/assets/icons/plus.svg?component';
   import switchBetweenSections from '~/composables/SwitchBetweenSections';
-  import { ICustomEventsType } from '~/types/ICustomEventsType';
+  import { ICustomEvents } from '~/constants/ICustomEvents';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
 
   const cleanUpCategoriesSelection = () => {
@@ -61,7 +61,7 @@
   };
 
   onMounted(async () => {
-    events.on(ICustomEventsType.storageInitiated, async () => {
+    events.on(ICustomEvents.storageInitiated, async () => {
       categories.value = await ChromeStorageHelper.getInstance().getCategories();
     });
   });

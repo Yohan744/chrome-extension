@@ -9,21 +9,21 @@
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import type { ITodoType } from '~/types/ITodoType';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
-  import { ICustomEventsType } from '~/types/ICustomEventsType';
+  import { ICustomEvents } from '~/constants/ICustomEvents';
 
   const events = useGlobalEvents();
   const todos = ref<ITodoType[]>(await ChromeStorageHelper.getInstance().getTodos());
 
   onMounted(async () => {
-    events.on(ICustomEventsType.taskCreated, async () => {
+    events.on(ICustomEvents.taskCreated, async () => {
       todos.value = await ChromeStorageHelper.getInstance().getTodos();
     });
 
-    events.on(ICustomEventsType.storageInitiated, async () => {
+    events.on(ICustomEvents.storageInitiated, async () => {
       todos.value = await ChromeStorageHelper.getInstance().getTodos();
     });
 
-    events.on(ICustomEventsType.migrationDone, async () => {
+    events.on(ICustomEvents.migrationDone, async () => {
       todos.value = await ChromeStorageHelper.getInstance().getTodos();
     });
   });
@@ -39,7 +39,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 20px;
+    gap: 15px;
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: none;

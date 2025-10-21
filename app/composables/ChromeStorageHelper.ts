@@ -5,7 +5,7 @@ import defaultCategoriesData from '~/data/defaultCategoriesData';
 import type { IOldTodoType } from '~/types/IOldTodoType';
 import oldCategoriesNameData from '~/data/oldCategoriesNameData';
 import { useGlobalEvents } from '~/composables/GlobalEvents';
-import { ICustomEventsType } from '~/types/ICustomEventsType';
+import { ICustomEvents } from '~/constants/ICustomEvents';
 
 const events = useGlobalEvents();
 
@@ -83,7 +83,7 @@ class ChromeStorageHelper {
       await storageSet(updates);
     }
 
-    events.trigger(ICustomEventsType.storageInitiated);
+    events.trigger(ICustomEvents.storageInitiated);
   }
 
   public async getAllStorage(): Promise<{ todos: ITodoType[]; categories: ICategoryType[] }> {
@@ -215,7 +215,7 @@ class ChromeStorageHelper {
     await this.setTodos(next);
     await storageRemove(oldKeys);
 
-    events.trigger(ICustomEventsType.migrationDone);
+    events.trigger(ICustomEvents.migrationDone);
 
     console.log(`Migrated ${oldItems.length} old todos.`);
     console.log(`Removed old keys: ${oldKeys.join(', ')}`);

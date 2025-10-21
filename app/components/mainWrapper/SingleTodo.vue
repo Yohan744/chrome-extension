@@ -1,7 +1,7 @@
 <template>
   <div class="single-todo">
     <TodoCheckbox @checked="handleCheckboxClick" />
-    <div class="right-part">
+    <div class="right-part" :style="{ '--selection-bg': primaryColor }">
       <div class="icon-wrapper" :style="wrapperStyle">
         <div class="icon" :style="iconStyle"></div>
       </div>
@@ -36,7 +36,7 @@
   });
 
   const primaryColor = computed(() => category.value?.color || '#9aa0a6');
-  const darkerBg = computed(() => `color-mix(in hsl, ${primaryColor.value} 48%, black)`);
+  const darkerBg = computed(() => `color-mix(in hsl, ${primaryColor.value} 40%, black)`);
   const wrapperStyle = computed(() => ({ background: darkerBg.value }));
 
   const iconStyle = computed(() => ({
@@ -62,13 +62,13 @@
 
     .right-part {
       position: relative;
-      padding: 17px 15px;
+      padding: 15px;
       width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
-      gap: 20px;
+      gap: 15px;
       border-radius: 10px;
       background: rgba($color-gray, 0.4);
 
@@ -96,9 +96,14 @@
 
         .task {
           position: relative;
-          font-size: 15px;
-          line-height: 1.3;
+          font-size: 16px;
+          line-height: 1.45;
           font-variation-settings: 'wght' 500;
+
+          &::selection {
+            background: var(--selection-bg);
+            color: $color-white;
+          }
         }
       }
 

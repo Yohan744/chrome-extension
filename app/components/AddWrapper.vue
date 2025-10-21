@@ -30,7 +30,7 @@
   import type { ICategoryType } from '~/types/ICategoryType';
   import switchBetweenSections from '~/composables/SwitchBetweenSections';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
-  import { ICustomEventsType } from '~/types/ICustomEventsType';
+  import { ICustomEvents } from '~/constants/ICustomEvents';
 
   const storage = ChromeStorageHelper.getInstance();
   const events = useGlobalEvents();
@@ -69,7 +69,7 @@
       order: order
     });
 
-    events.trigger(ICustomEventsType.taskCreated);
+    events.trigger(ICustomEvents.taskCreated);
     isTaskAlreadyCreated.value = true;
     switchSectionAndCleanUpAddWrapper();
   };

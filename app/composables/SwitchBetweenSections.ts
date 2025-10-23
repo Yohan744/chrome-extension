@@ -1,6 +1,9 @@
 import gsap from 'gsap';
+import { useGlobalEvents } from '~/composables/GlobalEvents';
+import { ICustomEvents } from '~/constants/ICustomEvents';
 
 let isAnimating: boolean = false;
+const events = useGlobalEvents();
 
 const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: () => void) => {
   if (isAnimating) return;
@@ -32,6 +35,9 @@ const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: (
   isAnimating = true;
 
   const tl = gsap.timeline({
+    onStart: () => {
+      events.trigger(ICustomEvents.switchSectionStart, show as string);
+    },
     onComplete: () => {
       isAnimating = false;
       sectionToHide.classList.remove('active');

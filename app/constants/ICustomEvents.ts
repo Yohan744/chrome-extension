@@ -3,5 +3,5 @@ export const ICustomEvents = {
   migrationDone: 'migration-done',
   taskCreated: 'task-created',
   taskDeleted: 'task-deleted',
-  animateTasks: 'animate-tasks'
+  switchSectionStart: 'sectionSwitchStart'
 };

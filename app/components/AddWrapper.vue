@@ -81,6 +81,13 @@
       addWrapperRef.value?.cleanUpCategoriesSelection();
     });
   };
+
+  onMounted(async () => {
+    events.on(ICustomEvents.switchSectionStart, async showSectionName => {
+      if (showSectionName !== 'add') return;
+      taskInputRef.value?.focus();
+    });
+  });
 </script>
 
 <style scoped lang="scss">

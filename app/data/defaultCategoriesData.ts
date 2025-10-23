@@ -31,6 +31,12 @@ const defaultCategoriesData: ICategoryType[] = [
     name: 'other',
     iconName: 'ellipsis',
     color: IColors.paper
+  },
+  {
+    id: 'custom-category',
+    name: 'home',
+    iconName: 'ellipsis',
+    color: IColors.yellow
   }
 ];
 

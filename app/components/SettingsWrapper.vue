@@ -1,15 +1,17 @@
 <template>
-  <section id="settings-wrapper">
+  <section id="settings-wrapper" class="active">
     <h1 class="title">Settings</h1>
+    <SettingsWrapperAddCustomCategory />
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import SettingsWrapperAddCustomCategory from './settingsWrapper/AddCustomCategory.vue';
+</script>
 
 <style scoped lang="scss">
   #settings-wrapper {
     position: absolute;
-    gap: 30px;
     padding: 30px 20px calc($footer-height + 20px);
     inset: 0;
     height: 100%;
@@ -19,14 +21,14 @@
     justify-content: flex-start;
     align-content: flex-start;
     background: linear-gradient($color-indigo 0, $color-rebecca-purple 0, $color-black 40%);
-    pointer-events: none;
-    opacity: 0;
+    //pointer-events: none;
+    //opacity: 0;
 
     .title {
       position: relative;
-      font-size: 23px;
+      font-size: 28px;
+      line-height: 1.25;
       font-variation-settings: 'wght' 800;
-      color: $color-white;
     }
   }
 </style>

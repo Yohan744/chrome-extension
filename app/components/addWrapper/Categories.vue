@@ -3,7 +3,7 @@
 
   <div ref="categoriesWrapper" class="categories-wrapper">
     <div
-      v-for="category in categories"
+      v-for="category in visibleCategories"
       :key="category.id"
       class="category"
       :style="{ background: category.color }"
@@ -44,6 +44,9 @@
 
   const categoriesWrapper = ref<HTMLElement | null>(null);
   const categories = ref<ICategoryType[] | null>(await ChromeStorageHelper.getInstance().getCategories());
+  const visibleCategories = computed<ICategoryType[]>(() =>
+    categories.value ? categories.value.filter(c => c.id !== 'custom-category') : []
+  );
 
   const handleClickOnCategory = (e: MouseEvent) => {
     const target = e.currentTarget as HTMLElement;

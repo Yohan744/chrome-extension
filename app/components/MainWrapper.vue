@@ -1,5 +1,5 @@
 <template>
-  <section id="main-wrapper" class="active">
+  <section id="main-wrapper">
     <ChromeStorageDebug />
     <MainWrapperTopPart />
     <MainWrapperTodosWrapper />
@@ -25,5 +25,7 @@
     justify-content: flex-start;
     align-content: flex-start;
     background: linear-gradient($color-indigo 0, $color-rebecca-purple 0, $color-black 40%);
+    pointer-events: none;
+    opacity: 0;
   }
 </style>

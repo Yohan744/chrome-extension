@@ -1,6 +1,6 @@
 <template>
   <div class="single-todo" :data-id="props.todoItem.id">
-    <TodoCheckbox @checked="handleCheckboxClick" />
+    <TodoCheckbox :color="primaryColor" @checked="handleCheckboxClick" />
     <div class="right-part" :style="{ '--selection-bg': primaryColor }">
       <div class="icon-wrapper" :style="wrapperStyle">
         <div class="icon" :style="iconStyle"></div>
@@ -51,7 +51,7 @@
   const handleCheckboxClick = async (target: HTMLElement) => {
     if (!target) return;
     const todoId = target.closest('.single-todo')?.getAttribute('data-id');
-    if (!todoId) return;
+    if (!todoId || todoId === 'x') return;
     await ChromeStorageHelper.getInstance().deleteTodo(todoId);
     events.trigger(ICustomEvents.taskDeleted);
   };

@@ -1,5 +1,5 @@
 <template>
-  <label class="todo-checkbox">
+  <label class="todo-checkbox" :style="{ '--todo-color': props.color }">
     <input ref="inputRef" type="checkbox" @click="e => handleClick(e)" />
     <svg width="25" height="25">
       <polyline points="16 3 7 15 2 10" />
@@ -9,6 +9,10 @@
 
 <script setup lang="ts">
   const emit = defineEmits(['checked']);
+
+  const props = defineProps<{
+    color: string;
+  }>();
 
   const inputRef = ref<HTMLInputElement | null>(null);
 
@@ -24,8 +28,8 @@
     transform: scale(0.8);
 
     &:hover svg {
-      background: $color-magenta;
-      border: 3px solid $color-magenta;
+      background: var(--todo-color);
+      border: 3px solid var(--todo-color);
     }
 
     input {
@@ -35,8 +39,8 @@
       display: none;
 
       &:checked + svg {
-        background: $color-magenta;
-        border: 3px solid $color-magenta;
+        background: var(--todo-color);
+        border: 3px solid var(--todo-color);
         stroke-dashoffset: -45;
       }
     }

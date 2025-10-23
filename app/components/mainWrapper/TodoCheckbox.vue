@@ -1,6 +1,6 @@
 <template>
   <label class="todo-checkbox">
-    <input ref="inputRef" type="checkbox" @click="handleClick" />
+    <input ref="inputRef" type="checkbox" @click="e => handleClick(e)" />
     <svg width="25" height="25">
       <polyline points="16 3 7 15 2 10" />
     </svg>
@@ -12,9 +12,9 @@
 
   const inputRef = ref<HTMLInputElement | null>(null);
 
-  const handleClick = () => {
-    if (!inputRef.value || !inputRef.value.checked) return;
-    emit('checked');
+  const handleClick = (e: MouseEvent) => {
+    if (!inputRef.value || !inputRef.value.checked || !e.target) return;
+    emit('checked', e.target);
   };
 </script>
 

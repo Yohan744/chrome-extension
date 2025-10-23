@@ -1,5 +1,5 @@
 <template>
-  <div class="single-todo">
+  <div class="single-todo" :data-id="props.todoItem.id">
     <TodoCheckbox @checked="handleCheckboxClick" />
     <div class="right-part" :style="{ '--selection-bg': primaryColor }">
       <div class="icon-wrapper" :style="wrapperStyle">
@@ -19,10 +19,14 @@
   import TodoCheckbox from '~/components/mainWrapper/TodoCheckbox.vue';
   import type { ITodoType } from '~/types/ITodoType';
   import type { ICategoryType } from '~/types/ICategoryType';
+  import { useGlobalEvents } from '~/composables/GlobalEvents';
+  import { ICustomEvents } from '~/constants/ICustomEvents';
 
   const props = defineProps<{
     todoItem: ITodoType;
   }>();
+
+  const events = useGlobalEvents();
 
   const category = ref<ICategoryType | null>(
     await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId)
@@ -44,8 +48,12 @@
     backgroundColor: primaryColor.value
   }));
 
-  const handleCheckboxClick = () => {
-    console.log('Checkbox checked!');
+  const handleCheckboxClick = async (target: HTMLElement) => {
+    if (!target) return;
+    const todoId = target.closest('.single-todo')?.getAttribute('data-id');
+    if (!todoId) return;
+    await ChromeStorageHelper.getInstance().deleteTodo(todoId);
+    events.trigger(ICustomEvents.taskDeleted);
   };
 </script>
 

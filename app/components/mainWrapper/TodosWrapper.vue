@@ -16,17 +16,25 @@
 
   onMounted(async () => {
     events.on(ICustomEvents.taskCreated, async () => {
-      todos.value = await ChromeStorageHelper.getInstance().getTodos();
+      await updateTodos();
+    });
+
+    events.on(ICustomEvents.taskDeleted, async () => {
+      await updateTodos();
     });
 
     events.on(ICustomEvents.storageInitiated, async () => {
-      todos.value = await ChromeStorageHelper.getInstance().getTodos();
+      await updateTodos();
     });
 
     events.on(ICustomEvents.migrationDone, async () => {
-      todos.value = await ChromeStorageHelper.getInstance().getTodos();
+      await updateTodos();
     });
   });
+
+  const updateTodos = async () => {
+    todos.value = await ChromeStorageHelper.getInstance().getTodos();
+  };
 </script>
 
 <style scoped lang="scss">

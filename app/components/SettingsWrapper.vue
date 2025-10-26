@@ -1,12 +1,12 @@
 <template>
   <section id="settings-wrapper" class="active">
     <h1 class="title">Settings</h1>
-    <SettingsWrapperAddCustomCategory />
+    <AddCustomCategory />
   </section>
 </template>
 
 <script setup lang="ts">
-  import SettingsWrapperAddCustomCategory from './settingsWrapper/AddCustomCategory.vue';
+  import AddCustomCategory from './settingsWrapper/AddCustomCategory.vue';
 </script>
 
 <style scoped lang="scss">

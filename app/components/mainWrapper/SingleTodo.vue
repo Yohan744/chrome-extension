@@ -10,7 +10,7 @@
         <p class="task">{{ props.todoItem.task }}</p>
       </div>
 
-      <div class="indicator" :style="{ background: category?.color }" />
+      <div class="indicator" :style="{ background: category?.color || '#9aa0a6' }" />
     </div>
   </div>
 </template>

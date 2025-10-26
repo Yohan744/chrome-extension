@@ -17,14 +17,14 @@
       />
     </label>
 
-    <AddWrapperCategories ref="addWrapperRef" @category-is-selected="handleCategorySelected" />
+    <Categories ref="addWrapperRef" @category-is-selected="handleCategorySelected" />
 
     <button class="create-task-button" @click="handleTaskCreation">Create task</button>
   </section>
 </template>
 
 <script setup lang="ts">
-  import AddWrapperCategories from '~/components/addWrapper/Categories.vue';
+  import Categories from '~/components/addWrapper/Categories.vue';
   import DOMPurify from 'dompurify';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import type { ICategoryType } from '~/types/ICategoryType';
@@ -37,7 +37,7 @@
 
   const isTaskAlreadyCreated = ref<boolean>(false);
   const taskInputRef = ref<HTMLInputElement | null>(null);
-  const addWrapperRef = ref<InstanceType<typeof AddWrapperCategories> | null>(null);
+  const addWrapperRef = ref<InstanceType<typeof Categories> | null>(null);
   const task = ref<string | null>(null);
   const actualCategory = ref<string | null>(null);
 

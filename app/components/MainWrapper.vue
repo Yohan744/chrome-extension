@@ -1,14 +1,14 @@
 <template>
   <section id="main-wrapper">
     <ChromeStorageDebug />
-    <MainWrapperTopPart />
-    <MainWrapperTodosWrapper />
+    <TopPart />
+    <TodosWrapper />
   </section>
 </template>
 
 <script setup lang="ts">
-  import MainWrapperTopPart from '~/components/mainWrapper/TopPart.vue';
-  import MainWrapperTodosWrapper from '~/components/mainWrapper/TodosWrapper.vue';
+  import TopPart from '~/components/mainWrapper/TopPart.vue';
+  import TodosWrapper from '~/components/mainWrapper/TodosWrapper.vue';
   import ChromeStorageDebug from '~/components/ChromeStorageDebug.vue';
 </script>
 

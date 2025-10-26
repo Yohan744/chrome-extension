@@ -10,6 +10,9 @@ $global-width: 380px;
 $footer-height: 40px;
 
 $z-index: (
+  'popUp-content': 30,
+  'popUp-btn': 25,
+  'popUp-background': 20,
   'footer': 10
 );
 

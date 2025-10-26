@@ -140,6 +140,13 @@ class ChromeStorageHelper {
     return category || null;
   }
 
+  public async updateCategory(id: ICategoryType['id'], updates: Partial<ICategoryType>): Promise<ICategoryType[]> {
+    const current = await this.getCategories();
+    const next = current.map(c => (c.id === id ? { ...c, ...updates } : c));
+    await this.setCategories(next);
+    return next;
+  }
+
   public async setCategories(next: ICategoryType[]): Promise<void> {
     await storageSet({ categories: next });
   }

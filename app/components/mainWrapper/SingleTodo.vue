@@ -21,9 +21,11 @@
   import type { ICategoryType } from '~/types/ICategoryType';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
   import { ICustomEvents } from '~/constants/ICustomEvents';
+  import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
 
   const props = defineProps<{
     todoItem: ITodoType;
+    isForCustomCategory?: boolean;
   }>();
 
   const events = useGlobalEvents();
@@ -55,6 +57,18 @@
     await ChromeStorageHelper.getInstance().deleteTodo(todoId);
     events.trigger(ICustomEvents.taskDeleted);
   };
+
+  onMounted(async () => {
+    if (!props.isForCustomCategory) return;
+
+    events.on(ICustomEvents.storageInitiated, async () => {
+      category.value = await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId);
+    });
+
+    events.on(ICustomEvents.customCategoryNewColor, async () => {
+      category.value = await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId);
+    });
+  });
 </script>
 
 <style scoped lang="scss">

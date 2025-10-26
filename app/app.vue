@@ -14,7 +14,7 @@
   import Footer from '~/components/Footer.vue';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
 
-  onBeforeMount(async () => {
+  onMounted(async () => {
     await ChromeStorageHelper.getInstance().initDefaultStorage();
     await ChromeStorageHelper.getInstance().migrateOldTodos();
   });

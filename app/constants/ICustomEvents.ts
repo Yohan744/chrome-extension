@@ -3,5 +3,6 @@ export const ICustomEvents = {
   migrationDone: 'migration-done',
   taskCreated: 'task-created',
   taskDeleted: 'task-deleted',
-  switchSectionStart: 'sectionSwitchStart'
+  switchSectionStart: 'sectionSwitchStart',
+  customCategoryNewColor: 'custom-category-new-color'
 };

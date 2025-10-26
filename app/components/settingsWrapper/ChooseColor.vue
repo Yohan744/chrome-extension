@@ -21,6 +21,7 @@
 </template>
 
 <script setup lang="ts">
+  import PopUp from '~/components/PopUp.vue';
   import { IColors } from '~/constants/IColors';
   import type { ICategoryType } from '~/types/ICategoryType';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
@@ -34,6 +35,8 @@
   );
 
   onMounted(async () => {
+    await updateCategory();
+
     events.on(ICustomEvents.storageInitiated, async () => {
       await updateCategory();
     });
@@ -52,6 +55,7 @@
     if (!color || color === category.value.color) return;
     await ChromeStorageHelper.getInstance().updateCategory(category.value.id, { color: color });
     await updateCategory();
+    events.trigger(ICustomEvents.customCategoryNewColor);
   };
 </script>
 

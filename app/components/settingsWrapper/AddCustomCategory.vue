@@ -2,7 +2,7 @@
   <h4 class="add-custom-category-title">Add custom category</h4>
 
   <div class="wrapper">
-    <SingleTodo v-if="fakeTodo" :todo-item="{ ...fakeTodo }" />
+    <SingleTodo :todo-item="fakeTodo" :is-for-custom-category="true" />
 
     <div class="bottom-part">
       <ChooseColor />
@@ -14,22 +14,16 @@
   import type { ITodoType } from '~/types/ITodoType';
   import SingleTodo from '~/components/mainWrapper/SingleTodo.vue';
   import ChooseColor from '~/components/settingsWrapper/ChooseColor.vue';
-  import { useGlobalEvents } from '~/composables/GlobalEvents';
-  import { ICustomEvents } from '~/constants/ICustomEvents';
+  // import { useGlobalEvents } from '~/composables/GlobalEvents';
+  // import { ICustomEvents } from '~/constants/ICustomEvents';
+  //
+  // const events = useGlobalEvents();
 
-  const events = useGlobalEvents();
-
-  const fakeTodo = ref<ITodoType | null>(null);
-
-  onMounted(async () => {
-    events.on(ICustomEvents.storageInitiated, async () => {
-      fakeTodo.value = {
-        id: 'x',
-        task: 'Hello World',
-        categoryId: 'custom-category',
-        order: 999
-      };
-    });
+  const fakeTodo = ref<ITodoType>({
+    id: 'x',
+    task: 'Hello World',
+    categoryId: 'custom-category',
+    order: 999
   });
 </script>
 

@@ -99,6 +99,7 @@
         padding: 6px;
         @include center;
         border-radius: 7px;
+        transition: background $transition-time $default-ease;
 
         .icon {
           position: relative;
@@ -136,6 +137,7 @@
         height: 100%;
         width: 8px;
         border-radius: 0 10px 10px 0;
+        transition: background $transition-time $default-ease;
       }
     }
   }

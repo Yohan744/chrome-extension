@@ -30,9 +30,7 @@
 
   const colors = IColors;
   const events = useGlobalEvents();
-  const category = ref<ICategoryType | null>(
-    await ChromeStorageHelper.getInstance().getCategoryById('custom-category')
-  );
+  const category = ref<ICategoryType | null>(null);
 
   onMounted(async () => {
     await updateCategory();
@@ -43,7 +41,6 @@
   });
 
   const updateCategory = async () => {
-    if (!category.value) return;
     category.value = await ChromeStorageHelper.getInstance().getCategoryById('custom-category');
   };
 

@@ -5,7 +5,8 @@
     <SingleTodo :todo-item="fakeTodo" :is-for-custom-category="true" />
 
     <div class="bottom-part">
-      <ChooseColor />
+      <ChooseColor :category="category" @color-selected="handleColorSelected" @update-category="updateCategory" />
+      <ChooseIcon :category="category" @icon-selected="handleIconSelected" @update-category="updateCategory" />
     </div>
   </div>
 </template>
@@ -14,10 +15,18 @@
   import type { ITodoType } from '~/types/ITodoType';
   import SingleTodo from '~/components/mainWrapper/SingleTodo.vue';
   import ChooseColor from '~/components/settingsWrapper/ChooseColor.vue';
-  // import { useGlobalEvents } from '~/composables/GlobalEvents';
-  // import { ICustomEvents } from '~/constants/ICustomEvents';
-  //
-  // const events = useGlobalEvents();
+  import ChooseIcon from '~/components/settingsWrapper/ChooseIcon.vue';
+  import type { ICategoryType } from '~/types/ICategoryType';
+  import { useGlobalEvents } from '~/composables/GlobalEvents';
+  import { ICustomEvents } from '~/constants/ICustomEvents';
+  import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+
+  const events = useGlobalEvents();
+
+  const category = ref<ICategoryType | null>(null);
+
+  const colorSelected = ref<string | null>(null);
+  const iconSelected = ref<string | null>(null);
 
   const fakeTodo = ref<ITodoType>({
     id: 'x',
@@ -25,6 +34,26 @@
     categoryId: 'custom-category',
     order: 999
   });
+
+  onMounted(async () => {
+    await updateCategory();
+
+    events.on(ICustomEvents.storageInitiated, async () => {
+      await updateCategory();
+    });
+  });
+
+  const updateCategory = async () => {
+    category.value = await ChromeStorageHelper.getInstance().getCategoryById('custom-category');
+  };
+
+  const handleColorSelected = (color: string) => {
+    colorSelected.value = color;
+  };
+
+  const handleIconSelected = (iconName: string) => {
+    iconSelected.value = iconName;
+  };
 </script>
 
 <style scoped lang="scss">

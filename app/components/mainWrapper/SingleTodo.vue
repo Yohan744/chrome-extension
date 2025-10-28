@@ -3,14 +3,14 @@
     <TodoCheckbox :color="primaryColor" @checked="handleCheckboxClick" />
     <div class="right-part" :style="{ '--selection-bg': primaryColor }">
       <div class="icon-wrapper" :style="wrapperStyle">
-        <div class="icon" :style="iconStyle"></div>
+        <Icon :icon-name="category?.iconName" :color="primaryColor" />
       </div>
 
       <div class="task-wrapper">
         <p class="task">{{ props.todoItem.task }}</p>
       </div>
 
-      <div class="indicator" :style="{ background: category?.color || '#9aa0a6' }" />
+      <div class="indicator" :style="{ background: category?.color || '#eeeeee' }" />
     </div>
   </div>
 </template>
@@ -22,6 +22,7 @@
   import { useGlobalEvents } from '~/composables/GlobalEvents';
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+  import Icon from '~/components/Icon.vue';
 
   const props = defineProps<{
     todoItem: ITodoType;
@@ -34,21 +35,9 @@
     await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId)
   );
 
-  const runtimeConfig = useRuntimeConfig();
-  const baseURL = runtimeConfig.app?.baseURL || '/';
-  const iconSrc = computed(() => {
-    const name = category.value?.iconName || 'ellipsis';
-    return `${baseURL}app-icons/${name}.svg`;
-  });
-
-  const primaryColor = computed(() => category.value?.color || '#9aa0a6');
+  const primaryColor = computed(() => category.value?.color || '#eeeeee');
   const darkerBg = computed(() => `color-mix(in hsl, ${primaryColor.value} 40%, black)`);
   const wrapperStyle = computed(() => ({ background: darkerBg.value }));
-
-  const iconStyle = computed(() => ({
-    maskImage: `url(${iconSrc.value})`,
-    backgroundColor: primaryColor.value
-  }));
 
   const handleCheckboxClick = async (target: HTMLElement) => {
     if (!target) return;
@@ -100,14 +89,6 @@
         @include center;
         border-radius: 7px;
         transition: background $transition-time $default-ease;
-
-        .icon {
-          position: relative;
-          height: 20px;
-          aspect-ratio: 1;
-          mask-size: 100%;
-          background-repeat: no-repeat;
-        }
       }
 
       .task-wrapper {

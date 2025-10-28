@@ -1,20 +1,16 @@
 <template>
   <PopUp>
     <template #btn>
-      <div class="btn" :style="{ background: category?.color }" />
+      <div class="btn" :style="{ background: props.category?.color }">
+        <Icon :icon-name="props.category?.iconName" :color="props.category?.color" />
+      </div>
     </template>
 
     <template #content>
       <div class="content">
-        <div
-          v-for="color in colors"
-          :key="color"
-          :style="{ '--color': color }"
-          :class="{ active: color === category?.color }"
-          class="color"
-          :data-color="color"
-          @click="e => handleColorClick(e)"
-        />
+        <div v-for="icon in icons" :key="icon" class="icon" @click="e => handleIconClick(e)">
+          <Icon :icon-name="icon" />
+        </div>
       </div>
     </template>
   </PopUp>
@@ -22,31 +18,23 @@
 
 <script setup lang="ts">
   import PopUp from '~/components/PopUp.vue';
-  import { IColors } from '~/constants/IColors';
+  // import { ICustomEvents } from '~/constants/ICustomEvents';
+  // import { useGlobalEvents } from '~/composables/GlobalEvents';
   import type { ICategoryType } from '~/types/ICategoryType';
-  import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
-  import { ICustomEvents } from '~/constants/ICustomEvents';
-  import { useGlobalEvents } from '~/composables/GlobalEvents';
+  import Icon from '~/components/Icon.vue';
+  import { IIcons } from '~/constants/IIcons';
 
-  const colors = IColors;
-  const events = useGlobalEvents();
+  const icons = IIcons;
+  // const events = useGlobalEvents();
 
-  const emits = defineEmits(['colorSelected', 'updateCategory']);
+  // const emits = defineEmits(['iconSelected', 'updateCategory']);
 
   const props = defineProps<{
     category: ICategoryType | null;
   }>();
 
-  const handleColorClick = async (e: MouseEvent) => {
-    if (!props.category || !e.target) return;
-
-    const target = e.target as HTMLElement;
-    const color = target.getAttribute('data-color');
-    if (!color || color === props.category.color) return;
-    await ChromeStorageHelper.getInstance().updateCategory(props.category.id, { color: color });
-    events.trigger(ICustomEvents.customCategoryNewColor);
-    emits('colorSelected', color);
-    emits('updateCategory');
+  const handleIconClick = async (e: MouseEvent) => {
+    console.log('click', e);
   };
 </script>
 

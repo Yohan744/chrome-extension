@@ -7,6 +7,20 @@
     <div class="bottom-part">
       <ChooseColor :category="category" @color-selected="handleColorSelected" @update-category="updateCategory" />
       <ChooseIcon :category="category" @icon-selected="handleIconSelected" @update-category="updateCategory" />
+
+      <label>
+        <input
+          ref="categoryInputRef"
+          class="category-input"
+          type="text"
+          maxlength="18"
+          autocomplete="off"
+          placeholder="Category name"
+          @input="handleInput"
+        />
+      </label>
+
+      <button class="create" @click="handleCategoryCreation">Create</button>
     </div>
   </div>
 </template>
@@ -20,13 +34,16 @@
   import { useGlobalEvents } from '~/composables/GlobalEvents';
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+  import DOMPurify from 'dompurify';
 
   const events = useGlobalEvents();
 
+  const categoryInputRef = ref<HTMLInputElement | null>(null);
   const category = ref<ICategoryType | null>(null);
 
   const colorSelected = ref<string | null>(null);
   const iconSelected = ref<string | null>(null);
+  const categoryName = ref<string>('');
 
   const fakeTodo = ref<ITodoType>({
     id: 'x',
@@ -45,6 +62,8 @@
 
   const updateCategory = async () => {
     category.value = await ChromeStorageHelper.getInstance().getCategoryById('custom-category');
+    colorSelected.value = category.value?.color || null;
+    iconSelected.value = category.value?.iconName || null;
   };
 
   const handleColorSelected = (color: string) => {
@@ -53,6 +72,29 @@
 
   const handleIconSelected = (iconName: string) => {
     iconSelected.value = iconName;
+  };
+
+  const handleInput = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    target.value = DOMPurify.sanitize(target.value)
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ');
+
+    categoryName.value = target.value;
+  };
+
+  const handleCategoryCreation = async () => {
+    if (!colorSelected.value || !iconSelected.value || !categoryName.value || categoryName.value === '') return;
+
+    await ChromeStorageHelper.getInstance().addCategory({
+      id: crypto.randomUUID(),
+      name: categoryName.value,
+      iconName: iconSelected.value,
+      color: colorSelected.value
+    });
+
+    events.trigger(ICustomEvents.newCategoryCreated);
+    categoryInputRef.value!.value = '';
   };
 </script>
 
@@ -78,13 +120,64 @@
 
     .bottom-part {
       position: relative;
-      margin-top: 20px;
+      margin-top: 13px;
       width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
+
+      label {
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-grow: 1;
+
+        .category-input {
+          position: relative;
+          padding: 8px 12px;
+          height: 100%;
+          display: flex;
+          flex-grow: 1;
+          width: 100%;
+          border-radius: 7px;
+          border: none;
+          background: rgba($color-gray, 0.44);
+          font-size: 12px;
+          font-variation-settings: 'wght' 475;
+
+          &:focus {
+            border: none;
+            outline: none;
+          }
+
+          &::placeholder {
+            color: rgba($color-white, 0.35);
+          }
+        }
+      }
+
+      .create {
+        position: relative;
+        height: 100%;
+        width: 80px;
+        padding: 6px;
+        @include center();
+        border: none;
+        background: linear-gradient(30deg, $color-blue-violet 0%, $color-orchid 70%);
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 12px;
+        font-variation-settings: 'wght' 500;
+        color: $color-white;
+        opacity: 1;
+        transition: opacity $transition-time $default-ease;
+
+        &:hover {
+          opacity: 0.75;
+        }
+      }
     }
   }
 </style>

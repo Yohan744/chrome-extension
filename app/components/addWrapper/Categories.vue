@@ -67,6 +67,10 @@
     events.on(ICustomEvents.storageInitiated, async () => {
       categories.value = await ChromeStorageHelper.getInstance().getCategories();
     });
+
+    events.on(ICustomEvents.newCategoryCreated, async () => {
+      categories.value = await ChromeStorageHelper.getInstance().getCategories();
+    });
   });
 </script>
 

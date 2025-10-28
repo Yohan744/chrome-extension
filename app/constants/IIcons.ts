@@ -1,5 +1,9 @@
 export const IIcons = {
-  home: 'home',
-  search: 'search',
-  settings: 'settings'
+  briefcase: 'briefcase-business',
+  cookie: 'cookie',
+  utensils: 'utensils',
+  dumbbell: 'dumbbell',
+  others: 'ellipsis',
+  singleUser: 'user',
+  doubleUser: 'users'
 };

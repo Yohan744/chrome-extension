@@ -44,7 +44,7 @@
     const color = target.getAttribute('data-color');
     if (!color || color === props.category.color) return;
     await ChromeStorageHelper.getInstance().updateCategory(props.category.id, { color: color });
-    events.trigger(ICustomEvents.customCategoryNewColor);
+    events.trigger(ICustomEvents.updatedCustomCategory);
     emits('colorSelected', color);
     emits('updateCategory');
   };
@@ -62,10 +62,8 @@
   }
 
   .content {
-    position: absolute;
+    position: relative;
     padding: 10px;
-    top: 35px;
-    left: -2px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;

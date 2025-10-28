@@ -54,7 +54,7 @@
       category.value = await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId);
     });
 
-    events.on(ICustomEvents.customCategoryNewColor, async () => {
+    events.on(ICustomEvents.updatedCustomCategory, async () => {
       category.value = await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId);
     });
   });

@@ -2,11 +2,13 @@
   <section id="settings-wrapper" class="active">
     <h1 class="title">Settings</h1>
     <AddCustomCategory />
+    <DeleteCategories />
   </section>
 </template>
 
 <script setup lang="ts">
   import AddCustomCategory from './settingsWrapper/AddCustomCategory.vue';
+  import DeleteCategories from '~/components/settingsWrapper/DeleteCategories.vue';
 </script>
 
 <style scoped lang="scss">

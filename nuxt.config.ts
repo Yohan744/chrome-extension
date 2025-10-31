@@ -70,7 +70,8 @@ export default defineNuxtConfig({
   experimental: {
     payloadExtraction: true, // Extract payload for better SSG
     componentIslands: true, // Better lazy loading
-    viewTransition: false // Native view transitions
+    viewTransition: false, // Native view transitions
+    extractAsyncDataHandlers: true // Extract async data for better SSG
   },
   compatibilityDate: '2025-07-15',
 

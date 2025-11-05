@@ -5,11 +5,17 @@
       <p class="month">{{ monthOfTheYear[actualMonth] }}</p>
     </div>
 
-    <h4 class="task-count">0 tasks</h4>
+    <h4 class="task-count">{{ taskNumber }} {{ taskNumber <= 1 ? 'task' : 'tasks' }}</h4>
   </div>
 </template>
 
 <script setup lang="ts">
+  import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+  import { ICustomEvents } from '~/constants/ICustomEvents';
+
+  const taskNumber = ref<number>(0);
+  const events = useGlobalEvents();
+
   const actualDay: number = new Date().getDay();
   const actualDate: number = new Date().getDate();
   const actualMonth: number = new Date().getMonth();
@@ -28,6 +34,22 @@
     'November',
     'December'
   ];
+
+  onMounted(async () => {
+    await updateTaskNumber();
+
+    events.on(ICustomEvents.taskCreated, async () => {
+      await updateTaskNumber();
+    });
+
+    events.on(ICustomEvents.taskDeleted, async () => {
+      await updateTaskNumber();
+    });
+  });
+
+  const updateTaskNumber = async () => {
+    taskNumber.value = (await ChromeStorageHelper.getInstance().getTodos()).length;
+  };
 </script>
 
 <style scoped lang="scss">

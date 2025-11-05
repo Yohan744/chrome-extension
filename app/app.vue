@@ -13,10 +13,12 @@
   import SettingsWrapper from '~/components/SettingsWrapper.vue';
   import Footer from '~/components/Footer.vue';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+  import ChromeBadgeHelper from '~/composables/ChromeBadgeTextHelper';
 
   onMounted(async () => {
     await ChromeStorageHelper.getInstance().initDefaultStorage();
     await ChromeStorageHelper.getInstance().migrateOldTodos();
+    ChromeBadgeHelper.getInstance().init();
   });
 </script>
 

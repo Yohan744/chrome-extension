@@ -1,5 +1,7 @@
 <template>
   <h4 class="delete-category-title">Delete category</h4>
+
+  <div class="wrapper"></div>
 </template>
 
 <script setup lang="ts"></script>

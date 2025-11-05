@@ -39,17 +39,35 @@
       position: relative;
       margin: auto auto 0;
       font-size: 8px;
-      color: rgba($color-white, 0.5);
+      color: rgba($color-white, 0.75);
+      transition: color calc($transition-time * 0.65) $default-ease;
 
       &:before {
         position: absolute;
         content: '';
         bottom: -3px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0;
+        transform-origin: right;
+        transform: scaleX(0);
+        opacity: 0;
         height: 1px;
         width: 100%;
-        background: rgba($color-white, 0.5);
+        background: rgba($color-white, 0.75);
+        transition:
+          transform calc($transition-time * 0.65) $default-ease,
+          opacity calc($transition-time * 0.65) $default-ease,
+          background calc($transition-time * 0.65) $default-ease;
+      }
+
+      @include has-hover() {
+        color: rgba($color-white, 1);
+
+        &:before {
+          opacity: 1;
+          transform-origin: left;
+          transform: scaleX(1);
+          background: rgba($color-white, 1);
+        }
       }
     }
   }

@@ -127,13 +127,11 @@
       transition: border $transition-time $default-ease;
 
       @include has-hover {
-        &:hover {
-          border-color: rgba($color-white, 0.75);
+        border-color: rgba($color-white, 0.75);
 
-          svg {
-            color: rgba($color-white, 0.75);
-            transform: scale3d(0.85, 0.85, 0.85);
-          }
+        svg {
+          color: rgba($color-white, 0.75);
+          transform: scale3d(0.85, 0.85, 0.85);
         }
       }
 

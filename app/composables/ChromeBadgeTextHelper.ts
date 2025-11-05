@@ -13,8 +13,9 @@ class ChromeBadgeHelper {
     return ChromeBadgeHelper.instance;
   }
 
-  public init() {
-    chrome.browserAction.setBadgeBackgroundColor({ color: '#AB31ED' });
+  public async init() {
+    const todosCount = (await ChromeStorageHelper.getInstance().getTodos()).length;
+    await this.updateBadgeText(todosCount);
 
     events.on(ICustomEvents.taskCreated, async () => {
       const taskCount = (await ChromeStorageHelper.getInstance().getTodos()).length;
@@ -28,9 +29,10 @@ class ChromeBadgeHelper {
   }
 
   public updateBadgeText(value: number) {
-    console.log(value);
-    chrome.browserAction.setBadgeText({
-      text: value.toString()
+    chrome.action.setBadgeBackgroundColor({ color: value === 0 ? '#AB31ED00' : '#AB31EDFF' });
+
+    chrome.action.setBadgeText({
+      text: value === 0 ? '' : value.toString()
     });
   }
 }

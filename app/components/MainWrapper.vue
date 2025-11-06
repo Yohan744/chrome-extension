@@ -16,7 +16,7 @@
   #main-wrapper {
     position: absolute;
     gap: 30px;
-    padding: 30px 20px calc($footer-height + 20px);
+    padding: 30px 20px calc($footer-height + 5px);
     inset: 0;
     height: 100%;
     width: 100%;

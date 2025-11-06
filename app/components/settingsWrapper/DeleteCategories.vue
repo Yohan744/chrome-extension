@@ -1,10 +1,11 @@
 <template>
   <h4 class="delete-category-title">Delete category</h4>
-
-  <div class="wrapper"></div>
+  <Categories :can-delete-categories="true" />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import Categories from '~/components/addWrapper/Categories.vue';
+</script>
 
 <style scoped lang="scss">
   .delete-category-title {

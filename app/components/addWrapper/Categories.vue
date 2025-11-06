@@ -1,6 +1,4 @@
 <template>
-  <h4 class="category-title">Categories</h4>
-
   <div ref="categoriesWrapper" class="categories-wrapper">
     <div
       v-for="category in visibleCategories"
@@ -10,9 +8,10 @@
       @click="e => handleClickOnCategory(e)"
     >
       {{ category.name }}
+      <div v-if="props.canDeleteCategories" class="delete-btn" @click="e => deleteCategory(e)" />
     </div>
 
-    <div class="add" @click="switchBetweenSections('settings')">
+    <div v-if="props.isInAddWrapper" class="add" @click="switchBetweenSections('settings')">
       <PlusIcon />
     </div>
   </div>
@@ -26,11 +25,17 @@
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
 
+  const props = defineProps<{
+    isInAddWrapper?: boolean;
+    canDeleteCategories?: boolean;
+  }>();
+
   const cleanUpCategoriesSelection = () => {
     const categoryElements = categoriesWrapper.value?.querySelectorAll('.category');
     if (!categoryElements || categoryElements.length === 0) return;
     categoryElements.forEach(el => {
       el.classList.remove('disabled');
+      el.classList.remove('enabled');
     });
   };
 
@@ -50,17 +55,36 @@
 
   const handleClickOnCategory = (e: MouseEvent) => {
     const target = e.currentTarget as HTMLElement;
-    if (!target) return;
     const categoryElements = categoriesWrapper.value?.querySelectorAll('.category');
-    if (!categoryElements || categoryElements.length === 0) return;
+
+    if (!categoryElements || categoryElements.length === 0 || !target) return;
+
+    const isTargetDisabled = target.classList.contains('disabled');
+    const anyDisabled = Array.from(categoryElements).some(el => el.classList.contains('disabled'));
+
+    if (!isTargetDisabled && anyDisabled) {
+      cleanUpCategoriesSelection();
+      return;
+    }
+
     categoryElements.forEach(el => {
       if (el !== target) {
         el.classList.add('disabled');
+        if (props.canDeleteCategories) el.classList.remove('enabled');
       } else {
         el.classList.remove('disabled');
-        emit('categoryIsSelected', target.innerText);
+        if (props.canDeleteCategories) {
+          el.classList.add('enabled');
+        } else emit('categoryIsSelected', target.innerText);
       }
     });
+  };
+
+  const deleteCategory = (e: MouseEvent) => {
+    const target = e.currentTarget as HTMLElement;
+    if (!target) return;
+
+    console.log('delete');
   };
 
   onMounted(async () => {
@@ -75,23 +99,18 @@
 </script>
 
 <style scoped lang="scss">
-  .category-title {
-    position: relative;
-    margin-top: 40px;
-    font-size: 18px;
-    font-variation-settings: 'wght' 650;
-  }
-
   .categories-wrapper {
     position: relative;
     margin-top: 20px;
     gap: 10px;
+    height: 140px;
     width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
+    overflow-y: scroll;
 
     .category {
       position: relative;
@@ -110,9 +129,28 @@
         filter $transition-time $default-ease,
         opacity $transition-time $default-ease;
 
+      .delete-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 30px;
+        width: 30px;
+        background: red;
+        cursor: pointer;
+        pointer-events: none;
+        opacity: 0;
+      }
+
       &.disabled {
-        filter: grayscale(1);
-        opacity: 0.75;
+        filter: grayscale(0.6);
+        opacity: 0.4;
+      }
+
+      &.enabled {
+        .delete-btn {
+          pointer-events: auto;
+          opacity: 1;
+        }
       }
     }
 

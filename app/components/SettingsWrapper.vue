@@ -3,7 +3,6 @@
     <h1 class="title">Settings</h1>
     <AddCustomCategory />
     <DeleteCategories />
-
     <a class="support-btn" href="https://buymeacoffee.com/yohan_qns" target="_blank">Support me</a>
   </section>
 </template>
@@ -16,7 +15,7 @@
 <style scoped lang="scss">
   #settings-wrapper {
     position: absolute;
-    padding: 30px 20px calc($footer-height + 20px);
+    padding: 30px 20px calc($footer-height + 5px);
     inset: 0;
     height: 100%;
     width: 100%;

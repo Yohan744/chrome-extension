@@ -17,7 +17,9 @@
       />
     </label>
 
-    <Categories ref="addWrapperRef" @category-is-selected="handleCategorySelected" />
+    <h4 class="category-title">Categories</h4>
+
+    <Categories ref="addWrapperRef" :is-in-add-wrapper="true" @category-is-selected="handleCategorySelected" />
 
     <button class="create-task-button" @click="handleTaskCreation">Create task</button>
   </section>
@@ -93,7 +95,7 @@
 <style scoped lang="scss">
   #add-wrapper {
     position: absolute;
-    padding: 30px 20px calc($footer-height + 20px);
+    padding: 30px 20px calc($footer-height + 5px);
     inset: 0;
     height: 100%;
     width: 100%;
@@ -133,6 +135,13 @@
       &::placeholder {
         color: rgba($color-white, 0.35);
       }
+    }
+
+    .category-title {
+      position: relative;
+      margin-top: 30px;
+      font-size: 18px;
+      font-variation-settings: 'wght' 650;
     }
 
     .create-task-button {

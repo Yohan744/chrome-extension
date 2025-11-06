@@ -101,7 +101,8 @@
 <style scoped lang="scss">
   .categories-wrapper {
     position: relative;
-    margin-top: 20px;
+    margin-top: 10px;
+    padding-top: 10px;
     gap: 10px;
     height: 140px;
     width: 100%;
@@ -133,12 +134,41 @@
         position: absolute;
         top: 0;
         right: 0;
-        height: 30px;
-        width: 30px;
-        background: red;
+        height: 18px;
+        width: 18px;
+        background: $color-white;
         cursor: pointer;
+        border-radius: 50px;
+        z-index: 1;
         pointer-events: none;
         opacity: 0;
+        transform: translate3d(50%, -50%, 0);
+        transition: opacity $transition-time $default-ease;
+
+        &:before,
+        &:after {
+          position: absolute;
+          content: '';
+          top: 50%;
+          left: 50%;
+          height: 2px;
+          width: 60%;
+          border-radius: 3px;
+          background: $color-black;
+          transform: translate3d(-50%, -50%, 0) rotate(45deg) scaleY(0.8);
+          transition: transform $transition-time $default-ease;
+        }
+
+        &:after {
+          transform: translate3d(-50%, -50%, 0) rotate(-45deg) scaleY(0.8);
+        }
+
+        @include has-hover {
+          &:before,
+          &:after {
+            transform: translate3d(-50%, -50%, 0) rotate(0deg);
+          }
+        }
       }
 
       &.disabled {
@@ -169,7 +199,7 @@
 
         svg {
           color: rgba($color-white, 0.75);
-          transform: scale3d(0.85, 0.85, 0.85);
+          transform: scale3d(0.7, 0.7, 0.7);
         }
       }
 

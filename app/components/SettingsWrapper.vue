@@ -2,14 +2,15 @@
   <section id="settings-wrapper" class="active">
     <h1 class="title">Settings</h1>
     <AddCustomCategory />
-    <DeleteCategories />
+    <h4 class="delete-category-title">Delete category</h4>
+    <Categories :can-delete-categories="true" />
     <a class="support-btn" href="https://buymeacoffee.com/yohan_qns" target="_blank">Support me</a>
   </section>
 </template>
 
 <script setup lang="ts">
   import AddCustomCategory from './settingsWrapper/AddCustomCategory.vue';
-  import DeleteCategories from '~/components/settingsWrapper/DeleteCategories.vue';
+  import Categories from '~/components/addWrapper/Categories.vue';
 </script>
 
 <style scoped lang="scss">
@@ -32,6 +33,13 @@
       font-size: 28px;
       line-height: 1.25;
       font-variation-settings: 'wght' 800;
+    }
+
+    .delete-category-title {
+      position: relative;
+      margin-top: 30px;
+      font-size: 18px;
+      font-variation-settings: 'wght' 650;
     }
 
     .support-btn {
@@ -58,7 +66,7 @@
           background calc($transition-time * 0.65) $default-ease;
       }
 
-      @include has-hover() {
+      @include has-hover {
         color: rgba($color-white, 1);
 
         &:before {

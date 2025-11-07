@@ -2,38 +2,34 @@
   <div class="top-part">
     <div class="left-part">
       <h1 class="title">{{ dayOfTheWeek[actualDay] + ' ' + actualDate }}</h1>
-      <p class="month">{{ monthOfTheYear[actualMonth] }}</p>
+      <p class="task-count">{{ taskNumber }} {{ taskNumber <= 1 ? 'task' : 'tasks' }}</p>
     </div>
 
-    <h4 class="task-count">{{ taskNumber }} {{ taskNumber <= 1 ? 'task' : 'tasks' }}</h4>
+    <div class="right-part">
+      <button class="settings" @click="switchBetweenSections('settings')">
+        <SettingsIcon />
+      </button>
+
+      <button class="add" @click="switchBetweenSections('add')">
+        <PlusIcon />
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import { ICustomEvents } from '~/constants/ICustomEvents';
+  import switchBetweenSections from '~/composables/SwitchBetweenSections';
+  import PlusIcon from '~/assets/icons/plus.svg?component';
+  import SettingsIcon from '~/assets/icons/settings.svg?component';
 
   const taskNumber = ref<number>(0);
   const events = useGlobalEvents();
 
   const actualDay: number = new Date().getDay();
   const actualDate: number = new Date().getDate();
-  const actualMonth: number = new Date().getMonth();
   const dayOfTheWeek: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const monthOfTheYear: string[] = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
 
   onMounted(async () => {
     await updateTaskNumber();
@@ -76,7 +72,7 @@
         color: $color-white;
       }
 
-      .month {
+      .task-count {
         position: relative;
         margin-left: 3px;
         font-size: 13px;
@@ -85,12 +81,27 @@
       }
     }
 
-    .task-count {
+    .right-part {
       position: relative;
-      margin-top: 3px;
-      font-size: 16px;
-      font-variation-settings: 'wght' 500;
-      color: rgba($color-white, 0.85);
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      .settings {
+        position: relative;
+        height: 50px;
+        width: 50px;
+        background: red;
+      }
+
+      .add {
+        position: relative;
+        height: 50px;
+        width: 50px;
+        background: blue;
+      }
     }
   }
 </style>

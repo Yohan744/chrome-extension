@@ -15,7 +15,7 @@ class ChromeBadgeHelper {
 
   public async init() {
     const todosCount = (await ChromeStorageHelper.getInstance().getTodos()).length;
-    await this.updateBadgeText(todosCount);
+    this.updateBadgeText(todosCount);
 
     events.on(ICustomEvents.taskCreated, async () => {
       const taskCount = (await ChromeStorageHelper.getInstance().getTodos()).length;

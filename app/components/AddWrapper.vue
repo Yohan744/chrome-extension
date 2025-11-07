@@ -95,7 +95,7 @@
 <style scoped lang="scss">
   #add-wrapper {
     position: absolute;
-    padding: 30px 20px calc($footer-height + 5px);
+    padding: 30px 20px 20px;
     inset: 0;
     height: 100%;
     width: 100%;

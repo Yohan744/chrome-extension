@@ -58,11 +58,11 @@ class ChromeStorageHelper {
     return ChromeStorageHelper.instance;
   }
 
-  public async clearAllStorage(): Promise<void> {
-    const s = getChromeStorage();
-    if (!s) return;
-    await s.clear();
-  }
+  // public async clearAllStorage(): Promise<void> {
+  //   const s = getChromeStorage();
+  //   if (!s) return;
+  //   await s.clear();
+  // }
 
   public async initDefaultStorage(): Promise<void> {
     const { todos, categories } = await storageGet<{ todos?: ITodoType[]; categories?: ICategoryType[] }>([
@@ -86,9 +86,9 @@ class ChromeStorageHelper {
     events.trigger(ICustomEvents.storageInitiated);
   }
 
-  public async getAllStorage(): Promise<{ todos: ITodoType[]; categories: ICategoryType[] }> {
-    return await storageGet();
-  }
+  // public async getAllStorage(): Promise<{ todos: ITodoType[]; categories: ICategoryType[] }> {
+  //   return await storageGet();
+  // }
 
   //////////////////////////////////////////////////////////////////////////////////
 
@@ -166,12 +166,6 @@ class ChromeStorageHelper {
   }
 
   //////////////////////////////////////////////////////////////////////////////////
-
-  public async addOldTodo(oldTodos: IOldTodoType): Promise<void> {
-    const s = getChromeStorage();
-    if (!s) return;
-    await s.set({ [Math.floor(Math.random() * 100)]: oldTodos });
-  }
 
   public async migrateOldTodos(): Promise<{ migrated: number; removedKeys: string[] }> {
     await this.initDefaultStorage();

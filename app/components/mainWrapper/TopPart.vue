@@ -91,16 +91,53 @@
 
       .settings {
         position: relative;
-        height: 50px;
-        width: 50px;
-        background: red;
+        height: 20px;
+        width: 20px;
+        border-radius: 7px;
+        @include center;
+        cursor: pointer;
+        opacity: 0.65;
+        transition: opacity $transition-time $default-ease;
+
+        @include has-hover {
+          opacity: 1;
+        }
+
+        svg {
+          position: relative;
+          height: 100%;
+          width: 100%;
+          color: $color-gray;
+        }
       }
 
       .add {
         position: relative;
-        height: 50px;
-        width: 50px;
-        background: blue;
+        height: 35px;
+        width: 35px;
+        border-radius: 7px;
+        background: linear-gradient(50deg, $color-blue-violet 0%, $color-magenta 70%);
+        @include center;
+        cursor: pointer;
+        opacity: 1;
+        transition: opacity $transition-time $default-ease;
+
+        @include has-hover {
+          opacity: 0.75;
+
+          svg {
+            transform: scale(1.075);
+          }
+        }
+
+        svg {
+          position: relative;
+          height: 22px;
+          width: 22px;
+          color: $color-white;
+          transform: scale(1);
+          transition: transform $transition-time $default-ease;
+        }
       }
     }
   }

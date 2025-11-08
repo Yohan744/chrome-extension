@@ -2,7 +2,11 @@
   <div class="top-part">
     <div class="left-part">
       <h1 class="title">{{ dayOfTheWeek[actualDay] + ' ' + actualDate }}</h1>
-      <p class="task-count">{{ taskNumber }} {{ taskNumber <= 1 ? 'task' : 'tasks' }}</p>
+      <div class="task-count">
+        <p class="number">{{ taskNumber }}</p>
+        <p class="text">task</p>
+        <p class="plural" :class="{ show: taskNumber > 1 }">s</p>
+      </div>
     </div>
 
     <div class="right-part">
@@ -74,10 +78,41 @@
 
       .task-count {
         position: relative;
-        margin-left: 3px;
+        margin-left: 1px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
         font-size: 13px;
         font-variation-settings: 'wght' 500;
         color: rgba($color-white, 0.55);
+
+        .number {
+          position: relative;
+          min-width: 8px;
+        }
+
+        .text {
+          position: relative;
+          margin-left: 4px;
+          width: 28px;
+        }
+
+        .plural {
+          position: relative;
+          margin-left: 0;
+          width: 7px;
+          opacity: 0;
+          transform: translate3d(0, 4px, 0);
+          transition:
+            opacity $transition-time $default-ease,
+            transform $transition-time $default-ease;
+
+          &.show {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+          }
+        }
       }
     }
 

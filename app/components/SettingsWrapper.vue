@@ -1,5 +1,6 @@
 <template>
   <section id="settings-wrapper">
+    <GoBackButton />
     <h1 class="title">Settings</h1>
     <AddCustomCategory />
     <h4 class="delete-category-title">Delete category</h4>
@@ -11,6 +12,7 @@
 <script setup lang="ts">
   import AddCustomCategory from './settingsWrapper/AddCustomCategory.vue';
   import Categories from '~/components/addWrapper/Categories.vue';
+  import GoBackButton from '~/components/GoBackButton.vue';
 </script>
 
 <style scoped lang="scss">

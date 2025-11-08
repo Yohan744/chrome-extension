@@ -104,7 +104,7 @@
     margin-top: 10px;
     padding-top: 10px;
     gap: 10px;
-    height: 140px;
+    max-height: 200px;
     width: 100%;
     display: flex;
     flex-direction: row;

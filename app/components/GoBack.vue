@@ -52,7 +52,7 @@
 
     .title {
       position: relative;
-      font-size: 28px;
+      font-size: 27px;
       line-height: 1.25;
       font-variation-settings: 'wght' 800;
     }

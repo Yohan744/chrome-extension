@@ -71,7 +71,7 @@
 
       .title {
         position: relative;
-        font-size: 23px;
+        font-size: 24px;
         font-variation-settings: 'wght' 800;
         color: $color-white;
       }
@@ -126,52 +126,46 @@
 
       .settings {
         position: relative;
-        height: 20px;
-        width: 20px;
+        height: 35px;
+        width: 45px;
         border-radius: 7px;
         @include center;
         cursor: pointer;
-        opacity: 0.65;
-        transition: opacity $transition-time $default-ease;
+        background: rgba($color-gray, 0.5);
+        transition: background $transition-time $default-ease;
 
         @include has-hover {
-          opacity: 1;
+          background: rgba($color-gray, 0.9);
         }
 
         svg {
           position: relative;
-          height: 100%;
-          width: 100%;
-          color: $color-gray;
+          height: auto;
+          width: 20px;
+          color: $color-white;
         }
       }
 
       .add {
         position: relative;
         height: 35px;
-        width: 35px;
+        width: 45px;
         border-radius: 7px;
-        background: linear-gradient(50deg, $color-blue-violet 0%, $color-magenta 70%);
+        background: linear-gradient(120deg, $color-blue-violet 0%, $color-magenta 50%);
         @include center;
         cursor: pointer;
         opacity: 1;
         transition: opacity $transition-time $default-ease;
 
         @include has-hover {
-          opacity: 0.75;
-
-          svg {
-            transform: scale(1.075);
-          }
+          opacity: 0.7;
         }
 
         svg {
           position: relative;
-          height: 22px;
-          width: 22px;
+          height: auto;
+          width: 20px;
           color: $color-white;
-          transform: scale(1);
-          transition: transform $transition-time $default-ease;
         }
       }
     }

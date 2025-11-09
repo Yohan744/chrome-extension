@@ -165,7 +165,7 @@
         padding: 6px;
         @include center();
         border: none;
-        background: linear-gradient(30deg, $color-blue-violet 0%, $color-orchid 70%);
+        background: linear-gradient(120deg, $color-blue-violet 0%, $color-orchid 70%);
         border-radius: 7px;
         cursor: pointer;
         font-size: 12px;
@@ -175,7 +175,7 @@
         transition: opacity $transition-time $default-ease;
 
         &:hover {
-          opacity: 0.75;
+          opacity: 0.7;
         }
       }
     }

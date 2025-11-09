@@ -80,7 +80,7 @@
       justify-content: flex-start;
       align-items: center;
       gap: 15px;
-      border-radius: 10px;
+      border-radius: 7px;
       background: rgba($color-gray, 0.4);
 
       .icon-wrapper {
@@ -117,7 +117,7 @@
         right: 0;
         height: 100%;
         width: 8px;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 7px 7px 0;
         transition: background $transition-time $default-ease;
       }
     }

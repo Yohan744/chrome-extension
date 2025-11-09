@@ -109,7 +109,7 @@
 
     .title {
       position: relative;
-      font-size: 28px;
+      font-size: 27px;
       line-height: 1.25;
       font-variation-settings: 'wght' 800;
     }
@@ -122,7 +122,7 @@
       width: 100%;
       border-radius: 7px;
       border: none;
-      background: rgba($color-gray, 0.44);
+      background: rgba($color-gray, 0.35);
       font-size: 14px;
       font-variation-settings: 'wght' 475;
 
@@ -153,13 +153,13 @@
       border-radius: 7px;
       cursor: pointer;
       font-size: 16px;
-      font-variation-settings: 'wght' 500;
+      font-variation-settings: 'wght' 550;
       color: $color-white;
       opacity: 1;
       transition: opacity $transition-time $default-ease;
 
       &:hover {
-        opacity: 0.75;
+        opacity: 0.7;
       }
     }
   }

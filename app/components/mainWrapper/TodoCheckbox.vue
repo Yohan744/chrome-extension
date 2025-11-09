@@ -52,7 +52,7 @@
       stroke-dashoffset: -69;
       stroke-linecap: round;
       stroke-width: 3px;
-      border-radius: 4px;
+      border-radius: 6px;
       fill: none;
       background: transparent;
       transition:

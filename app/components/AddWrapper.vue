@@ -1,10 +1,6 @@
 <template>
   <section id="add-wrapper">
-    <h1 class="title">
-      Create new
-      <br />
-      task
-    </h1>
+    <GoBack :title="title" :margin-top="true" />
 
     <label>
       <input
@@ -33,9 +29,12 @@
   import switchBetweenSections from '~/composables/SwitchBetweenSections';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
   import { ICustomEvents } from '~/constants/ICustomEvents';
+  import GoBack from '~/components/GoBack.vue';
 
   const storage = ChromeStorageHelper.getInstance();
   const events = useGlobalEvents();
+
+  const title = 'Create new <br/> task';
 
   const isTaskAlreadyCreated = ref<boolean>(false);
   const taskInputRef = ref<HTMLInputElement | null>(null);

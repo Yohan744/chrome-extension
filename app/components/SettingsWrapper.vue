@@ -1,7 +1,6 @@
 <template>
   <section id="settings-wrapper">
-    <GoBackButton />
-    <h1 class="title">Settings</h1>
+    <GoBack :title="title" />
     <AddCustomCategory />
     <h4 class="delete-category-title">Delete category</h4>
     <Categories :can-delete-categories="true" />
@@ -12,7 +11,9 @@
 <script setup lang="ts">
   import AddCustomCategory from './settingsWrapper/AddCustomCategory.vue';
   import Categories from '~/components/addWrapper/Categories.vue';
-  import GoBackButton from '~/components/GoBackButton.vue';
+  import GoBack from '~/components/GoBack.vue';
+
+  const title = 'Settings';
 </script>
 
 <style scoped lang="scss">
@@ -29,13 +30,6 @@
     background: linear-gradient($color-indigo 0, $color-rebecca-purple 0, $color-black 40%);
     pointer-events: none;
     opacity: 0;
-
-    .title {
-      position: relative;
-      font-size: 28px;
-      line-height: 1.25;
-      font-variation-settings: 'wght' 800;
-    }
 
     .delete-category-title {
       position: relative;

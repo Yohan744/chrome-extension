@@ -33,7 +33,7 @@
 
     .delete-category-title {
       position: relative;
-      margin-top: 30px;
+      margin-top: 15px;
       font-size: 18px;
       font-variation-settings: 'wght' 650;
     }

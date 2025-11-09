@@ -30,8 +30,8 @@
     .button {
       position: relative;
       margin-bottom: 20px;
-      height: 33px;
-      width: 33px;
+      height: 35px;
+      width: 45px;
       @include center;
       border-radius: 7px;
       cursor: pointer;
@@ -39,14 +39,14 @@
       transition: background $transition-time $default-ease;
 
       @include has-hover {
-        background: rgba($color-gray, 0.85);
+        background: rgba($color-gray, 0.9);
       }
 
       svg {
         position: relative;
         height: auto;
         width: 18px;
-        color: rgba($color-white, 0.85);
+        color: $color-white;
       }
     }
 

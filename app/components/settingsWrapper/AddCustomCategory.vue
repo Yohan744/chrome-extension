@@ -108,7 +108,7 @@
 
   .wrapper {
     position: relative;
-    padding: 15px 10px;
+    padding: 15px;
     margin-top: 20px;
     width: 100%;
     display: flex;
@@ -116,7 +116,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     border-radius: 7px;
-    background: rgba($color-gray, 0.4);
+    background: $background-wrapper-color;
 
     .bottom-part {
       position: relative;

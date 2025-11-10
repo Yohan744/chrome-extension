@@ -131,11 +131,11 @@
         border-radius: 7px;
         @include center;
         cursor: pointer;
-        background: rgba($color-gray, 0.5);
+        background: rgba($color-gray, 0.9);
         transition: background $transition-time $default-ease;
 
         @include has-hover {
-          background: rgba($color-gray, 0.9);
+          background: rgba($color-gray, 0.6);
         }
 
         svg {

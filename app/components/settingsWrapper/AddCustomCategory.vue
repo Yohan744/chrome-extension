@@ -169,7 +169,7 @@
         border-radius: 7px;
         cursor: pointer;
         font-size: 12px;
-        font-variation-settings: 'wght' 500;
+        font-variation-settings: 'wght' 550;
         color: $color-white;
         opacity: 1;
         transition: opacity $transition-time $default-ease;

@@ -103,7 +103,7 @@
     position: relative;
     margin-top: 10px;
     padding-top: 10px;
-    gap: 10px;
+    gap: 9px;
     max-height: 200px;
     width: 100%;
     display: flex;
@@ -115,8 +115,8 @@
 
     .category {
       position: relative;
-      padding: 0 15px;
-      height: 38px;
+      padding: 0 14px;
+      height: 36px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -125,7 +125,8 @@
       cursor: pointer;
       filter: grayscale(0);
       opacity: 1;
-      font-variation-settings: 'wght' 480;
+      font-size: 14px;
+      font-variation-settings: 'wght' 450;
       transition:
         filter $transition-time $default-ease,
         opacity $transition-time $default-ease;
@@ -143,7 +144,7 @@
         pointer-events: none;
         opacity: 0;
         transform: translate3d(50%, -50%, 0);
-        transition: opacity $transition-time $default-ease;
+        transition: opacity calc($transition-time * 0.65) $default-ease;
 
         &:before,
         &:after {
@@ -156,7 +157,7 @@
           border-radius: 3px;
           background: $color-black;
           transform: translate3d(-50%, -50%, 0) rotate(45deg) scaleY(0.8);
-          transition: transform $transition-time $default-ease;
+          transition: transform calc($transition-time * 0.65) $default-ease;
         }
 
         &:after {
@@ -181,6 +182,10 @@
           pointer-events: auto;
           opacity: 1;
         }
+      }
+
+      @include has-hover {
+        opacity: 0.7;
       }
     }
 

@@ -1,6 +1,6 @@
 <template>
   <section id="add-wrapper">
-    <GoBack :title="title" :margin-top="true" />
+    <GoBack :title="title" :is-add-wrapper="true" />
 
     <label>
       <input

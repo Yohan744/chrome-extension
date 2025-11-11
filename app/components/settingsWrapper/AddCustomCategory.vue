@@ -102,8 +102,8 @@
   .add-custom-category-title {
     position: relative;
     margin-top: 30px;
-    font-size: 18px;
-    font-variation-settings: 'wght' 650;
+    font-size: 17px;
+    font-variation-settings: 'wght' 600;
   }
 
   .wrapper {
@@ -116,7 +116,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     border-radius: 7px;
-    background: $background-wrapper-color;
+    background: rgba($color-gray, 0.2);
 
     .bottom-part {
       position: relative;

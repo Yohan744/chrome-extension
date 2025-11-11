@@ -55,6 +55,7 @@
       width: 100%;
       pointer-events: none;
       opacity: 0;
+      background: rgba($color-black, 0.2);
       z-index: 1;
 
       &.open {

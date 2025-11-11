@@ -44,6 +44,7 @@
       height: 35px;
       width: 45px;
       @include center;
+      @include light-border;
       border-radius: 7px;
       cursor: pointer;
       background: rgba($color-gray, 0.9);

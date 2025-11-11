@@ -56,9 +56,9 @@
       fill: none;
       background: transparent;
       transition:
-        border calc($transition-time * 0.85) $easePower4Out,
-        background calc($transition-time * 0.85) $easePower4Out,
-        stroke-dashoffset calc($transition-time * 0.85) $easePower4Out;
+        border calc($transition-time * 0.8) $easePower4Out,
+        background calc($transition-time * 0.8) $easePower4Out,
+        stroke-dashoffset calc($transition-time * 0.8) $easePower4Out;
 
       polyline {
         transform: scale(0.775) translate(2px, 1px);

@@ -1,4 +1,6 @@
-@mixin has-hover() {
+@use './colors.scss' as *;
+
+@mixin has-hover {
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       @content;
@@ -6,14 +8,18 @@
   }
 }
 
-@mixin has-touch() {
+@mixin has-touch {
   @media (hover: none) and (pointer: coarse) {
     @content;
   }
 }
 
-@mixin center() {
+@mixin center {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@mixin light-border {
+  border: 1px solid rgba($color-border, 0.2);
 }

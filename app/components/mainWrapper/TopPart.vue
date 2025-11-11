@@ -130,6 +130,7 @@
         width: 45px;
         border-radius: 7px;
         @include center;
+        @include light-border;
         cursor: pointer;
         background: rgba($color-gray, 0.9);
         transition: background $transition-time $default-ease;

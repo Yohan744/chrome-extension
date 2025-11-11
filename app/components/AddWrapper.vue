@@ -139,8 +139,8 @@
     .category-title {
       position: relative;
       margin-top: 30px;
-      font-size: 18px;
-      font-variation-settings: 'wght' 650;
+      font-size: 17px;
+      font-variation-settings: 'wght' 600;
     }
 
     .create-task-button {

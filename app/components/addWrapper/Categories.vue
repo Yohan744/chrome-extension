@@ -1,18 +1,20 @@
 <template>
   <div ref="categoriesWrapper" class="categories-wrapper">
-    <div
-      v-for="category in visibleCategories"
-      :key="category.id"
-      class="category"
-      :style="{ background: category.color }"
-      @click="e => handleClickOnCategory(e)"
-    >
-      {{ category.name }}
-      <div v-if="props.canDeleteCategories" class="delete-btn" @click="e => deleteCategory(e)" />
-    </div>
+    <div class="wrapper">
+      <div
+        v-for="category in visibleCategories"
+        :key="category.id"
+        class="category"
+        :style="{ background: category.color }"
+        @click="e => handleClickOnCategory(e)"
+      >
+        {{ category.name }}
+        <div v-if="props.canDeleteCategories" class="delete-btn" @click="e => deleteCategory(e)" />
+      </div>
 
-    <div v-if="props.isInAddWrapper" class="add" @click="switchBetweenSections('settings')">
-      <PlusIcon />
+      <div v-if="props.isInAddWrapper" class="add" @click="switchBetweenSections('settings')">
+        <PlusIcon />
+      </div>
     </div>
   </div>
 </template>
@@ -101,123 +103,134 @@
 <style scoped lang="scss">
   .categories-wrapper {
     position: relative;
-    margin-top: 10px;
-    padding-top: 10px;
-    gap: 9px;
-    max-height: 200px;
+    margin: 8px 0 30px;
+    height: 190px;
     width: 100%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    overflow-y: scroll;
 
-    .category {
+    .wrapper {
       position: relative;
-      padding: 0 14px;
-      height: 36px;
+      padding-top: 8px;
+      gap: 9px;
+      height: fit-content;
+      max-height: 100%;
+      width: 100%;
       display: flex;
-      justify-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
       align-items: center;
-      border-radius: 7px;
-      user-select: none;
-      cursor: pointer;
-      filter: grayscale(0);
-      opacity: 1;
-      font-size: 14px;
-      font-variation-settings: 'wght' 450;
-      transition:
-        filter $transition-time $default-ease,
-        opacity $transition-time $default-ease;
+      overflow-y: scroll;
 
-      .delete-btn {
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 18px;
-        width: 18px;
-        background: $color-white;
+      .category {
+        position: relative;
+        padding: 0 14px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 7px;
+        user-select: none;
         cursor: pointer;
-        border-radius: 50px;
-        z-index: 1;
-        pointer-events: none;
-        opacity: 0;
-        transform: translate3d(50%, -50%, 0);
-        transition: opacity calc($transition-time * 0.65) $default-ease;
+        filter: grayscale(0);
+        opacity: 1;
+        font-size: 13px;
+        font-variation-settings: 'wght' 450;
+        transition:
+          filter $transition-time $default-ease,
+          opacity $transition-time $default-ease;
 
-        &:before,
-        &:after {
+        .delete-btn {
           position: absolute;
-          content: '';
-          top: 50%;
-          left: 50%;
-          height: 2px;
-          width: 60%;
-          border-radius: 3px;
-          background: $color-black;
-          transform: translate3d(-50%, -50%, 0) rotate(45deg) scaleY(0.8);
-          transition: transform calc($transition-time * 0.65) $default-ease;
+          top: 0;
+          right: 0;
+          height: 18px;
+          width: 18px;
+          background: $color-white;
+          cursor: pointer;
+          border-radius: 50px;
+          z-index: 1;
+          pointer-events: none;
+          opacity: 0;
+          transform: translate3d(50%, -50%, 0);
+          transition: opacity calc($transition-time * 0.65) $default-ease;
+
+          &:before,
+          &:after {
+            position: absolute;
+            content: '';
+            top: 50%;
+            left: 50%;
+            height: 2px;
+            width: 60%;
+            border-radius: 3px;
+            background: $color-black;
+            transform: translate3d(-50%, -50%, 0) rotate(45deg) scaleY(0.8);
+            transition: transform calc($transition-time * 0.65) $default-ease;
+          }
+
+          &:after {
+            transform: translate3d(-50%, -50%, 0) rotate(-45deg) scaleY(0.8);
+          }
+
+          @include has-hover {
+            &:before,
+            &:after {
+              transform: translate3d(-50%, -50%, 0) rotate(0deg);
+            }
+          }
         }
 
-        &:after {
-          transform: translate3d(-50%, -50%, 0) rotate(-45deg) scaleY(0.8);
+        &.disabled {
+          filter: grayscale(0.6);
+          opacity: 0.4;
+        }
+
+        &.enabled {
+          .delete-btn {
+            pointer-events: auto;
+            opacity: 1;
+          }
         }
 
         @include has-hover {
-          &:before,
-          &:after {
-            transform: translate3d(-50%, -50%, 0) rotate(0deg);
-          }
+          opacity: 0.7;
         }
       }
 
-      &.disabled {
-        filter: grayscale(0.6);
-        opacity: 0.4;
-      }
+      .add {
+        position: relative;
+        height: 30px;
+        width: 38px;
+        border-radius: 7px;
+        cursor: pointer;
+        @include center();
+        @include light-border;
+        background: rgba($color-gray, 0.6);
+        transition: background $transition-time $default-ease;
 
-      &.enabled {
-        .delete-btn {
-          pointer-events: auto;
-          opacity: 1;
+        @include has-hover {
+          background: rgba($color-gray, 0.4);
         }
-      }
 
-      @include has-hover {
-        opacity: 0.7;
+        svg {
+          position: relative;
+          height: 15px;
+          stroke-width: 2px;
+          color: $color-white;
+        }
       }
     }
 
-    .add {
-      position: relative;
-      height: 25px;
-      width: 25px;
-      border-radius: 7px;
-      cursor: pointer;
-      @include center();
-      border: 2px dashed $color-gray;
-      transition: border $transition-time $default-ease;
-
-      @include has-hover {
-        border-color: rgba($color-white, 0.75);
-
-        svg {
-          color: rgba($color-white, 0.75);
-          transform: scale3d(0.7, 0.7, 0.7);
-        }
-      }
-
-      svg {
-        position: relative;
-        height: 18px;
-        stroke-width: 2px;
-        color: $color-gray;
-        transform: scale3d(1, 1, 1);
-        transition:
-          color $transition-time $default-ease,
-          transform calc($transition-time * 0.75) $default-ease;
-      }
+    &:before {
+      position: absolute;
+      content: '';
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      width: 100%;
+      z-index: 1;
+      background: linear-gradient(rgba($color-black, 0) 0%, rgba($color-black, 0.25) 50%, rgba($color-black, 1) 100%);
     }
   }
 </style>

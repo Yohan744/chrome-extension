@@ -53,7 +53,8 @@
 
     task.value = DOMPurify.sanitize(inputValue)
       .replace(/<[^>]*>/g, '')
-      .replace(/\s+/g, ' ');
+      .replace(/\s+/g, ' ')
+      .trim();
   };
 
   const handleCategorySelected = (categoryName: string) => {

@@ -1,6 +1,6 @@
 <template>
   <div class="go-back" :class="{ addWrapper: props.isAddWrapper }">
-    <div class="button" @click="switchBetweenSections('main')">
+    <div class="button" @click="handleClick">
       <GoBackIcon />
     </div>
 
@@ -16,6 +16,14 @@
     title: string;
     isAddWrapper?: boolean;
   }>();
+
+  const emit = defineEmits(['goBackClicked']);
+
+  const handleClick = () => {
+    switchBetweenSections('main', () => {
+      emit('goBackClicked');
+    });
+  };
 </script>
 
 <style scoped lang="scss">

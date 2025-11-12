@@ -12,7 +12,7 @@
         <div v-if="props.canDeleteCategories" class="delete-btn" @click="e => deleteCategory(e)" />
       </div>
 
-      <div v-if="props.isInAddWrapper" class="add" @click="switchBetweenSections('settings')">
+      <div v-if="props.isInAddWrapper" class="add" @click="emit('addCategoryClicked')">
         <PlusIcon />
       </div>
     </div>
@@ -23,7 +23,6 @@
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import type { ICategoryType } from '~/types/ICategoryType';
   import PlusIcon from '~/assets/icons/plus.svg?component';
-  import switchBetweenSections from '~/composables/SwitchBetweenSections';
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
 
@@ -45,7 +44,7 @@
     cleanUpCategoriesSelection
   });
 
-  const emit = defineEmits(['categoryIsSelected']);
+  const emit = defineEmits(['categoryIsSelected', 'addCategoryClicked']);
 
   const events = useGlobalEvents();
 
@@ -103,14 +102,13 @@
 <style scoped lang="scss">
   .categories-wrapper {
     position: relative;
-    margin: 8px 0 30px;
-    height: 190px;
+    margin: 15px 0 25px;
+    height: 180px;
     width: 100%;
     display: flex;
 
     .wrapper {
       position: relative;
-      padding-top: 8px;
       gap: 9px;
       height: fit-content;
       max-height: 100%;

@@ -101,7 +101,7 @@
 <style scoped lang="scss">
   .add-custom-category-title {
     position: relative;
-    margin-top: 30px;
+    margin-top: 35px;
     font-size: 17px;
     font-variation-settings: 'wght' 600;
   }
@@ -109,7 +109,7 @@
   .wrapper {
     position: relative;
     padding: 15px;
-    margin-top: 20px;
+    margin-top: 15px;
     width: 100%;
     display: flex;
     flex-direction: column;

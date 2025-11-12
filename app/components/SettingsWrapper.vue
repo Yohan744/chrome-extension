@@ -52,7 +52,7 @@
       position: relative;
       margin: auto auto 0;
       @include center;
-      gap: 8px;
+      gap: 12px;
 
       .link {
         position: relative;
@@ -93,7 +93,7 @@
         position: relative;
         height: 100%;
         width: 1px;
-        background: rgba($color-gray, 0.2);
+        background: rgba($color-gray, 0.5);
       }
     }
   }

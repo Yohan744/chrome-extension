@@ -1,6 +1,6 @@
 <template>
   <section id="add-wrapper">
-    <GoBack :title="title" :is-add-wrapper="true" />
+    <GoBack :title="title" :is-add-wrapper="true" @go-back-clicked="cleanAddWrapper" />
 
     <label>
       <input
@@ -15,7 +15,12 @@
 
     <h4 class="category-title">Categories</h4>
 
-    <Categories ref="addWrapperRef" :is-in-add-wrapper="true" @category-is-selected="handleCategorySelected" />
+    <Categories
+      ref="addWrapperRef"
+      :is-in-add-wrapper="true"
+      @category-is-selected="handleCategorySelected"
+      @add-category-clicked="switchSectionAndCleanUpAddWrapper('settings')"
+    />
 
     <button class="create-task-button" @click="handleTaskCreation">Create task</button>
   </section>
@@ -72,15 +77,19 @@
 
     events.trigger(ICustomEvents.taskCreated);
     isTaskAlreadyCreated.value = true;
-    switchSectionAndCleanUpAddWrapper();
+    switchSectionAndCleanUpAddWrapper('main');
   };
 
-  const switchSectionAndCleanUpAddWrapper = () => {
-    switchBetweenSections('main', () => {
-      isTaskAlreadyCreated.value = false;
-      taskInputRef.value!.value = '';
-      addWrapperRef.value?.cleanUpCategoriesSelection();
+  const switchSectionAndCleanUpAddWrapper = (sectionName: 'main' | 'settings') => {
+    switchBetweenSections(sectionName, () => {
+      cleanAddWrapper();
     });
+  };
+
+  const cleanAddWrapper = () => {
+    isTaskAlreadyCreated.value = false;
+    taskInputRef.value!.value = '';
+    addWrapperRef.value?.cleanUpCategoriesSelection();
   };
 
   onMounted(async () => {
@@ -116,7 +125,7 @@
 
     .task-input {
       position: relative;
-      margin-top: 30px;
+      margin-top: 35px;
       padding: 15px;
       height: 50px;
       width: 100%;
@@ -138,7 +147,7 @@
 
     .category-title {
       position: relative;
-      margin-top: 30px;
+      margin-top: 35px;
       font-size: 17px;
       font-variation-settings: 'wght' 600;
     }

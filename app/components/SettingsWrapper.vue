@@ -2,7 +2,16 @@
   <section id="settings-wrapper">
     <GoBack :title="title" />
     <AddCustomCategory />
-    <h4 v-if="CategoriesRef?.selectedCategory" class="delete-category-title">Delete category</h4>
+    <div class="delete-category-wrapper">
+      <div class="title">Delete category</div>
+      <button
+        :class="{ active: CategoriesRef?.selectedCategory }"
+        class="button"
+        @click="CategoriesRef?.deleteCategory"
+      >
+        Delete
+      </button>
+    </div>
     <Categories ref="CategoriesRef" :can-delete-categories="true" />
     <SettingsFooter />
   </section>
@@ -34,11 +43,46 @@
     pointer-events: none;
     opacity: 0;
 
-    .delete-category-title {
+    .delete-category-wrapper {
       position: relative;
-      margin-top: 15px;
-      font-size: 17px;
-      font-variation-settings: 'wght' 600;
+      margin-top: 25px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 15px;
+
+      .title {
+        position: relative;
+        font-size: 17px;
+        font-variation-settings: 'wght' 600;
+      }
+
+      .button {
+        position: relative;
+        height: 32px;
+        width: 80px;
+        padding: 6px;
+        @include center();
+        border: none;
+        background: linear-gradient(120deg, $color-blue-violet 0%, $color-orchid 70%);
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 12px;
+        font-variation-settings: 'wght' 550;
+        color: $color-white;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity $transition-time $default-ease;
+
+        &.active {
+          opacity: 1;
+          pointer-events: all;
+        }
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
     }
   }
 </style>

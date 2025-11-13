@@ -44,7 +44,7 @@
 
   const deleteCategory = () => {
     const category = selectedCategory.value;
-    if (!category) return;
+    if (!category || !props.canDeleteCategories) return;
 
     console.log('delete');
   };
@@ -76,7 +76,6 @@
 
     if (!isTargetDisabled && anyDisabled) {
       cleanUpCategoriesSelection();
-      console.log(selectedCategory.value);
       return;
     }
 
@@ -92,8 +91,6 @@
         } else emit('categoryIsSelected', target.innerText);
       }
     });
-
-    console.log(selectedCategory.value);
   };
 
   onMounted(async () => {

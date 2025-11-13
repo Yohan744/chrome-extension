@@ -9,7 +9,6 @@
         @click="e => handleClickOnCategory(e)"
       >
         {{ category.name }}
-        <div v-if="props.canDeleteCategories" class="delete-btn" @click="e => deleteCategory(e)" />
       </div>
 
       <div v-if="props.isInAddWrapper" class="add" @click="emit('addCategoryClicked')">
@@ -26,6 +25,8 @@
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
 
+  const selectedCategory = ref<HTMLElement | null>(null);
+
   const props = defineProps<{
     isInAddWrapper?: boolean;
     canDeleteCategories?: boolean;
@@ -34,14 +35,24 @@
   const cleanUpCategoriesSelection = () => {
     const categoryElements = categoriesWrapper.value?.querySelectorAll('.category');
     if (!categoryElements || categoryElements.length === 0) return;
+    selectedCategory.value = null;
     categoryElements.forEach(el => {
       el.classList.remove('disabled');
       el.classList.remove('enabled');
     });
   };
 
+  const deleteCategory = () => {
+    const category = selectedCategory.value;
+    if (!category) return;
+
+    console.log('delete');
+  };
+
   defineExpose({
-    cleanUpCategoriesSelection
+    cleanUpCategoriesSelection,
+    deleteCategory,
+    selectedCategory
   });
 
   const emit = defineEmits(['categoryIsSelected', 'addCategoryClicked']);
@@ -65,6 +76,7 @@
 
     if (!isTargetDisabled && anyDisabled) {
       cleanUpCategoriesSelection();
+      console.log(selectedCategory.value);
       return;
     }
 
@@ -76,16 +88,12 @@
         el.classList.remove('disabled');
         if (props.canDeleteCategories) {
           el.classList.add('enabled');
+          selectedCategory.value = target;
         } else emit('categoryIsSelected', target.innerText);
       }
     });
-  };
 
-  const deleteCategory = (e: MouseEvent) => {
-    const target = e.currentTarget as HTMLElement;
-    if (!target) return;
-
-    console.log('delete');
+    console.log(selectedCategory.value);
   };
 
   onMounted(async () => {
@@ -138,57 +146,9 @@
           filter $transition-time $default-ease,
           opacity $transition-time $default-ease;
 
-        .delete-btn {
-          position: absolute;
-          top: 0;
-          right: 0;
-          height: 18px;
-          width: 18px;
-          background: $color-white;
-          cursor: pointer;
-          border-radius: 50px;
-          z-index: 1;
-          pointer-events: none;
-          opacity: 0;
-          transform: translate3d(50%, -50%, 0);
-          transition: opacity calc($transition-time * 0.65) $default-ease;
-
-          &:before,
-          &:after {
-            position: absolute;
-            content: '';
-            top: 50%;
-            left: 50%;
-            height: 2px;
-            width: 60%;
-            border-radius: 3px;
-            background: $color-black;
-            transform: translate3d(-50%, -50%, 0) rotate(45deg) scaleY(0.8);
-            transition: transform calc($transition-time * 0.65) $default-ease;
-          }
-
-          &:after {
-            transform: translate3d(-50%, -50%, 0) rotate(-45deg) scaleY(0.8);
-          }
-
-          @include has-hover {
-            &:before,
-            &:after {
-              transform: translate3d(-50%, -50%, 0) rotate(0deg);
-            }
-          }
-        }
-
         &.disabled {
           filter: grayscale(0.6);
           opacity: 0.4;
-        }
-
-        &.enabled {
-          .delete-btn {
-            pointer-events: auto;
-            opacity: 1;
-          }
         }
 
         @include has-hover {

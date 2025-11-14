@@ -20,7 +20,7 @@
         />
       </label>
 
-      <button class="create" @click="handleCategoryCreation">Create</button>
+      <button class="create" :class="{ active: categoryName !== '' }" @click="handleCategoryCreation">Create</button>
     </div>
   </div>
 </template>
@@ -80,7 +80,7 @@
       .replace(/<[^>]*>/g, '')
       .replace(/\s+/g, ' ');
 
-    categoryName.value = target.value;
+    categoryName.value = target.value.trim();
   };
 
   const handleCategoryCreation = async () => {
@@ -92,6 +92,8 @@
       iconName: iconSelected.value,
       color: colorSelected.value
     });
+
+    categoryName.value = '';
 
     events.trigger(ICustomEvents.newCategoryCreated);
     categoryInputRef.value!.value = '';
@@ -171,11 +173,21 @@
         font-size: 12px;
         font-variation-settings: 'wght' 550;
         color: $color-white;
-        opacity: 1;
-        transition: opacity $transition-time $default-ease;
+        opacity: 0.35;
+        filter: grayscale(1);
+        pointer-events: none;
+        transition:
+          opacity $transition-time $default-ease,
+          filter $transition-time $default-ease;
 
         &:hover {
           opacity: 0.7;
+        }
+
+        &.active {
+          opacity: 1;
+          filter: grayscale(0);
+          pointer-events: all;
         }
       }
     }

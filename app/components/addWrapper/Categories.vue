@@ -177,6 +177,7 @@
         clip-path: inset(0 0 0 0 round 7px);
         font-size: 13px;
         font-variation-settings: 'wght' 450;
+        will-change: opacity, filter, clip-path, margin, width, padding;
         transition:
           filter $transition-time $default-ease,
           opacity $transition-time $default-ease;

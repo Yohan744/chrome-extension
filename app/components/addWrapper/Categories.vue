@@ -60,6 +60,11 @@
 
     isAnimatingCategoryDeletion.value = true;
 
+    gsap.set(category, {
+      padding: '0px',
+      width: `${categoryWidth}px`
+    });
+
     gsap.to(category, {
       clipPath: 'inset(0 100% 0 0 round 7px)',
       duration: 1.15,
@@ -67,8 +72,9 @@
     });
 
     gsap.to(category, {
-      marginRight: `-${categoryWidth + 9}px`,
-      delay: 0.3,
+      marginRight: `-9px`,
+      width: 0,
+      delay: 0.7,
       duration: 1,
       ease: 'power2.out',
       onComplete: () => {

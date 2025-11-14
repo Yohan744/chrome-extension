@@ -1,9 +1,14 @@
 <template>
-  <div ref="categoriesWrapper" class="categories-wrapper">
+  <div
+    ref="categoriesWrapper"
+    class="categories-wrapper"
+    :style="{ height: props.canDeleteCategories ? '130px' : '180px' }"
+  >
     <div class="wrapper">
       <div
         v-for="category in visibleCategories"
         :key="category.id"
+        :data-id="category.id"
         class="category"
         :style="{ background: category.color }"
         @click="e => handleClickOnCategory(e)"
@@ -24,8 +29,10 @@
   import PlusIcon from '~/assets/icons/plus.svg?component';
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
+  import gsap from 'gsap';
 
   const selectedCategory = ref<HTMLElement | null>(null);
+  const isAnimatingCategoryDeletion = ref(false);
 
   const props = defineProps<{
     isInAddWrapper?: boolean;
@@ -34,8 +41,8 @@
 
   const cleanUpCategoriesSelection = () => {
     const categoryElements = categoriesWrapper.value?.querySelectorAll('.category');
-    if (!categoryElements || categoryElements.length === 0) return;
     selectedCategory.value = null;
+    if (!categoryElements || categoryElements.length === 0) return;
     categoryElements.forEach(el => {
       el.classList.remove('disabled');
       el.classList.remove('enabled');
@@ -44,9 +51,33 @@
 
   const deleteCategory = () => {
     const category = selectedCategory.value;
-    if (!category || !props.canDeleteCategories) return;
+    if (!category || !props.canDeleteCategories || isAnimatingCategoryDeletion.value) return;
 
-    console.log('delete');
+    const categoryWidth = category.offsetWidth;
+    const categoryID = category.getAttribute('data-id');
+
+    if (!categoryID || !categoryWidth) return;
+
+    isAnimatingCategoryDeletion.value = true;
+
+    gsap.to(category, {
+      clipPath: 'inset(0 100% 0 0 round 7px)',
+      duration: 1.15,
+      ease: 'power2.out'
+    });
+
+    gsap.to(category, {
+      marginRight: `-${categoryWidth + 9}px`,
+      delay: 0.3,
+      duration: 1,
+      ease: 'power2.out',
+      onComplete: () => {
+        category.remove();
+        cleanUpCategoriesSelection();
+        isAnimatingCategoryDeletion.value = false;
+        ChromeStorageHelper.getInstance().deleteCategory(categoryID);
+      }
+    });
   };
 
   defineExpose({
@@ -69,7 +100,7 @@
     const target = e.currentTarget as HTMLElement;
     const categoryElements = categoriesWrapper.value?.querySelectorAll('.category');
 
-    if (!categoryElements || categoryElements.length === 0 || !target) return;
+    if (!categoryElements || categoryElements.length === 0 || !target || isAnimatingCategoryDeletion.value) return;
 
     const isTargetDisabled = target.classList.contains('disabled');
     const anyDisabled = Array.from(categoryElements).some(el => el.classList.contains('disabled'));
@@ -100,6 +131,7 @@
 
     events.on(ICustomEvents.newCategoryCreated, async () => {
       categories.value = await ChromeStorageHelper.getInstance().getCategories();
+      cleanUpCategoriesSelection();
     });
   });
 </script>
@@ -108,7 +140,6 @@
   .categories-wrapper {
     position: relative;
     margin: 15px 0 25px;
-    height: 180px;
     width: 100%;
     display: flex;
 
@@ -137,6 +168,7 @@
         cursor: pointer;
         filter: grayscale(0);
         opacity: 1;
+        clip-path: inset(0 0 0 0 round 7px);
         font-size: 13px;
         font-variation-settings: 'wght' 450;
         transition:

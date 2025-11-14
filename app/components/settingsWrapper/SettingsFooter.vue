@@ -8,7 +8,7 @@
       Feedback
     </a>
     <div class="separator" />
-    <a class="link" href="https://buymeacoffee.com/yohan_qns" target="_blank">Support me</a>
+    <a class="link" href="https://buymeacoffee.com/yohan_qns" target="_blank">Support</a>
   </div>
 </template>
 
@@ -23,8 +23,8 @@
 
     .link {
       position: relative;
-      font-size: 8px;
-      color: rgba($color-white, 0.75);
+      font-size: 7px;
+      color: rgba($color-white, 0.5);
       transition: color calc($transition-time * 0.8) $default-ease;
 
       &:before {

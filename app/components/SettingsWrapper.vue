@@ -47,8 +47,8 @@
       position: relative;
       margin-top: 25px;
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
+      justify-content: space-between;
+      align-items: flex-end;
       gap: 15px;
 
       .title {
@@ -59,23 +59,26 @@
 
       .button {
         position: relative;
-        height: 32px;
-        width: 80px;
-        padding: 6px;
+        height: 30px;
+        width: 72px;
         @include center();
         border: none;
         background: linear-gradient(120deg, $color-blue-violet 0%, $color-orchid 70%);
         border-radius: 7px;
         cursor: pointer;
-        font-size: 12px;
+        font-size: 10px;
         font-variation-settings: 'wght' 550;
         color: $color-white;
-        opacity: 0;
+        opacity: 0.35;
+        filter: grayscale(1);
         pointer-events: none;
-        transition: opacity $transition-time $default-ease;
+        transition:
+          opacity $transition-time $default-ease,
+          filter $transition-time $default-ease;
 
         &.active {
           opacity: 1;
+          filter: grayscale(0);
           pointer-events: all;
         }
 

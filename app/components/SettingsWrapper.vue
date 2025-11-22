@@ -1,7 +1,7 @@
 <template>
   <section id="settings-wrapper">
-    <GoBack :title="title" />
-    <AddCustomCategory />
+    <GoBack :title="title" @go-back-clicked="handleGoBackClicked" />
+    <AddCustomCategory ref="AddCustomCategoryRef" />
     <div class="delete-category-wrapper">
       <div class="title">Delete category</div>
       <button
@@ -25,7 +25,13 @@
 
   const title = 'Settings';
 
+  const AddCustomCategoryRef = ref<InstanceType<typeof AddCustomCategory> | null>(null);
   const CategoriesRef = ref<InstanceType<typeof Categories> | null>(null);
+
+  const handleGoBackClicked = () => {
+    CategoriesRef.value?.cleanUpCategoriesSelection();
+    AddCustomCategoryRef.value?.clean();
+  };
 </script>
 
 <style scoped lang="scss">

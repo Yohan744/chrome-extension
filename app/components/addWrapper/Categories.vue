@@ -74,7 +74,7 @@
     gsap.to(category, {
       marginRight: `-9px`,
       width: 0,
-      delay: 0.7,
+      delay: 0.5,
       duration: 1,
       ease: 'power2.out',
       onComplete: () => {

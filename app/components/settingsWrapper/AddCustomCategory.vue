@@ -98,6 +98,15 @@
     events.trigger(ICustomEvents.newCategoryCreated);
     categoryInputRef.value!.value = '';
   };
+
+  const clean = () => {
+    categoryName.value = '';
+    categoryInputRef.value!.value = '';
+  };
+
+  defineExpose({
+    clean
+  });
 </script>
 
 <style scoped lang="scss">

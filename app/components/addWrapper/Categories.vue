@@ -2,9 +2,9 @@
   <div
     ref="categoriesWrapper"
     class="categories-wrapper"
-    :style="{ height: props.canDeleteCategories ? '130px' : '180px' }"
+    :style="{ height: props.canDeleteCategories ? '140px' : '185px' }"
   >
-    <div class="wrapper">
+    <div ref="WrapperRef" class="wrapper">
       <div
         v-for="category in visibleCategories"
         :key="category.id"
@@ -32,6 +32,7 @@
   import gsap from 'gsap';
 
   const selectedCategory = ref<HTMLElement | null>(null);
+  const WrapperRef = ref<HTMLElement | null>(null);
   const isAnimatingCategoryDeletion = ref(false);
 
   const props = defineProps<{
@@ -42,6 +43,7 @@
   const cleanUpCategoriesSelection = () => {
     const categoryElements = categoriesWrapper.value?.querySelectorAll('.category');
     selectedCategory.value = null;
+    WrapperRef.value?.scrollTo({ top: 0, behavior: 'instant' });
     if (!categoryElements || categoryElements.length === 0) return;
     categoryElements.forEach(el => {
       el.classList.remove('disabled');
@@ -145,12 +147,13 @@
 <style scoped lang="scss">
   .categories-wrapper {
     position: relative;
-    margin: 15px 0 25px;
+    margin: 15px 0 0;
     width: 100%;
     display: flex;
 
     .wrapper {
       position: relative;
+      padding-bottom: 15px;
       gap: 9px;
       height: fit-content;
       max-height: 100%;
@@ -221,9 +224,10 @@
       content: '';
       bottom: 0;
       left: 0;
-      height: 1px;
+      height: 50px;
       width: 100%;
       z-index: 1;
+      pointer-events: none;
       background: linear-gradient(rgba($color-black, 0) 0%, rgba($color-black, 0.25) 50%, rgba($color-black, 1) 100%);
     }
   }

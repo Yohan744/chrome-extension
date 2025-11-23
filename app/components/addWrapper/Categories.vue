@@ -40,10 +40,10 @@
     canDeleteCategories?: boolean;
   }>();
 
-  const cleanUpCategoriesSelection = () => {
+  const cleanUpCategoriesSelection = (scrollToTop: boolean = true) => {
     const categoryElements = categoriesWrapper.value?.querySelectorAll('.category');
     selectedCategory.value = null;
-    WrapperRef.value?.scrollTo({ top: 0, behavior: 'instant' });
+    if (scrollToTop) WrapperRef.value?.scrollTo({ top: 0, behavior: 'instant' });
     if (!categoryElements || categoryElements.length === 0) return;
     categoryElements.forEach(el => {
       el.classList.remove('disabled');
@@ -81,7 +81,7 @@
       ease: 'power2.out',
       onComplete: () => {
         category.remove();
-        cleanUpCategoriesSelection();
+        cleanUpCategoriesSelection(false);
         isAnimatingCategoryDeletion.value = false;
         ChromeStorageHelper.getInstance().deleteCategory(categoryID);
       }

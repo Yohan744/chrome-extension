@@ -112,7 +112,7 @@
 <style scoped lang="scss">
   .add-custom-category-title {
     position: relative;
-    margin-top: 35px;
+    margin-top: 30px;
     font-size: 17px;
     font-variation-settings: 'wght' 600;
   }

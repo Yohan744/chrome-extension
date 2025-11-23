@@ -126,7 +126,7 @@
 
     .task-input {
       position: relative;
-      margin-top: 35px;
+      margin-top: 30px;
       padding: 15px;
       height: 50px;
       width: 100%;

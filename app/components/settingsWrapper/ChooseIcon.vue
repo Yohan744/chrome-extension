@@ -50,10 +50,17 @@
 <style scoped lang="scss">
   .btn {
     position: relative;
+    height: 31px;
+    width: 31px;
     padding: 6px;
     border-radius: 7px;
     cursor: pointer;
+    @include center;
     background: rgba($color-gray, 0.4);
+
+    :deep(.icon) {
+      height: 18px;
+    }
   }
 
   .content {

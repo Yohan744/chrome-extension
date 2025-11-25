@@ -26,15 +26,23 @@
 
     .btn-wrapper {
       position: relative;
+      @include center;
+      opacity: 1;
+      transition: opacity $transition-time $default-ease;
       z-index: z('popUp-btn');
+
+      @include has-hover {
+        opacity: 0.7;
+      }
     }
 
     .content-wrapper {
-      position: absolute;
-      top: 38px;
-      left: 0;
+      position: fixed;
+      margin: 10px auto 0;
+      left: -50%;
+      width: 80%;
       pointer-events: none;
-      transform: translate3d(0, 10px, 0);
+      transform: translate3d(50%, 10px, 0);
       opacity: 0;
       z-index: z('popUp-content');
       transition:
@@ -44,7 +52,7 @@
       &.open {
         pointer-events: all;
         opacity: 1;
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(50%, 0, 0);
       }
     }
 
@@ -57,6 +65,7 @@
       opacity: 0;
       background: rgba($color-black, 0.2);
       z-index: 1;
+      transition: opacity $transition-time $default-ease;
 
       &.open {
         pointer-events: all;

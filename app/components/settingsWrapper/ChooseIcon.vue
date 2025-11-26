@@ -65,12 +65,14 @@
 
   .content {
     position: relative;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    height: fit-content;
+    width: 100%;
+    padding: 25px 20px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
     gap: 10px;
-    border-radius: 7px;
-    background: rgba($color-gray, 1);
 
     .icon-wrapper {
       position: relative;

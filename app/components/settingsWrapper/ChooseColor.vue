@@ -107,9 +107,8 @@
       height: 30px;
       width: 30px;
       border-radius: 7px;
-      padding: 5px;
       cursor: pointer;
-      border: 1px solid rgba(var(--color-rgb), 0.1);
+      border: 1px solid rgba(var(--color-rgb), 0.15);
       transition: border $transition-time $default-ease;
 
       div {
@@ -119,10 +118,19 @@
         border-radius: 3px;
         background: var(--color);
         pointer-events: none;
+        transform: scale(0.55);
+        transition:
+          transform $transition-time $default-ease,
+          border-radius $transition-time $default-ease;
       }
 
       &.active {
         border: 1px solid rgba(var(--color-rgb), 1);
+
+        div {
+          border-radius: 3px;
+          transform: scale(0.7);
+        }
       }
     }
   }

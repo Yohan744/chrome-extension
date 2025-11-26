@@ -68,7 +68,7 @@
       width: 100%;
       pointer-events: none;
       opacity: 0;
-      background: rgba($color-black, 0.5);
+      background: rgba($color-black, 0.35);
       z-index: 1;
       transition: opacity $transition-time $default-ease;
 

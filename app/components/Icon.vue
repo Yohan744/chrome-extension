@@ -28,5 +28,9 @@
     aspect-ratio: 1;
     mask-size: 100%;
     background-repeat: no-repeat;
+    will-change: background-color, mask-image;
+    transition:
+      background $transition-time $default-ease,
+      mask-image $transition-time $default-ease;
   }
 </style>

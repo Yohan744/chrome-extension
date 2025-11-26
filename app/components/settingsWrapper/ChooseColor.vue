@@ -11,12 +11,13 @@
         <div
           v-for="color in colors"
           :key="color"
+          :style="{ '--color': color, '--color-rgb': hexToRgb(color) }"
           :class="{ active: color === category?.color }"
           class="color"
           :data-color="color"
           @click="e => handleColorClick(e)"
         >
-          <div :style="{ '--color': color }" />
+          <div />
         </div>
       </div>
     </template>
@@ -51,6 +52,23 @@
     emits('colorSelected', color);
     emits('updateCategory');
   };
+
+  const hexToRgb = (hex: string) => {
+    const h = hex.replace('#', '');
+    const bigint = parseInt(
+      h.length === 3
+        ? h
+            .split('')
+            .map(c => c + c)
+            .join('')
+        : h,
+      16
+    );
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `${r}, ${g}, ${b}`;
+  };
 </script>
 
 <style scoped lang="scss">
@@ -77,22 +95,22 @@
     position: relative;
     height: fit-content;
     width: 100%;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    padding: 25px 20px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
     gap: 10px;
-    border-radius: 7px;
-    background: rgba($color-gray, 0.85);
 
     .color {
       position: relative;
-      height: 28px;
-      width: 28px;
+      height: 30px;
+      width: 30px;
       border-radius: 7px;
-      border: 1px solid rgba($color-gray, 0.2);
-      padding: 4px;
+      padding: 5px;
       cursor: pointer;
-      background: rgba($color-gray, 0.4);
+      border: 1px solid rgba(var(--color-rgb), 0.1);
+      transition: border $transition-time $default-ease;
 
       div {
         position: relative;
@@ -103,29 +121,8 @@
         pointer-events: none;
       }
 
-      &:before {
-        position: absolute;
-        content: '';
-        bottom: -5px;
-        left: 50%;
-        height: 2px;
-        width: 60%;
-        border-radius: 7px;
-        opacity: 0;
-        transform: translate3d(-50%, 4px, 0);
-        background: var(--color);
-        transition:
-          opacity $transition-time $default-ease,
-          transform $transition-time $default-ease;
-      }
-
       &.active {
-        //&:before {
-        //  opacity: 1;
-        //  transform: translate3d(-50%, 0, 0);
-        //}
-
-        border: 1px solid rgba($color-gray, 1);
+        border: 1px solid rgba(var(--color-rgb), 1);
       }
     }
   }

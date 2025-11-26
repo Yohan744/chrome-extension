@@ -39,12 +39,17 @@
     .content-wrapper {
       position: fixed;
       margin: 10px auto 0;
-      left: -50%;
-      width: 80%;
+      left: 50%;
+      max-height: 165px;
+      width: 75.9%;
       pointer-events: none;
-      transform: translate3d(50%, 10px, 0);
+      @include light-border;
+      transform: translate3d(-50%, 10px, 0);
       opacity: 0;
       z-index: z('popUp-content');
+      border-radius: 7px;
+      backdrop-filter: blur(7px);
+      background: $color-popup-bg;
       transition:
         opacity $transition-time $default-ease,
         transform $transition-time $default-ease;
@@ -52,7 +57,7 @@
       &.open {
         pointer-events: all;
         opacity: 1;
-        transform: translate3d(50%, 0, 0);
+        transform: translate3d(-50%, 0, 0);
       }
     }
 
@@ -63,7 +68,7 @@
       width: 100%;
       pointer-events: none;
       opacity: 0;
-      background: rgba($color-black, 0.2);
+      background: rgba($color-black, 0.5);
       z-index: 1;
       transition: opacity $transition-time $default-ease;
 

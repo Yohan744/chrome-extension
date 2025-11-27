@@ -104,8 +104,8 @@
 
     .color {
       position: relative;
-      height: 30px;
-      width: 30px;
+      height: 32px;
+      width: 32px;
       border-radius: 7px;
       cursor: pointer;
       border: 2px solid rgba($color-gray, 0.15);

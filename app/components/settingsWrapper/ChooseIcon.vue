@@ -8,7 +8,13 @@
 
     <template #content>
       <div class="content">
-        <div v-for="icon in icons" :key="icon" class="icon-wrapper" @click="e => handleIconClick(e)">
+        <div
+          v-for="icon in icons"
+          :key="icon"
+          class="icon-wrapper"
+          :class="{ active: icon === category?.iconName }"
+          @click="e => handleIconClick(e)"
+        >
           <Icon :data-icon="icon" :icon-name="icon" />
         </div>
       </div>
@@ -38,7 +44,7 @@
     if (!props.category || !e.target) return;
 
     const target = e.target as HTMLElement;
-    const iconName = target.getAttribute('data-icon');
+    const iconName = target.children[0]?.getAttribute('data-icon');
     if (!iconName || iconName === props.category.iconName) return;
     await ChromeStorageHelper.getInstance().updateCategory(props.category.id, { iconName: iconName });
     events.trigger(ICustomEvents.updatedCustomCategory);
@@ -76,31 +82,31 @@
 
     .icon-wrapper {
       position: relative;
-      padding: 7px;
+      height: 32px;
+      width: 32px;
       border-radius: 7px;
+      @include center;
       cursor: pointer;
-      background: rgba($color-white, 0.8);
+      background: rgba(255, 255, 255, 0.025);
+      transition: background $transition-time $default-ease;
 
-      &:before {
-        position: absolute;
-        content: '';
-        bottom: -5px;
-        left: 50%;
-        height: 2px;
-        width: 60%;
-        border-radius: 7px;
-        opacity: 0;
-        transform: translate3d(-50%, 4px, 0);
-        background: $color-white;
+      :deep(.icon) {
+        height: 18px;
+        width: auto;
+        transform: scale(1);
+        pointer-events: none;
+        opacity: 0.8;
         transition:
-          opacity $transition-time $default-ease,
-          transform $transition-time $default-ease;
+          transform $transition-time $default-ease,
+          opacity $transition-time $default-ease;
       }
 
       &.active {
-        &:before {
+        background: rgba(255, 255, 255, 0.15);
+
+        :deep(.icon) {
+          transform: scale(1.075);
           opacity: 1;
-          transform: translate3d(-50%, 0, 0);
         }
       }
     }

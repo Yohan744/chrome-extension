@@ -4,19 +4,65 @@
       <slot name="btn"></slot>
     </div>
 
-    <div class="content-wrapper" :class="{ open: isOpen }">
+    <div ref="popIn" class="content-wrapper">
       <slot name="content"></slot>
     </div>
 
-    <div class="background" :class="{ open: isOpen }" @click="handleToggle" />
+    <div ref="overlay" class="background" :class="{ open: isOpen }" @click="handleToggle" />
   </div>
 </template>
 
 <script setup lang="ts">
-  const isOpen = ref(false);
+  import gsap from 'gsap';
+
+  const isOpen = ref<boolean>(false);
+  const isAnimating = ref<boolean>(false);
+
+  const popIn = ref<HTMLElement | null>(null);
+  const overlay = ref<HTMLElement | null>(null);
 
   const handleToggle = () => {
+    if (isAnimating.value) return;
     isOpen.value = !isOpen.value;
+  };
+
+  watch(
+    () => isOpen.value,
+    (state: boolean) => {
+      animatePopIn(state);
+    }
+  );
+
+  const animatePopIn = (state: boolean) => {
+    if (isAnimating.value) return;
+    gsap.to(popIn.value, {
+      opacity: state ? 1 : 0,
+      scale: 1,
+      overwrite: true,
+      force3D: true,
+      pointerEvents: state ? 'all' : 'none',
+      duration: state ? 0.6 : 0.3,
+      ease: state ? 'power3.out' : 'sine.in'
+    });
+
+    gsap.to(overlay.value, {
+      opacity: state ? 1 : 0,
+      pointerEvents: state ? 'all' : 'none',
+      overwrite: true,
+      duration: state ? 0.6 : 0.3,
+      ease: state ? 'power3.out' : 'sine.in',
+      onStart: () => {
+        isAnimating.value = true;
+      },
+      onComplete: () => {
+        if (!state) {
+          gsap.set(popIn.value, {
+            scale: 0.8
+          });
+        }
+        gsap.delayedCall(0, () => (isAnimating.value = false));
+      }
+    });
   };
 </script>
 
@@ -44,21 +90,12 @@
       width: 75.9%;
       pointer-events: none;
       @include light-border;
-      transform: translate3d(-50%, 10px, 0);
+      transform: translate3d(-50%, 0, 0) scale(0.75);
       opacity: 0;
       z-index: z('popUp-content');
       border-radius: 7px;
       backdrop-filter: blur(7px);
       background: $color-popup-bg;
-      transition:
-        opacity $transition-time $default-ease,
-        transform $transition-time $default-ease;
-
-      &.open {
-        pointer-events: all;
-        opacity: 1;
-        transform: translate3d(-50%, 0, 0);
-      }
     }
 
     .background {
@@ -68,13 +105,10 @@
       width: 100%;
       pointer-events: none;
       opacity: 0;
-      background: rgba($color-black, 0.35);
+      background: rgba($color-black, 0.425);
       z-index: 1;
-      transition: opacity $transition-time $default-ease;
 
       &.open {
-        pointer-events: all;
-        opacity: 1;
         z-index: z('popUp-background');
       }
     }

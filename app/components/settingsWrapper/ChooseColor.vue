@@ -108,7 +108,7 @@
       width: 30px;
       border-radius: 7px;
       cursor: pointer;
-      border: 1px solid rgba(var(--color-rgb), 0.15);
+      border: 2px solid rgba($color-gray, 0.15);
       transition: border $transition-time $default-ease;
 
       div {
@@ -125,7 +125,7 @@
       }
 
       &.active {
-        border: 1px solid rgba(var(--color-rgb), 1);
+        border: 2px solid rgba(var(--color-rgb), 1);
 
         div {
           border-radius: 3px;

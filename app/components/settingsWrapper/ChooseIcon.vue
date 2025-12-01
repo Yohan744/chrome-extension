@@ -79,6 +79,7 @@
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 10px;
+    overflow-y: scroll;
 
     .icon-wrapper {
       position: relative;

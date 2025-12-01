@@ -87,6 +87,7 @@
       margin: 10px auto 0;
       left: 50%;
       max-height: 165px;
+      overflow: hidden;
       width: 75.9%;
       pointer-events: none;
       @include light-border;

@@ -14,8 +14,10 @@ export const IIcons = {
 
   home: 'house',
   brush: 'brush-cleaning',
-  utensils: 'utensils',
-  utensilsss: 'utensils-crossed',
+  utensils: 'utensils-crossed',
+  cookie: 'cookie',
+  soup: 'soup',
+  wine: 'wine',
   cart: 'shopping-cart',
   bed: 'bed-double',
   lightbulb: 'lightbulb',
@@ -23,8 +25,12 @@ export const IIcons = {
 
   ///////////////////////////////////////////////////////
 
-  cookie: 'cookie',
   dumbbell: 'dumbbell',
+  heart: 'heart',
+  pill: 'pill',
+
+  ///////////////////////////////////////////////////////
+
   others: 'ellipsis',
   singleUser: 'user',
   doubleUser: 'users'

@@ -79,7 +79,6 @@
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 10px;
-    overflow-y: scroll;
 
     .icon-wrapper {
       position: relative;
@@ -88,7 +87,7 @@
       border-radius: 7px;
       @include center;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.025);
+      background: rgba(255, 255, 255, 0.04);
       transition: background $transition-time $default-ease;
 
       :deep(.icon) {
@@ -103,7 +102,7 @@
       }
 
       &.active {
-        background: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.25);
 
         :deep(.icon) {
           transform: scale(1.075);

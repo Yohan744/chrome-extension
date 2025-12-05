@@ -97,6 +97,7 @@
       border-radius: 7px;
       backdrop-filter: blur(7px);
       background: $color-popup-bg;
+      overflow-y: scroll;
     }
 
     .background {

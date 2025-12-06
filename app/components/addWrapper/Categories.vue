@@ -34,6 +34,7 @@
   const selectedCategory = ref<HTMLElement | null>(null);
   const WrapperRef = ref<HTMLElement | null>(null);
   const isAnimatingCategoryDeletion = ref(false);
+  const events = useGlobalEvents();
 
   const props = defineProps<{
     isInAddWrapper?: boolean;
@@ -84,6 +85,7 @@
         cleanUpCategoriesSelection(false);
         isAnimatingCategoryDeletion.value = false;
         ChromeStorageHelper.getInstance().deleteCategory(categoryID);
+        events.trigger(ICustomEvents.categoryDeleted);
       }
     });
   };
@@ -95,8 +97,6 @@
   });
 
   const emit = defineEmits(['categoryIsSelected', 'addCategoryClicked']);
-
-  const events = useGlobalEvents();
 
   const categoriesWrapper = ref<HTMLElement | null>(null);
   const categories = ref<ICategoryType[] | null>(await ChromeStorageHelper.getInstance().getCategories());

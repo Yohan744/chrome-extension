@@ -20,7 +20,13 @@
         />
       </label>
 
-      <button class="create" :class="{ active: categoryName !== '' }" @click="handleCategoryCreation">Create</button>
+      <button
+        class="create"
+        :class="{ active: categoryName !== '' && !checkIfCategoryAlreadyExists(categoryName) }"
+        @click="handleCategoryCreation"
+      >
+        Create
+      </button>
     </div>
   </div>
 </template>
@@ -40,6 +46,7 @@
 
   const categoryInputRef = ref<HTMLInputElement | null>(null);
   const category = ref<ICategoryType | null>(null);
+  const allCategories = ref<ICategoryType[]>([]);
 
   const colorSelected = ref<string | null>(null);
   const iconSelected = ref<string | null>(null);
@@ -54,9 +61,20 @@
 
   onMounted(async () => {
     await updateCategory();
+    allCategories.value = await ChromeStorageHelper.getInstance().getCategories();
 
     events.on(ICustomEvents.storageInitiated, async () => {
       await updateCategory();
+    });
+
+    events.on(ICustomEvents.newCategoryCreated, async () => {
+      allCategories.value = await ChromeStorageHelper.getInstance().getCategories();
+      console.log('boum');
+    });
+
+    events.on(ICustomEvents.categoryDeleted, async () => {
+      allCategories.value = await ChromeStorageHelper.getInstance().getCategories();
+      console.log('pas boum');
     });
   });
 
@@ -83,8 +101,29 @@
     categoryName.value = target.value.trim();
   };
 
+  const checkIfCategoryAlreadyExists = (name: string) => {
+    return allCategories.value.some(
+      category =>
+        category.name
+          .toLowerCase()
+          .replace(/<[^>]*>/g, '')
+          .replace(/\s+/g, ' ') ===
+        name
+          .toLowerCase()
+          .replace(/<[^>]*>/g, '')
+          .replace(/\s+/g, ' ')
+    );
+  };
+
   const handleCategoryCreation = async () => {
-    if (!colorSelected.value || !iconSelected.value || !categoryName.value || categoryName.value === '') return;
+    if (
+      !colorSelected.value ||
+      !iconSelected.value ||
+      !categoryName.value ||
+      categoryName.value === '' ||
+      checkIfCategoryAlreadyExists(categoryName.value)
+    )
+      return;
 
     await ChromeStorageHelper.getInstance().addCategory({
       id: crypto.randomUUID(),

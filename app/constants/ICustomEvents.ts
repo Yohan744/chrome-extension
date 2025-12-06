@@ -6,5 +6,6 @@ export const ICustomEvents = {
   switchSectionStart: 'sectionSwitchStart',
   updatedCustomCategory: 'updated-custom-category',
   newCategoryCreated: 'new-category-created',
+  categoryDeleted: 'category-deleted',
   cleanCustomCategoryTodo: 'clean-custom-category-todo'
 };

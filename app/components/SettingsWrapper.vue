@@ -26,7 +26,7 @@
   import { ICustomEvents } from '~/constants/ICustomEvents';
 
   const title = 'Settings';
-  const eventEmitter = useGlobalEvents();
+  const events = useGlobalEvents();
 
   const AddCustomCategoryRef = ref<InstanceType<typeof AddCustomCategory> | null>(null);
   const CategoriesRef = ref<InstanceType<typeof Categories> | null>(null);
@@ -34,7 +34,7 @@
   const handleGoBackClicked = () => {
     CategoriesRef.value?.cleanUpCategoriesSelection();
     AddCustomCategoryRef.value?.clean();
-    eventEmitter.trigger(ICustomEvents.cleanCustomCategoryTodo);
+    events.trigger(ICustomEvents.cleanCustomCategoryTodo);
   };
 </script>
 

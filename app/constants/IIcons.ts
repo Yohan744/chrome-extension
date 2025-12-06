@@ -45,6 +45,7 @@ export const IIcons = {
   cinema: 'clapperboard',
   camera: 'camera',
   plane: 'plane',
+  car: 'car',
   mountain: 'mountain-snow',
 
   ///////////////////////////////////////////////////////
@@ -53,11 +54,32 @@ export const IIcons = {
   doubleUser: 'users',
   mail: 'mail',
   phone: 'phone',
+  wifi: 'wifi',
   party: 'party',
 
   ///////////////////////////////////////////////////////
 
+  wallet: 'wallet',
+  bank: 'landmark',
+  creditCard: 'credit-card',
+  coins: 'coins',
+
   ///////////////////////////////////////////////////////
 
+  settings: 'settings',
+  earth: 'earth',
+  box: 'box',
+  wand: 'wand-sparkles',
+
+  ///////////////////////////////////////////////////////
+
+  leaf: 'leaf',
+  sun: 'sun',
+  cloudy: 'cloudy',
+  paw: 'paw-print',
+
+  ///////////////////////////////////////////////////////
+
+  alert: 'triangle-alert',
   others: 'ellipsis'
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="single-todo" :data-id="props.todoItem.id">
-    <TodoCheckbox :color="primaryColor" @checked="handleCheckboxClick" />
+    <TodoCheckbox ref="todoCheckboxRef" :color="primaryColor" @checked="handleCheckboxClick" />
     <div class="right-part" :style="{ '--selection-bg': primaryColor }">
       <div class="icon-wrapper" :style="wrapperStyle">
         <Icon :icon-name="category?.iconName" :color="primaryColor" />
@@ -30,6 +30,7 @@
   }>();
 
   const events = useGlobalEvents();
+  const todoCheckboxRef = ref<InstanceType<typeof TodoCheckbox> | null>(null);
 
   const category = ref<ICategoryType | null>(
     await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId)
@@ -56,6 +57,10 @@
 
     events.on(ICustomEvents.updatedCustomCategory, async () => {
       category.value = await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId);
+    });
+
+    events.on(ICustomEvents.cleanCustomCategoryTodo, () => {
+      todoCheckboxRef.value?.uncheck();
     });
   });
 </script>

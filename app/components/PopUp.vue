@@ -59,6 +59,7 @@
           gsap.set(popIn.value, {
             scale: 0.8
           });
+          popIn.value?.scrollTo({ top: 0, behavior: 'instant' });
         }
         gsap.delayedCall(0, () => (isAnimating.value = false));
       }

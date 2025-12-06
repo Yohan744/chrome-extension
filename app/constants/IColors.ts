@@ -6,12 +6,15 @@ export const IColors = {
   green: '#73ff00',
   springGreen: '#3aff40',
   turquoise: '#00ff80',
+  neonMint: '#00FFA8',
   cyan: '#00cec0',
+  iceBlue: '#A8F6FF',
   blue: '#009dff',
   azure: '#0068ff',
   darkblue: '#0033ff',
   indigo: '#4c1aff',
   purple: '#9900ff',
   magenta: '#cc00f5',
-  pink: '#ff00ea'
+  pink: '#ff00ea',
+  hotCoral: '#FF2E6F'
 };

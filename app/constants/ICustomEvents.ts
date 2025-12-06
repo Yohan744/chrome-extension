@@ -5,5 +5,6 @@ export const ICustomEvents = {
   taskDeleted: 'task-deleted',
   switchSectionStart: 'sectionSwitchStart',
   updatedCustomCategory: 'updated-custom-category',
-  newCategoryCreated: 'new-category-created'
+  newCategoryCreated: 'new-category-created',
+  cleanCustomCategoryTodo: 'clean-custom-category-todo'
 };

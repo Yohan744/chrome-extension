@@ -22,8 +22,11 @@
   import Categories from '~/components/addWrapper/Categories.vue';
   import GoBack from '~/components/GoBack.vue';
   import SettingsFooter from '~/components/settingsWrapper/SettingsFooter.vue';
+  import { useGlobalEvents } from '~/composables/GlobalEvents';
+  import { ICustomEvents } from '~/constants/ICustomEvents';
 
   const title = 'Settings';
+  const eventEmitter = useGlobalEvents();
 
   const AddCustomCategoryRef = ref<InstanceType<typeof AddCustomCategory> | null>(null);
   const CategoriesRef = ref<InstanceType<typeof Categories> | null>(null);
@@ -31,6 +34,7 @@
   const handleGoBackClicked = () => {
     CategoriesRef.value?.cleanUpCategoriesSelection();
     AddCustomCategoryRef.value?.clean();
+    eventEmitter.trigger(ICustomEvents.cleanCustomCategoryTodo);
   };
 </script>
 

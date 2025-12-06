@@ -90,6 +90,10 @@
       background: rgba(255, 255, 255, 0.04);
       transition: background $transition-time $default-ease;
 
+      @include has-hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
       :deep(.icon) {
         height: 18px;
         width: auto;

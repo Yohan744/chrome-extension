@@ -111,6 +111,10 @@
       border: 2px solid rgba($color-gray, 0.15);
       transition: border $transition-time $default-ease;
 
+      @include has-hover {
+        border: 2px solid rgba($color-gray, 0.4);
+      }
+
       div {
         position: relative;
         height: 100%;

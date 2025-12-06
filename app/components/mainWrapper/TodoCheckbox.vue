@@ -20,6 +20,13 @@
     if (!inputRef.value || !inputRef.value.checked || !e.target) return;
     emit('checked', e.target);
   };
+
+  const uncheck = () => {
+    if (!inputRef.value) return;
+    inputRef.value.checked = false;
+  };
+
+  defineExpose({ uncheck });
 </script>
 
 <style scoped lang="scss">

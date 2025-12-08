@@ -116,7 +116,7 @@
     const anyDisabled = Array.from(categoryElements).some(el => el.classList.contains('disabled'));
 
     if (!isTargetDisabled && anyDisabled) {
-      cleanUpCategoriesSelection();
+      cleanUpCategoriesSelection(false);
       return;
     }
 

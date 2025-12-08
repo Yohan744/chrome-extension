@@ -85,7 +85,7 @@
         cleanUpCategoriesSelection(false);
         isAnimatingCategoryDeletion.value = false;
         ChromeStorageHelper.getInstance().deleteCategory(categoryID);
-        events.trigger(ICustomEvents.categoryDeleted);
+        events.trigger(ICustomEvents.categoryDeleted, categoryID);
       }
     });
   };

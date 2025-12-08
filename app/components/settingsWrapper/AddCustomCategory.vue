@@ -69,12 +69,10 @@
 
     events.on(ICustomEvents.newCategoryCreated, async () => {
       allCategories.value = await ChromeStorageHelper.getInstance().getCategories();
-      console.log('boum');
     });
 
-    events.on(ICustomEvents.categoryDeleted, async () => {
-      allCategories.value = await ChromeStorageHelper.getInstance().getCategories();
-      console.log('pas boum');
+    events.on(ICustomEvents.categoryDeleted, async categoryID => {
+      allCategories.value = allCategories.value.filter(category => category.id !== categoryID);
     });
   });
 

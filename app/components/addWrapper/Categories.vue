@@ -13,6 +13,7 @@
         :style="{ background: category.color }"
         @click="e => handleClickOnCategory(e)"
       >
+        <Icon :icon-name="category?.iconName" :color="'#ffffff'" />
         {{ category.name }}
       </div>
 
@@ -30,6 +31,7 @@
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
   import gsap from 'gsap';
+  import Icon from '~/components/Icon.vue';
 
   const selectedCategory = ref<HTMLElement | null>(null);
   const WrapperRef = ref<HTMLElement | null>(null);
@@ -167,7 +169,7 @@
 
       .category {
         position: relative;
-        padding: 0 14px;
+        padding: 0 14px 0 7px;
         height: 35px;
         display: flex;
         justify-content: center;
@@ -179,7 +181,7 @@
         opacity: 1;
         clip-path: inset(0 0 0 0 round 7px);
         font-size: 13px;
-        font-variation-settings: 'wght' 450;
+        font-variation-settings: 'wght' 525;
         will-change: opacity, filter, clip-path, margin, width, padding;
         transition:
           filter $transition-time $default-ease,
@@ -192,6 +194,11 @@
 
         @include has-hover {
           opacity: 0.7;
+        }
+
+        :deep(.icon) {
+          margin-right: 4px;
+          height: 15px;
         }
       }
 

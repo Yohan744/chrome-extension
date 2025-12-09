@@ -10,7 +10,7 @@
         <p class="task">{{ props.todoItem.task }}</p>
       </div>
 
-      <div class="indicator" :style="{ background: category?.color || '#eeeeee' }" />
+      <div class="indicator" :style="{ background: category?.color.hex || '#eeeeee' }" />
     </div>
   </div>
 </template>
@@ -36,7 +36,7 @@
     await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId)
   );
 
-  const primaryColor = computed(() => category.value?.color || '#eeeeee');
+  const primaryColor = computed(() => category.value?.color.hex || '#eeeeee');
   const darkerBg = computed(() => `color-mix(in hsl, ${primaryColor.value} 40%, black)`);
   const wrapperStyle = computed(() => ({ background: darkerBg.value }));
 

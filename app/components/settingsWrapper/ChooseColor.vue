@@ -2,7 +2,7 @@
   <PopUp>
     <template #btn>
       <div class="btn">
-        <div class="color" :style="{ background: category?.color }" />
+        <div class="color" :style="{ background: category?.color.hex }" />
       </div>
     </template>
 
@@ -10,11 +10,12 @@
       <div class="content">
         <div
           v-for="color in colors"
-          :key="color"
-          :style="{ '--color': color, '--color-rgb': hexToRgb(color) }"
-          :class="{ active: color === category?.color }"
+          :key="color.hex"
+          :style="{ '--color': color.hex, '--color-rgb': hexToRgb(color.hex) }"
+          :class="{ active: color.hex === category?.color.hex }"
           class="color"
-          :data-color="color"
+          :data-color="color.hex"
+          :data-text-color="color.textColor"
           @click="e => handleColorClick(e)"
         >
           <div />
@@ -46,10 +47,16 @@
 
     const target = e.target as HTMLElement;
     const color = target.getAttribute('data-color');
-    if (!color || color === props.category.color) return;
-    await ChromeStorageHelper.getInstance().updateCategory(props.category.id, { color: color });
+    const textColor = target.getAttribute('data-text-color');
+    if (!color || !textColor || color === props.category.color.hex) return;
+    await ChromeStorageHelper.getInstance().updateCategory(props.category.id, {
+      color: {
+        hex: color,
+        textColor: textColor
+      }
+    });
     events.trigger(ICustomEvents.updatedCustomCategory);
-    emits('colorSelected', color);
+    emits('colorSelected', { hex: color, textColor: textColor });
     emits('updateCategory');
   };
 

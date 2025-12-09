@@ -10,10 +10,10 @@
         :key="category.id"
         :data-id="category.id"
         class="category"
-        :style="{ background: category.color }"
+        :style="{ background: category.color.hex, color: category.color.textColor }"
         @click="e => handleClickOnCategory(e)"
       >
-        <Icon :icon-name="category?.iconName" :color="'#ffffff'" />
+        <Icon :icon-name="category?.iconName" :color="category.color.textColor" />
         {{ category.name }}
       </div>
 
@@ -141,7 +141,7 @@
 
     events.on(ICustomEvents.newCategoryCreated, async () => {
       categories.value = await ChromeStorageHelper.getInstance().getCategories();
-      cleanUpCategoriesSelection();
+      cleanUpCategoriesSelection(false);
     });
   });
 </script>
@@ -169,7 +169,7 @@
 
       .category {
         position: relative;
-        padding: 0 14px 0 7px;
+        padding: 0 11px 0 10px;
         height: 35px;
         display: flex;
         justify-content: center;
@@ -181,7 +181,7 @@
         opacity: 1;
         clip-path: inset(0 0 0 0 round 7px);
         font-size: 13px;
-        font-variation-settings: 'wght' 525;
+        font-variation-settings: 'wght' 500;
         will-change: opacity, filter, clip-path, margin, width, padding;
         transition:
           filter $transition-time $default-ease,
@@ -197,7 +197,7 @@
         }
 
         :deep(.icon) {
-          margin-right: 4px;
+          margin-right: 7px;
           height: 15px;
         }
       }

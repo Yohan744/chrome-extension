@@ -36,7 +36,7 @@
   import SingleTodo from '~/components/mainWrapper/SingleTodo.vue';
   import ChooseColor from '~/components/settingsWrapper/ChooseColor.vue';
   import ChooseIcon from '~/components/settingsWrapper/ChooseIcon.vue';
-  import type { ICategoryType } from '~/types/ICategoryType';
+  import type { ICategoryType, IColorType } from '~/types/ICategoryType';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
@@ -48,7 +48,7 @@
   const category = ref<ICategoryType | null>(null);
   const allCategories = ref<ICategoryType[]>([]);
 
-  const colorSelected = ref<string | null>(null);
+  const colorSelected = ref<IColorType | null>(null);
   const iconSelected = ref<string | null>(null);
   const categoryName = ref<string>('');
 
@@ -82,7 +82,7 @@
     iconSelected.value = category.value?.iconName || null;
   };
 
-  const handleColorSelected = (color: string) => {
+  const handleColorSelected = (color: IColorType) => {
     colorSelected.value = color;
   };
 

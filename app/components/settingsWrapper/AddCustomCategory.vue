@@ -54,7 +54,7 @@
 
   const fakeTodo = ref<ITodoType>({
     id: 'x',
-    task: 'Hello World',
+    task: 'Hello world',
     categoryId: 'custom-category',
     order: 999
   });
@@ -123,8 +123,10 @@
     )
       return;
 
+    const id = crypto.randomUUID();
+
     await ChromeStorageHelper.getInstance().addCategory({
-      id: crypto.randomUUID(),
+      id: id,
       name: categoryName.value,
       iconName: iconSelected.value,
       color: colorSelected.value
@@ -132,7 +134,7 @@
 
     categoryName.value = '';
 
-    events.trigger(ICustomEvents.newCategoryCreated);
+    events.trigger(ICustomEvents.newCategoryCreated, id);
     categoryInputRef.value!.value = '';
   };
 

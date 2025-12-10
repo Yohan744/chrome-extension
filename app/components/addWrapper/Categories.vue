@@ -92,6 +92,22 @@
     });
   };
 
+  const animateCategoryApparition = (categoryElement: HTMLElement) => {
+    gsap.fromTo(
+      categoryElement,
+      {
+        opacity: 0,
+        clipPath: 'inset(0 100% 0 0 round 7px)'
+      },
+      {
+        opacity: 1,
+        clipPath: 'inset(0 0% 0 0 round 7px)',
+        duration: 1,
+        ease: 'power2.out'
+      }
+    );
+  };
+
   defineExpose({
     cleanUpCategoriesSelection,
     deleteCategory,
@@ -139,9 +155,24 @@
       categories.value = await ChromeStorageHelper.getInstance().getCategories();
     });
 
-    events.on(ICustomEvents.newCategoryCreated, async () => {
+    events.on(ICustomEvents.newCategoryCreated, async categoryID => {
       categories.value = await ChromeStorageHelper.getInstance().getCategories();
       cleanUpCategoriesSelection(false);
+
+      if (props.isInAddWrapper) return;
+
+      await nextTick();
+
+      console.log(categoryID);
+
+      animateCategoryApparition(
+        categoriesWrapper.value?.querySelector(`.category[data-id="${categoryID}"]`) as HTMLElement
+      );
+    });
+
+    events.on(ICustomEvents.categoryDeleted, async categoryID => {
+      if (!categories.value) return;
+      categories.value = categories.value.filter(category => category.id !== categoryID);
     });
   });
 </script>

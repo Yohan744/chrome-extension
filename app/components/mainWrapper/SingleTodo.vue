@@ -7,10 +7,13 @@
       </div>
 
       <div class="task-wrapper">
+        <p class="category-name" :style="{ background: primaryColor, color: category?.color.textColor }">
+          {{ category?.name }}
+        </p>
         <p class="task">{{ props.todoItem.task }}</p>
       </div>
 
-      <div class="indicator" :style="{ background: category?.color.hex || '#eeeeee' }" />
+      <div class="indicator" :style="{ background: primaryColor }" />
     </div>
   </div>
 </template>
@@ -101,7 +104,17 @@
         height: 100%;
         width: 100%;
         display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
         flex-grow: 1;
+
+        .category-name {
+          position: relative;
+          padding: 3px;
+          border-radius: 7px;
+          font-size: 12px;
+        }
 
         .task {
           position: relative;

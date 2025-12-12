@@ -31,7 +31,12 @@
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import { useGlobalEvents } from '~/composables/GlobalEvents';
   import gsap from 'gsap';
+  import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
   import Icon from '~/components/Icon.vue';
+
+  if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollToPlugin);
+  }
 
   const selectedCategory = ref<HTMLElement | null>(null);
   const WrapperRef = ref<HTMLElement | null>(null);
@@ -93,18 +98,48 @@
   };
 
   const animateCategoryApparition = (categoryElement: HTMLElement) => {
-    gsap.fromTo(
+    gsap.set(categoryElement, {
+      opacity: 0,
+      scale: 0
+    });
+
+    const tl = gsap.timeline({
+      overwrite: true,
+      force3D: true,
+      onComplete: () => {
+        tl.kill();
+      }
+    });
+
+    tl.to(
+      WrapperRef.value,
+      {
+        scrollTo: { y: 'max' },
+        duration: 0.85,
+        ease: 'power2.inOut'
+      },
+      0
+    );
+
+    tl.to(
       categoryElement,
       {
-        opacity: 0,
-        clipPath: 'inset(0 100% 0 0 round 7px)'
-      },
-      {
         opacity: 1,
-        clipPath: 'inset(0 0% 0 0 round 7px)',
-        duration: 1,
-        ease: 'power2.out'
-      }
+        scale: 1,
+        duration: 0.75,
+        ease: 'power3.out'
+      },
+      1
+    );
+
+    tl.to(
+      WrapperRef.value,
+      {
+        scrollTo: { y: 0 },
+        duration: 0.6,
+        ease: 'power2.inOut'
+      },
+      2
     );
   };
 
@@ -158,16 +193,13 @@
     events.on(ICustomEvents.newCategoryCreated, async categoryID => {
       categories.value = await ChromeStorageHelper.getInstance().getCategories();
       cleanUpCategoriesSelection(false);
-
-      if (props.isInAddWrapper) return;
-
+      if (props.isInAddWrapper && !props.canDeleteCategories) return;
       await nextTick();
-
-      console.log(categoryID);
-
-      animateCategoryApparition(
-        categoriesWrapper.value?.querySelector(`.category[data-id="${categoryID}"]`) as HTMLElement
-      );
+      const categoryToAnimate = categoriesWrapper.value?.querySelector(
+        `.category[data-id="${categoryID}"]`
+      ) as HTMLElement;
+      if (!categoryToAnimate) return;
+      animateCategoryApparition(categoryToAnimate);
     });
 
     events.on(ICustomEvents.categoryDeleted, async categoryID => {

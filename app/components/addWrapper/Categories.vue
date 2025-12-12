@@ -14,7 +14,7 @@
         @click="e => handleClickOnCategory(e)"
       >
         <Icon :icon-name="category?.iconName" :color="category.color.textColor" />
-        {{ category.name }}
+        <p class="text">{{ category.name }}</p>
       </div>
 
       <div v-if="props.isInAddWrapper" class="add" @click="emit('addCategoryClicked')">
@@ -65,29 +65,23 @@
 
     const categoryWidth = category.offsetWidth;
     const categoryID = category.getAttribute('data-id');
+    const iconElement = category.querySelector('.icon') as HTMLElement;
+    const textElement = category.querySelector('.text') as HTMLElement;
 
-    if (!categoryID || !categoryWidth) return;
+    if (!categoryID || !categoryWidth || !iconElement || !textElement) return;
 
     isAnimatingCategoryDeletion.value = true;
 
     gsap.set(category, {
-      padding: '0px',
-      width: `${categoryWidth}px`
+      width: `${categoryWidth}px`,
+      padding: '0px'
     });
 
-    gsap.to(category, {
-      clipPath: 'inset(0 100% 0 0 round 7px)',
-      duration: 1.15,
-      ease: 'power2.out'
-    });
-
-    gsap.to(category, {
-      marginRight: `-9px`,
-      width: 0,
-      delay: 0.5,
-      duration: 1,
-      ease: 'power2.out',
+    const tl = gsap.timeline({
+      overwrite: true,
+      force3D: true,
       onComplete: () => {
+        tl.kill();
         category.remove();
         cleanUpCategoriesSelection(false);
         isAnimatingCategoryDeletion.value = false;
@@ -95,6 +89,37 @@
         events.trigger(ICustomEvents.categoryDeleted, categoryID);
       }
     });
+
+    tl.to(
+      [textElement, iconElement],
+      {
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power1.out'
+      },
+      0
+    );
+
+    tl.to(
+      category,
+      {
+        clipPath: 'inset(0 100% 0 0 round 7px)',
+        duration: 1.15,
+        ease: 'power2.out'
+      },
+      0.15
+    );
+
+    tl.to(
+      category,
+      {
+        marginRight: `-9px`,
+        width: 0,
+        duration: 1,
+        ease: 'power2.out'
+      },
+      0.65
+    );
   };
 
   const animateCategoryApparition = (categoryElement: HTMLElement) => {
@@ -111,15 +136,21 @@
       }
     });
 
-    tl.to(
-      WrapperRef.value,
-      {
-        scrollTo: { y: 'max' },
-        duration: 0.85,
-        ease: 'power2.inOut'
-      },
-      0
-    );
+    const hasEnoughSpaceToScroll = WrapperRef.value
+      ? WrapperRef.value.scrollHeight > WrapperRef.value.clientHeight
+      : false;
+
+    if (hasEnoughSpaceToScroll) {
+      tl.to(
+        WrapperRef.value,
+        {
+          scrollTo: { y: 'max' },
+          duration: 0.85,
+          ease: 'power2.inOut'
+        },
+        0
+      );
+    }
 
     tl.to(
       categoryElement,
@@ -129,7 +160,7 @@
         duration: 0.75,
         ease: 'power3.out'
       },
-      1
+      hasEnoughSpaceToScroll ? 0.85 : 0
     );
 
     tl.to(
@@ -139,7 +170,7 @@
         duration: 0.6,
         ease: 'power2.inOut'
       },
-      2
+      hasEnoughSpaceToScroll ? 1.85 : 0
     );
   };
 
@@ -228,6 +259,10 @@
       flex-wrap: wrap;
       justify-content: flex-start;
       align-items: center;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      overflow-x: hidden;
       overflow-y: scroll;
 
       .category {
@@ -243,25 +278,29 @@
         filter: grayscale(0);
         opacity: 1;
         clip-path: inset(0 0 0 0 round 7px);
-        font-size: 13px;
-        font-variation-settings: 'wght' 500;
         will-change: opacity, filter, clip-path, margin, width, padding;
         transition:
           filter $transition-time $default-ease,
           opacity $transition-time $default-ease;
 
         &.disabled {
-          filter: grayscale(0.6);
-          opacity: 0.4;
+          filter: grayscale(0.6) !important;
+          opacity: 0.4 !important;
         }
 
         @include has-hover {
-          opacity: 0.7;
+          opacity: 0.75 !important;
         }
 
         :deep(.icon) {
           margin-right: 7px;
           height: 15px;
+        }
+
+        .text {
+          position: relative;
+          font-size: 13px;
+          font-variation-settings: 'wght' 500;
         }
       }
 

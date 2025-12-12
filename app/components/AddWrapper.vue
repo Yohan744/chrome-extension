@@ -169,7 +169,7 @@
       transition: opacity $transition-time $default-ease;
 
       &:hover {
-        opacity: 0.7;
+        opacity: 0.75;
       }
     }
   }

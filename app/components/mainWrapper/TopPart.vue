@@ -159,7 +159,7 @@
         transition: opacity $transition-time $default-ease;
 
         @include has-hover {
-          opacity: 0.7;
+          opacity: 0.75;
         }
 
         svg {

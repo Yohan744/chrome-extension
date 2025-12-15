@@ -92,7 +92,7 @@
           pointer-events: all;
         }
 
-        &:hover {
+        @include has-hover {
           opacity: 0.75;
         }
       }

@@ -25,7 +25,7 @@
       position: relative;
       font-size: 7px;
       color: rgba($color-white, 0.5);
-      transition: color calc($transition-time * 0.8) $default-ease;
+      transition: color $transition-time $default-ease;
 
       &:before {
         position: absolute;
@@ -39,9 +39,9 @@
         width: 100%;
         background: rgba($color-white, 0.75);
         transition:
-          transform calc($transition-time * 0.8) $default-ease,
-          opacity calc($transition-time * 0.8) $default-ease,
-          background calc($transition-time * 0.8) $default-ease;
+          transform $transition-time $default-ease,
+          opacity $transition-time $default-ease,
+          background $transition-time $default-ease;
       }
 
       @include has-hover {

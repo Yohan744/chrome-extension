@@ -34,9 +34,11 @@
     cursor: pointer;
     transform: scale(0.8);
 
-    &:hover svg {
-      background: var(--todo-color);
-      border: 3px solid var(--todo-color);
+    @include has-hover {
+      svg {
+        background: var(--todo-color);
+        border: 3px solid var(--todo-color);
+      }
     }
 
     input {
@@ -63,9 +65,9 @@
       fill: none;
       background: transparent;
       transition:
-        border calc($transition-time * 0.8) $easePower4Out,
-        background calc($transition-time * 0.8) $easePower4Out,
-        stroke-dashoffset calc($transition-time * 0.8) $easePower4Out;
+        border $transition-time $easePower4Out,
+        background $transition-time $easePower4Out,
+        stroke-dashoffset $transition-time $easePower4Out;
 
       polyline {
         transform: scale(0.775) translate(2px, 1px);

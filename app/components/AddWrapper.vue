@@ -168,7 +168,7 @@
       opacity: 1;
       transition: opacity $transition-time $default-ease;
 
-      &:hover {
+      @include has-hover {
         opacity: 0.75;
       }
     }

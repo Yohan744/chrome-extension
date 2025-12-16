@@ -53,7 +53,7 @@
   const categoryName = ref<string>('');
 
   const fakeTodo = ref<ITodoType>({
-    id: 'x',
+    id: 'custom-category',
     task: 'Hello world',
     categoryId: 'custom-category',
     order: 999

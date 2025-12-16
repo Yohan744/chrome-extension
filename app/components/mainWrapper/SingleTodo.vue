@@ -26,6 +26,7 @@
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import Icon from '~/components/Icon.vue';
+  import gsap from 'gsap';
 
   const props = defineProps<{
     todoItem: ITodoType;
@@ -33,6 +34,7 @@
   }>();
 
   const events = useGlobalEvents();
+  const isAnimating = ref<boolean>(false);
   const todoCheckboxRef = ref<InstanceType<typeof TodoCheckbox> | null>(null);
 
   const category = ref<ICategoryType | null>(
@@ -44,11 +46,44 @@
   const wrapperStyle = computed(() => ({ background: darkerBg.value }));
 
   const handleCheckboxClick = async (target: HTMLElement) => {
-    if (!target) return;
-    const todoId = target.closest('.single-todo')?.getAttribute('data-id');
-    if (!todoId || todoId === 'x') return;
+    if (!target || isAnimating.value) return;
+    const todoElement = target.closest('.single-todo') as HTMLElement;
+    const todoId = todoElement?.getAttribute('data-id');
+    if (!todoId || !todoElement || todoId === 'custom-category') return;
+
+    const todoElementHeight = todoElement.offsetHeight;
+
+    if (!todoElementHeight) return;
+
     await ChromeStorageHelper.getInstance().deleteTodo(todoId);
-    events.trigger(ICustomEvents.taskDeleted);
+    isAnimating.value = true;
+
+    const tl = gsap.timeline({
+      delay: 0.525,
+      force3D: true,
+      onComplete: () => {
+        tl.kill();
+        events.trigger(ICustomEvents.taskDeleted);
+        isAnimating.value = false;
+      }
+    });
+
+    tl.to(todoElement, {
+      scale: 0.5,
+      opacity: 0,
+      duration: 1,
+      ease: 'power2.inOut'
+    });
+
+    tl.to(
+      todoElement,
+      {
+        marginBottom: `-${todoElementHeight + 15}px`,
+        duration: 0.75,
+        ease: 'power2.out'
+      },
+      '-=0.45'
+    );
   };
 
   onMounted(async () => {
@@ -78,6 +113,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    will-change: margin-bottom, transform, opacity;
 
     .right-part {
       position: relative;

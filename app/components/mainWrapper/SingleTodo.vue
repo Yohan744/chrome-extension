@@ -55,7 +55,7 @@
 
     if (!todoElementHeight) return;
 
-    await ChromeStorageHelper.getInstance().deleteTodo(todoId);
+    // await ChromeStorageHelper.getInstance().deleteTodo(todoId);
     isAnimating.value = true;
 
     const tl = gsap.timeline({
@@ -63,6 +63,7 @@
       force3D: true,
       onComplete: () => {
         tl.kill();
+        todoElement.remove();
         events.trigger(ICustomEvents.taskDeleted);
         isAnimating.value = false;
       }
@@ -72,7 +73,7 @@
       scale: 0.5,
       opacity: 0,
       duration: 1,
-      ease: 'power2.inOut'
+      ease: 'power3.inOut'
     });
 
     tl.to(

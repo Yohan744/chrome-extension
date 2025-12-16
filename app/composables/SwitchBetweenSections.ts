@@ -57,8 +57,9 @@ const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: (
       opacity: 0,
       pointerEvents: 'none',
       duration: 0.7,
-      ease: 'power2.out'
-    }
+      ease: 'power1.out'
+    },
+    0
   );
 
   tl.fromTo(
@@ -70,9 +71,10 @@ const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: (
     {
       opacity: 1,
       pointerEvents: 'all',
-      duration: 0.7,
-      ease: 'power3.out'
-    }
+      duration: 0.95,
+      ease: 'power1.out'
+    },
+    0.65
   );
 };
 

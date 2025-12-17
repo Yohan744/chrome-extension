@@ -4,7 +4,6 @@
       v-for="todo in sortedTodos"
       :key="todo.id"
       :todo-item="todo"
-      :data-todo-id="todo.id"
       :class="{ 'is-dragging': dragState.draggingId === todo.id }"
       @drag-start="onDragStart"
       @drag-move="onDragMove"
@@ -38,7 +37,7 @@
     return [...todos.value].sort((a, b) => a.order - b.order);
   });
 
-  const getTodoElements = () => wrapperRef.value?.querySelectorAll('[data-todo-id]') ?? [];
+  const getTodoElements = () => wrapperRef.value?.querySelectorAll('[data-id]') ?? [];
 
   const onDragStart = (id: string, startY: number) => {
     dragState.draggingId = id;

@@ -13,6 +13,10 @@
         <p class="task">{{ props.todoItem.task }}</p>
       </div>
 
+      <div class="drag-handle" :style="{ background: primaryColor }" @mousedown="onDragStart">
+        <GrabHandleIcon />
+      </div>
+
       <div class="indicator" :style="{ background: primaryColor }" />
     </div>
   </div>
@@ -26,6 +30,7 @@
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
   import Icon from '~/components/Icon.vue';
+  import GrabHandleIcon from '~/assets/icons/grab-handle.svg?component';
   import gsap from 'gsap';
 
   const props = defineProps<{
@@ -85,6 +90,26 @@
       },
       '-=0.45'
     );
+  };
+
+  const emit = defineEmits(['drag-start', 'drag-move', 'drag-end']);
+
+  const onDragStart = (event: MouseEvent) => {
+    event.preventDefault();
+    emit('drag-start', props.todoItem.id, event.clientY);
+
+    const onMouseMove = (e: MouseEvent) => {
+      emit('drag-move', props.todoItem.id, e.clientY);
+    };
+
+    const onMouseUp = () => {
+      emit('drag-end', props.todoItem.id);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
   };
 
   onMounted(async () => {
@@ -163,6 +188,37 @@
             background: var(--selection-bg);
             color: $color-white;
           }
+        }
+      }
+
+      .drag-handle {
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        cursor: grab;
+        opacity: 1;
+        transition: opacity $transition-time $default-ease;
+
+        @include has-hover {
+          opacity: 0.75;
+        }
+
+        &:active {
+          cursor: grabbing;
+        }
+
+        svg {
+          position: relative;
+          height: 20px;
+          width: auto;
+          color: white;
         }
       }
 

@@ -32,10 +32,8 @@ body,
   scrollbar-width: none;
   -ms-overflow-style: none;
   background: $color-black;
-}
 
-// temporary for dev
-body {
-  //margin-top: 50px;
-  //margin-left: 800px;
+  &.grabbing-cursor {
+    cursor: grabbing !important;
+  }
 }

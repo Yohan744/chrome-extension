@@ -121,6 +121,14 @@ class ChromeStorageHelper {
     return next;
   }
 
+  public async updateTodosOrder(todos: ITodoType[]): Promise<void> {
+    const orderedTodos = todos.map((todo, index) => ({
+      ...todo,
+      order: index
+    }));
+    await this.setTodos(orderedTodos);
+  }
+
   //////////////////////////////////////////////////////////////////////////////////
 
   public async getCategories(): Promise<ICategoryType[]> {

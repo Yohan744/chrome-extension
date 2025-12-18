@@ -44,21 +44,23 @@
     return wrapperRef.value?.querySelector(`[data-id="${id}"]`) ?? null;
   };
 
-  const scrollToTodo = (id: string) => {
+  const scrollToTodo = (id: string, direction: -1 | 1 = 1) => {
     const wrapper = wrapperRef.value;
     const todoEl = getTodoElementById(id);
-    if (!wrapper || !todoEl) return;
 
-    const wrapperRect = wrapper.getBoundingClientRect();
-    const todoRect = todoEl.getBoundingClientRect();
+    if (!wrapper || !todoEl || wrapper.scrollHeight <= wrapper.clientHeight) return;
 
-    const todoOffsetTop = todoEl.offsetTop;
-    const centerOffset = todoOffsetTop - wrapperRect.height / 2 + todoRect.height / 2;
+    const todoOffsetTop = todoEl.getBoundingClientRect().top || 0;
+    const wrapperHeight = wrapper.clientHeight;
+    const todoHeight = todoEl.clientHeight;
+    const finalOffsetTop =
+      todoOffsetTop + wrapper.scrollTop - (wrapperHeight / 2 + (todoHeight + 30) / 2) + (todoHeight + 30) * direction;
 
     gsap.to(wrapper, {
-      scrollTo: { y: centerOffset, autoKill: false },
-      duration: 0.5,
-      ease: 'power2.out'
+      scrollTo: { y: finalOffsetTop, autoKill: false },
+      overwrite: false,
+      duration: 0.65,
+      ease: 'linear'
     });
   };
 
@@ -67,7 +69,6 @@
     dragState.startY = startY;
     dragState.lastY = startY;
     document.querySelector('body')?.classList.add('grabbing-cursor');
-    scrollToTodo(id);
   };
 
   const onDragMove = (id: string, currentY: number) => {
@@ -104,10 +105,10 @@
     nextTick(() => {
       Flip.from(state, {
         absolute: true,
-        duration: 0.5,
+        duration: 0.65,
         ease: 'power2.out',
         onStart: () => {
-          scrollToTodo(id);
+          scrollToTodo(id, direction);
         }
       });
     });

@@ -20,8 +20,9 @@
   import { ICustomEvents } from '~/constants/ICustomEvents';
   import gsap from 'gsap';
   import { Flip } from 'gsap/Flip';
+  import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
-  gsap.registerPlugin(Flip);
+  gsap.registerPlugin(Flip, ScrollToPlugin);
 
   const events = useGlobalEvents();
   const todos = ref<ITodoType[]>(await ChromeStorageHelper.getInstance().getTodos());
@@ -39,11 +40,34 @@
 
   const getTodoElements = () => wrapperRef.value?.querySelectorAll('[data-id]') ?? [];
 
+  const getTodoElementById = (id: string): HTMLElement | null => {
+    return wrapperRef.value?.querySelector(`[data-id="${id}"]`) ?? null;
+  };
+
+  const scrollToTodo = (id: string) => {
+    const wrapper = wrapperRef.value;
+    const todoEl = getTodoElementById(id);
+    if (!wrapper || !todoEl) return;
+
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const todoRect = todoEl.getBoundingClientRect();
+
+    const todoOffsetTop = todoEl.offsetTop;
+    const centerOffset = todoOffsetTop - wrapperRect.height / 2 + todoRect.height / 2;
+
+    gsap.to(wrapper, {
+      scrollTo: { y: centerOffset, autoKill: false },
+      duration: 0.5,
+      ease: 'power2.out'
+    });
+  };
+
   const onDragStart = (id: string, startY: number) => {
     dragState.draggingId = id;
     dragState.startY = startY;
     dragState.lastY = startY;
     document.querySelector('body')?.classList.add('grabbing-cursor');
+    scrollToTodo(id);
   };
 
   const onDragMove = (id: string, currentY: number) => {
@@ -81,7 +105,10 @@
       Flip.from(state, {
         absolute: true,
         duration: 0.5,
-        ease: 'power2.out'
+        ease: 'power2.out',
+        onStart: () => {
+          scrollToTodo(id);
+        }
       });
     });
   };
@@ -137,11 +164,16 @@
 
   :deep(.single-todo) {
     will-change: transform;
-    transition: opacity $transition-time $default-ease;
+    opacity: 1;
+    transition: opacity calc($transition-time * 2) $default-ease;
+
+    &.is-dragging {
+      transition: opacity $transition-time $default-ease;
+    }
   }
 
   :deep(.is-dragging) {
     z-index: 10;
-    opacity: 0.35;
+    opacity: 0.35 !important;
   }
 </style>

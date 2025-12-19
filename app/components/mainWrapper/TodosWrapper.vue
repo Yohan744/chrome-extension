@@ -58,7 +58,7 @@
 
     gsap.to(wrapper, {
       scrollTo: { y: finalOffsetTop, autoKill: false },
-      overwrite: false,
+      overwrite: true,
       duration: 0.65,
       ease: 'linear'
     });
@@ -75,7 +75,7 @@
     if (dragState.draggingId !== id) return;
 
     const deltaY = currentY - dragState.lastY;
-    const threshold = 55;
+    const threshold = 60;
 
     if (Math.abs(deltaY) < threshold) return;
 
@@ -104,8 +104,8 @@
 
     nextTick(() => {
       Flip.from(state, {
+        duration: 0.7,
         absolute: true,
-        duration: 0.65,
         ease: 'power2.out',
         onStart: () => {
           scrollToTodo(id, direction);

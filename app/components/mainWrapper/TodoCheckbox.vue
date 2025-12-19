@@ -57,6 +57,10 @@
     }
 
     svg {
+      position: relative;
+      min-width: 23px;
+      min-height: 23px;
+      aspect-ratio: 1;
       border: 3px solid $color-light-gray;
       stroke: white;
       stroke-dasharray: 23;

@@ -165,6 +165,7 @@
         position: relative;
         height: 100%;
         width: 100%;
+        max-width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -180,6 +181,7 @@
 
         .task {
           position: relative;
+          word-break: break-all;
           font-size: 16px;
           line-height: 1.45;
           font-variation-settings: 'wght' 500;

@@ -105,10 +105,13 @@
     nextTick(() => {
       Flip.from(state, {
         duration: 0.7,
-        absolute: true,
+        absolute: false,
         ease: 'power2.out',
         onStart: () => {
           scrollToTodo(id, direction);
+        },
+        onUpdate: () => {
+          dragState.lastY = currentY;
         }
       });
     });

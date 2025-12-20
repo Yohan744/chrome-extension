@@ -44,7 +44,7 @@
     return wrapperRef.value?.querySelector(`[data-id="${id}"]`) ?? null;
   };
 
-  const scrollToTodo = (id: string, direction: -1 | 1 = 1) => {
+  const scrollToTodo = (id: string, direction: -1 | 1 = 1, todoSwapHeight: number) => {
     const wrapper = wrapperRef.value;
     const todoEl = getTodoElementById(id);
 
@@ -54,11 +54,14 @@
     const wrapperHeight = wrapper.clientHeight;
     const todoHeight = todoEl.clientHeight;
     const finalOffsetTop =
-      todoOffsetTop + wrapper.scrollTop - (wrapperHeight / 2 + (todoHeight + 30) / 2) + (todoHeight + 30) * direction;
+      todoOffsetTop +
+      wrapper.scrollTop -
+      (wrapperHeight / 2 + (todoHeight + 30) / 2) +
+      (todoSwapHeight + todoHeight) * direction;
 
     gsap.to(wrapper, {
       scrollTo: { y: finalOffsetTop, autoKill: false },
-      overwrite: true,
+      overwrite: false,
       duration: 0.65,
       ease: 'linear'
     });
@@ -95,6 +98,11 @@
     newTodos[targetIndex] = newTodos[currentIndex];
     newTodos[currentIndex] = temp;
 
+    const todoTempElementId = temp.id;
+    const todoTempElement = getTodoElementById(todoTempElementId);
+
+    if (!todoTempElement) return;
+
     newTodos.forEach((todo, index) => {
       todo.order = index;
     });
@@ -106,9 +114,11 @@
       Flip.from(state, {
         duration: 0.7,
         absolute: false,
+        prune: false,
+        nested: false,
         ease: 'power2.out',
         onStart: () => {
-          scrollToTodo(id, direction);
+          scrollToTodo(id, direction, todoTempElement.clientHeight);
         },
         onUpdate: () => {
           dragState.lastY = currentY;

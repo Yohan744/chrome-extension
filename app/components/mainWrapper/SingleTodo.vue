@@ -1,6 +1,6 @@
 <template>
   <div class="single-todo" :data-id="props.todoItem.id">
-    <TodoCheckbox ref="todoCheckboxRef" :color="primaryColor" @checked="handleCheckboxClick" />
+    <TodoCheckbox ref="todoCheckboxRef" :color="primaryColor" :text-color="textColor" @checked="handleCheckboxClick" />
     <div class="right-part" :style="{ '--selection-bg': primaryColor }">
       <div class="icon-wrapper" :style="wrapperStyle">
         <Icon :icon-name="category?.iconName" :color="primaryColor" />
@@ -47,6 +47,7 @@
   );
 
   const primaryColor = computed(() => category.value?.color.hex || '#eeeeee');
+  const textColor = computed(() => category.value?.color.textColor || '#000000');
   const darkerBg = computed(() => `color-mix(in hsl, ${primaryColor.value} 40%, black)`);
   const wrapperStyle = computed(() => ({ background: darkerBg.value }));
 

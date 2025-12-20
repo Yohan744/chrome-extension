@@ -1,7 +1,7 @@
 <template>
   <label class="todo-checkbox" :style="{ '--todo-color': props.color }">
     <input ref="inputRef" type="checkbox" :disabled="isChecked" @click="e => handleClick(e)" />
-    <svg width="25" height="25">
+    <svg width="25" height="25" :style="{ stroke: props.textColor }">
       <polyline points="16 3 7 15 2 10" />
     </svg>
   </label>
@@ -12,6 +12,7 @@
 
   const props = defineProps<{
     color: string;
+    textColor: string;
   }>();
 
   const inputRef = ref<HTMLInputElement | null>(null);

@@ -177,10 +177,6 @@
   }
 
   :deep(.single-todo) {
-    will-change: transform;
-    opacity: 1;
-    transition: opacity calc($transition-time * 2) $default-ease;
-
     &.is-dragging {
       transition: opacity $transition-time $default-ease;
     }

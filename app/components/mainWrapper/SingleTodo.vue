@@ -64,8 +64,15 @@
     // await ChromeStorageHelper.getInstance().deleteTodo(todoId);
     isAnimating.value = true;
 
+    gsap.set(todoElement, {
+      scale: 1,
+      opacity: 1,
+      transition: 'none'
+    });
+
     const tl = gsap.timeline({
       delay: 0.525,
+      overwrite: true,
       force3D: true,
       onComplete: () => {
         tl.kill();
@@ -76,10 +83,10 @@
     });
 
     tl.to(todoElement, {
-      scale: 0.5,
+      scale: 0.65,
       opacity: 0,
-      duration: 1,
-      ease: 'power3.inOut'
+      duration: 0.85,
+      ease: 'power1.out'
     });
 
     tl.to(
@@ -89,7 +96,7 @@
         duration: 0.75,
         ease: 'power2.out'
       },
-      '-=0.45'
+      '-=0.3'
     );
   };
 
@@ -140,7 +147,9 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    opacity: 1;
     will-change: margin-bottom, transform, opacity;
+    transition: opacity calc($transition-time * 2) $default-ease;
 
     .right-part {
       position: relative;

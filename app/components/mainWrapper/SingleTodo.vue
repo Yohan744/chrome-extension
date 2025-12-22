@@ -71,7 +71,7 @@
     });
 
     const tl = gsap.timeline({
-      delay: 0.525,
+      delay: 0.6,
       overwrite: true,
       force3D: true,
       onComplete: () => {
@@ -85,18 +85,18 @@
     tl.to(todoElement, {
       scale: 0.65,
       opacity: 0,
-      duration: 0.85,
-      ease: 'power1.out'
+      duration: 0.8,
+      ease: 'power2.inOut'
     });
 
     tl.to(
       todoElement,
       {
         marginBottom: `-${todoElementHeight + 15}px`,
-        duration: 0.75,
-        ease: 'power2.out'
+        duration: 1.25,
+        ease: 'power4.out'
       },
-      '-=0.3'
+      '-=0.35'
     );
   };
 

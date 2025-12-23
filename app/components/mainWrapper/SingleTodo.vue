@@ -61,7 +61,13 @@
 
     if (!todoElementHeight) return;
 
-    // await ChromeStorageHelper.getInstance().deleteTodo(todoId);
+    const todoOrderNumber = await ChromeStorageHelper.getInstance().getTodoOrderById(todoId);
+    const biggestTodoOrder = await ChromeStorageHelper.getInstance().getBiggestOrderNumberInTodos();
+    const isLastTodo = todoOrderNumber === biggestTodoOrder;
+    const parentElement = todoElement.parentElement;
+    const hasEnoughSpaceToScroll = parentElement ? parentElement.scrollHeight > parentElement.clientHeight + 75 : false;
+
+    await ChromeStorageHelper.getInstance().deleteTodo(todoId);
     isAnimating.value = true;
 
     gsap.set(todoElement, {
@@ -85,19 +91,22 @@
     tl.to(todoElement, {
       scale: 0.65,
       opacity: 0,
-      duration: 0.8,
+      duration: 1,
       ease: 'power2.inOut'
     });
 
-    tl.to(
-      todoElement,
-      {
-        marginBottom: `-${todoElementHeight + 15}px`,
-        duration: 1.25,
-        ease: 'power4.out'
-      },
-      '-=0.35'
-    );
+    const vars = {
+      margin: isLastTodo
+        ? hasEnoughSpaceToScroll
+          ? `-${todoElementHeight + 15}px 0 0`
+          : `0 0 -${todoElementHeight + 15}px`
+        : `0 0 -${todoElementHeight + 15}px`,
+      scaleY: 0,
+      duration: 1.25,
+      ease: 'power4.out'
+    };
+
+    tl.to(todoElement, vars, '-=0.35');
   };
 
   const emit = defineEmits(['drag-start', 'drag-move', 'drag-end']);
@@ -148,7 +157,7 @@
     align-items: center;
     gap: 10px;
     opacity: 1;
-    will-change: margin-bottom, transform, opacity;
+    will-change: margin, transform, opacity;
     transition: opacity calc($transition-time * 2) $default-ease;
 
     .right-part {

@@ -207,6 +207,7 @@
         el.classList.add('disabled');
         if (props.canDeleteCategories) el.classList.remove('enabled');
       } else {
+        console.log('boum');
         el.classList.remove('disabled');
         if (props.canDeleteCategories) {
           el.classList.add('enabled');

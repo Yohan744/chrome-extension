@@ -22,7 +22,9 @@
       @add-category-clicked="switchSectionAndCleanUpAddWrapper('settings')"
     />
 
-    <button class="create-task-button" @click="handleTaskCreation">Create task</button>
+    <button class="create-task-button" :class="{ active: canCreateTask }" @click="handleTaskCreation">
+      Create task
+    </button>
   </section>
 </template>
 
@@ -46,6 +48,9 @@
   const addWrapperRef = ref<InstanceType<typeof Categories> | null>(null);
   const task = ref<string | null>(null);
   const actualCategory = ref<string | null>(null);
+  const canCreateTask = computed(() => {
+    return actualCategory.value !== null && task.value !== null && task.value !== '' && !isTaskAlreadyCreated.value;
+  });
 
   const handleInput = (e: Event) => {
     const target = e.target as HTMLInputElement;
@@ -90,6 +95,7 @@
   const cleanAddWrapper = () => {
     isTaskAlreadyCreated.value = false;
     taskInputRef.value!.value = '';
+    actualCategory.value = null;
     addWrapperRef.value?.cleanUpCategoriesSelection();
   };
 
@@ -165,8 +171,18 @@
       font-size: 16px;
       font-variation-settings: 'wght' 550;
       color: $color-white;
-      opacity: 1;
-      transition: opacity $transition-time $default-ease;
+      opacity: 0.35;
+      filter: grayscale(1);
+      pointer-events: none;
+      transition:
+        opacity $transition-time $default-ease,
+        filter $transition-time $default-ease;
+
+      &.active {
+        opacity: 1;
+        filter: grayscale(0);
+        pointer-events: all;
+      }
 
       @include has-hover {
         opacity: 0.75;

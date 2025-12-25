@@ -62,7 +62,7 @@
       .trim();
   };
 
-  const handleCategorySelected = (categoryName: string) => {
+  const handleCategorySelected = (categoryName: string | null) => {
     actualCategory.value = categoryName;
   };
 
@@ -94,7 +94,8 @@
 
   const cleanAddWrapper = () => {
     isTaskAlreadyCreated.value = false;
-    taskInputRef.value!.value = '';
+    task.value = null;
+    if (taskInputRef.value) taskInputRef.value.value = '';
     actualCategory.value = null;
     addWrapperRef.value?.cleanUpCategoriesSelection();
   };
@@ -172,15 +173,11 @@
       font-variation-settings: 'wght' 550;
       color: $color-white;
       opacity: 0.35;
-      filter: grayscale(1);
       pointer-events: none;
-      transition:
-        opacity $transition-time $default-ease,
-        filter $transition-time $default-ease;
+      transition: opacity $transition-time $default-ease;
 
       &.active {
         opacity: 1;
-        filter: grayscale(0);
         pointer-events: all;
       }
 

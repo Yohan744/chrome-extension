@@ -69,6 +69,7 @@
 
     await ChromeStorageHelper.getInstance().deleteTodo(todoId);
     isAnimating.value = true;
+    emit('delete-todo', todoId);
 
     gsap.set(todoElement, {
       scale: 1,
@@ -83,7 +84,7 @@
       onComplete: () => {
         tl.kill();
         todoElement.remove();
-        events.trigger(ICustomEvents.taskDeleted);
+        events.trigger(ICustomEvents.taskDeleted, todoId);
         isAnimating.value = false;
       }
     });
@@ -109,7 +110,7 @@
     tl.to(todoElement, vars, '-=0.35');
   };
 
-  const emit = defineEmits(['drag-start', 'drag-move', 'drag-end']);
+  const emit = defineEmits(['drag-start', 'drag-move', 'drag-end', 'delete-todo']);
 
   const onDragStart = (event: MouseEvent) => {
     event.preventDefault();

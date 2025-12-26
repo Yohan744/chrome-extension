@@ -8,6 +8,7 @@
       @drag-start="onDragStart"
       @drag-move="onDragMove"
       @drag-end="onDragEnd"
+      @delete-todo="handleTodoDeletion"
     />
   </div>
 </template>
@@ -27,6 +28,7 @@
   const events = useGlobalEvents();
   const todos = ref<ITodoType[]>(await ChromeStorageHelper.getInstance().getTodos());
   const wrapperRef = ref<HTMLElement | null>(null);
+  const lastDeletedTodoId = ref<string | null>(null);
 
   const dragState = reactive({
     draggingId: null as string | null,
@@ -43,6 +45,25 @@
   const getTodoElementById = (id: string): HTMLElement | null => {
     return wrapperRef.value?.querySelector(`[data-id="${id}"]`) ?? null;
   };
+
+  onMounted(async () => {
+    events.on(ICustomEvents.taskCreated, async () => {
+      await updateTodos();
+    });
+
+    events.on(ICustomEvents.taskDeleted, async todoId => {
+      await updateTodos();
+      if (lastDeletedTodoId.value === todoId) lastDeletedTodoId.value = null;
+    });
+
+    events.on(ICustomEvents.storageInitiated, async () => {
+      await updateTodos();
+    });
+
+    events.on(ICustomEvents.migrationDone, async () => {
+      await updateTodos();
+    });
+  });
 
   const scrollToTodo = (id: string, direction: -1 | 1 = 1, todoSwapHeight: number) => {
     const wrapper = wrapperRef.value;
@@ -68,6 +89,7 @@
   };
 
   const onDragStart = (id: string, startY: number) => {
+    if (lastDeletedTodoId.value !== null) return;
     dragState.draggingId = id;
     dragState.startY = startY;
     dragState.lastY = startY;
@@ -88,7 +110,7 @@
     const direction = deltaY > 0 ? 1 : -1;
     const targetIndex = currentIndex + direction;
 
-    if (targetIndex < 0 || targetIndex >= todos.value.length) return;
+    if (targetIndex < 0 || targetIndex >= todos.value.length || lastDeletedTodoId.value !== null) return;
 
     const state = Flip.getState(getTodoElements());
 
@@ -136,26 +158,12 @@
     await ChromeStorageHelper.getInstance().updateTodosOrder(todos.value);
   };
 
-  onMounted(async () => {
-    events.on(ICustomEvents.taskCreated, async () => {
-      await updateTodos();
-    });
-
-    events.on(ICustomEvents.taskDeleted, async () => {
-      await updateTodos();
-    });
-
-    events.on(ICustomEvents.storageInitiated, async () => {
-      await updateTodos();
-    });
-
-    events.on(ICustomEvents.migrationDone, async () => {
-      await updateTodos();
-    });
-  });
-
   const updateTodos = async () => {
     todos.value = await ChromeStorageHelper.getInstance().getTodos();
+  };
+
+  const handleTodoDeletion = (todoId: string) => {
+    lastDeletedTodoId.value = todoId;
   };
 </script>
 

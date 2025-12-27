@@ -33,7 +33,9 @@
   const dragState = reactive({
     draggingId: null as string | null,
     startY: 0,
-    lastY: 0
+    lastY: 0,
+    maxSimultaneousDrags: 3,
+    simultaneousDragsCount: 0
   });
 
   const sortedTodos = computed(() => {
@@ -102,7 +104,9 @@
     const deltaY = currentY - dragState.lastY;
     const threshold = 60;
 
-    if (Math.abs(deltaY) < threshold) return;
+    if (Math.abs(deltaY) < threshold || dragState.simultaneousDragsCount >= dragState.maxSimultaneousDrags) return;
+
+    console.log('actual drags count:', dragState.simultaneousDragsCount);
 
     const currentIndex = todos.value.findIndex(t => t.id === id);
     if (currentIndex === -1) return;
@@ -139,11 +143,19 @@
         prune: false,
         nested: false,
         ease: 'power2.out',
+        overwrite: false,
         onStart: () => {
           scrollToTodo(id, direction, todoTempElement.clientHeight);
+          dragState.simultaneousDragsCount = Math.min(
+            dragState.maxSimultaneousDrags,
+            dragState.simultaneousDragsCount + 1
+          );
         },
         onUpdate: () => {
           dragState.lastY = currentY;
+        },
+        onComplete: () => {
+          dragState.simultaneousDragsCount = Math.max(0, dragState.simultaneousDragsCount - 1);
         }
       });
     });

@@ -33,9 +33,7 @@
   const dragState = reactive({
     draggingId: null as string | null,
     startY: 0,
-    lastY: 0,
-    maxSimultaneousDrags: 3,
-    simultaneousDragsCount: 0
+    lastY: 0
   });
 
   const sortedTodos = computed(() => {
@@ -84,7 +82,7 @@
 
     gsap.to(wrapper, {
       scrollTo: { y: finalOffsetTop, autoKill: false },
-      overwrite: false,
+      overwrite: true,
       duration: 0.65,
       ease: 'linear'
     });
@@ -102,11 +100,9 @@
     if (dragState.draggingId !== id) return;
 
     const deltaY = currentY - dragState.lastY;
-    const threshold = 60;
+    const threshold = 75;
 
-    if (Math.abs(deltaY) < threshold || dragState.simultaneousDragsCount >= dragState.maxSimultaneousDrags) return;
-
-    console.log('actual drags count:', dragState.simultaneousDragsCount);
+    if (Math.abs(deltaY) < threshold) return;
 
     const currentIndex = todos.value.findIndex(t => t.id === id);
     if (currentIndex === -1) return;
@@ -142,20 +138,13 @@
         absolute: false,
         prune: false,
         nested: false,
-        ease: 'power2.out',
         overwrite: false,
+        ease: 'power2.out',
         onStart: () => {
           scrollToTodo(id, direction, todoTempElement.clientHeight);
-          dragState.simultaneousDragsCount = Math.min(
-            dragState.maxSimultaneousDrags,
-            dragState.simultaneousDragsCount + 1
-          );
         },
         onUpdate: () => {
           dragState.lastY = currentY;
-        },
-        onComplete: () => {
-          dragState.simultaneousDragsCount = Math.max(0, dragState.simultaneousDragsCount - 1);
         }
       });
     });

@@ -33,7 +33,8 @@
   const dragState = reactive({
     draggingId: null as string | null,
     startY: 0,
-    lastY: 0
+    lastY: 0,
+    lastDirection: null as -1 | 1 | null
   });
 
   const sortedTodos = computed(() => {
@@ -82,7 +83,7 @@
 
     gsap.to(wrapper, {
       scrollTo: { y: finalOffsetTop, autoKill: false },
-      overwrite: true,
+      overwrite: false,
       duration: 0.65,
       ease: 'linear'
     });
@@ -110,7 +111,13 @@
     const direction = deltaY > 0 ? 1 : -1;
     const targetIndex = currentIndex + direction;
 
-    if (targetIndex < 0 || targetIndex >= todos.value.length || lastDeletedTodoId.value !== null) return;
+    if (
+      targetIndex < 0 ||
+      targetIndex >= todos.value.length ||
+      lastDeletedTodoId.value !== null ||
+      (direction !== dragState.lastDirection && dragState.lastDirection !== null)
+    )
+      return;
 
     const state = Flip.getState(getTodoElements());
 
@@ -141,10 +148,14 @@
         overwrite: false,
         ease: 'power2.out',
         onStart: () => {
+          dragState.lastDirection = direction;
           scrollToTodo(id, direction, todoTempElement.clientHeight);
         },
         onUpdate: () => {
           dragState.lastY = currentY;
+        },
+        onComplete: () => {
+          dragState.lastDirection = null;
         }
       });
     });

@@ -34,7 +34,8 @@
     draggingId: null as string | null,
     startY: 0,
     lastY: 0,
-    lastDirection: null as -1 | 1 | null
+    lastDirection: null as -1 | 1 | null,
+    canDrag: true as boolean
   });
 
   const sortedTodos = computed(() => {
@@ -101,9 +102,9 @@
     if (dragState.draggingId !== id) return;
 
     const deltaY = currentY - dragState.lastY;
-    const threshold = 75;
+    const threshold = 60;
 
-    if (Math.abs(deltaY) < threshold) return;
+    if (Math.abs(deltaY) < threshold || !dragState.canDrag) return;
 
     const currentIndex = todos.value.findIndex(t => t.id === id);
     if (currentIndex === -1) return;
@@ -138,21 +139,27 @@
 
     todos.value = newTodos;
     dragState.lastY = currentY;
+    dragState.canDrag = false;
 
     nextTick(() => {
       Flip.from(state, {
         duration: 0.7,
         absolute: false,
-        prune: false,
-        nested: false,
+        absoluteOnLeave: true,
+        scale: true,
+        simple: true,
+        prune: true,
         overwrite: false,
         ease: 'power2.out',
         onStart: () => {
           dragState.lastDirection = direction;
           scrollToTodo(id, direction, todoTempElement.clientHeight);
         },
-        onUpdate: () => {
-          dragState.lastY = currentY;
+        onUpdate: function () {
+          if (this.progress() >= 0.75 && !dragState.canDrag) {
+            dragState.lastY = currentY;
+            dragState.canDrag = true;
+          }
         },
         onComplete: () => {
           dragState.lastDirection = null;

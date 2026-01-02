@@ -1,19 +1,19 @@
 <template>
   <div class="single-todo" :data-id="props.todoItem.id">
     <TodoCheckbox ref="todoCheckboxRef" :color="primaryColor" :text-color="textColor" @checked="handleCheckboxClick" />
-    <div class="right-part" :style="{ '--selection-bg': primaryColor }">
+    <div class="right-part-todo" :style="{ '--selection-bg': primaryColor }">
       <div class="icon-wrapper" :style="wrapperStyle">
         <Icon :icon-name="category?.iconName" :color="primaryColor" />
       </div>
 
       <div class="task-wrapper">
-        <p class="category-name" :style="{ background: primaryColor, color: category?.color.textColor }">
-          {{ category?.name }}
+        <p class="category-name" :style="{ background: primaryColor, color: category?.color.textColor || '#07060f' }">
+          {{ category?.name || 'Other' }}
         </p>
         <p class="task">{{ props.todoItem.task }}</p>
       </div>
 
-      <div class="drag-handle" :style="{ background: primaryColor }" @mousedown="onDragStart">
+      <div class="drag-handle" @mousedown="onDragStart">
         <GrabHandleIcon />
       </div>
 
@@ -161,23 +161,23 @@
     will-change: margin, transform, opacity;
     transition: opacity calc($transition-time * 2) $default-ease;
 
-    .right-part {
+    .right-part-todo {
       position: relative;
       padding: 15px;
       width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
-      align-items: center;
-      gap: 15px;
+      align-items: normal;
+      gap: 11px;
       border-radius: 7px;
       background: rgba($color-gray, 0.4);
 
       .icon-wrapper {
         position: relative;
-        padding: 6px;
+        padding: 6px 9px;
         @include center;
-        border-radius: 7px;
+        border-radius: 4px;
         transition: background $transition-time $default-ease;
       }
 
@@ -191,20 +191,23 @@
         justify-content: flex-start;
         align-items: flex-start;
         flex-grow: 1;
+        gap: 5px;
 
         .category-name {
           position: relative;
-          padding: 3px;
-          border-radius: 7px;
-          font-size: 12px;
+          padding: 3px 5px;
+          border-radius: 4px;
+          font-size: 9px;
+          font-variation-settings: 'wght' 480;
         }
 
         .task {
           position: relative;
-          word-break: break-all;
+          width: 90%;
+          word-break: break-word;
           font-size: 16px;
-          line-height: 1.45;
-          font-variation-settings: 'wght' 500;
+          line-height: 1.35;
+          font-variation-settings: 'wght' 530;
 
           &::selection {
             background: var(--selection-bg);
@@ -215,21 +218,17 @@
 
       .drag-handle {
         position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        width: 28px;
-        height: 28px;
+        bottom: 10px;
+        right: 17px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 5px;
         cursor: grab;
-        opacity: 1;
+        opacity: 0.55;
         transition: opacity $transition-time $default-ease;
 
         @include has-hover {
-          opacity: 0.75;
+          opacity: 0.15;
         }
 
         &:active {
@@ -238,9 +237,9 @@
 
         svg {
           position: relative;
-          height: 20px;
+          height: 15px;
           width: auto;
-          color: white;
+          color: $color-gray;
         }
       }
 

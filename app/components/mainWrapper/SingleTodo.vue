@@ -7,7 +7,7 @@
       </div>
 
       <div class="task-wrapper">
-        <p class="category-name" :style="{ background: primaryColor, color: category?.color.textColor || '#07060f' }">
+        <p class="category-name" :style="{ background: primaryColor, color: textColor }">
           {{ category?.name || 'Other' }}
         </p>
         <p class="task">{{ props.todoItem.task }}</p>
@@ -47,7 +47,7 @@
   );
 
   const primaryColor = computed(() => category.value?.color.hex || '#eeeeee');
-  const textColor = computed(() => category.value?.color.textColor || '#000000');
+  const textColor = computed(() => category.value?.color.textColor || '#07060f');
   const darkerBg = computed(() => `color-mix(in hsl, ${primaryColor.value} 40%, black)`);
   const wrapperStyle = computed(() => ({ background: darkerBg.value }));
 
@@ -175,6 +175,7 @@
 
       .icon-wrapper {
         position: relative;
+        max-height: 43px;
         padding: 6px 9px;
         @include center;
         border-radius: 4px;
@@ -197,8 +198,9 @@
           position: relative;
           padding: 3px 5px;
           border-radius: 4px;
-          font-size: 9px;
+          font-size: 8px;
           font-variation-settings: 'wght' 480;
+          user-select: none;
         }
 
         .task {

@@ -1,11 +1,11 @@
 export const IColors = {
   red: {
     hex: '#e30b0b',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   },
   orange: {
     hex: '#ff7300',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   },
   yellow: {
     hex: '#fff200',
@@ -41,34 +41,34 @@ export const IColors = {
   },
   blue: {
     hex: '#009dff',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   },
   azure: {
     hex: '#0068ff',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   },
   darkblue: {
     hex: '#0033ff',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   },
   indigo: {
     hex: '#4c1aff',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   },
   purple: {
     hex: '#9900ff',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   },
   magenta: {
     hex: '#cc00f5',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   },
   pink: {
     hex: '#ff00ea',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   },
   hotCoral: {
     hex: '#FF2E6F',
-    textColor: '#eeeeee'
+    textColor: '#ffffff'
   }
 };

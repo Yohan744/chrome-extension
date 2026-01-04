@@ -46,7 +46,7 @@
     await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId)
   );
 
-  const primaryColor = computed(() => category.value?.color.hex || '#eeeeee');
+  const primaryColor = computed(() => category.value?.color.hex || '#ffffff');
   const textColor = computed(() => category.value?.color.textColor || '#07060f');
   const darkerBg = computed(() => `color-mix(in hsl, ${primaryColor.value} 40%, black)`);
   const wrapperStyle = computed(() => ({ background: darkerBg.value }));

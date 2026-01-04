@@ -17,7 +17,7 @@
 
   const iconStyle = computed(() => ({
     maskImage: `url(${iconSrc.value})`,
-    backgroundColor: props.color || '#eeeeee'
+    backgroundColor: props.color || '#ffffff'
   }));
 </script>
 

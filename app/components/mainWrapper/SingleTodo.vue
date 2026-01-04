@@ -175,7 +175,6 @@
 
       .icon-wrapper {
         position: relative;
-        max-height: 43px;
         padding: 6px 9px;
         @include center;
         border-radius: 4px;
@@ -220,13 +219,14 @@
 
       .drag-handle {
         position: absolute;
-        bottom: 10px;
-        right: 17px;
+        padding: 2px;
+        bottom: 7px;
+        right: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: grab;
-        opacity: 0.55;
+        opacity: 0.6;
         transition: opacity $transition-time $default-ease;
 
         @include has-hover {
@@ -239,7 +239,7 @@
 
         svg {
           position: relative;
-          height: 15px;
+          height: 12px;
           width: auto;
           color: $color-gray;
         }

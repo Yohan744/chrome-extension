@@ -3,7 +3,11 @@
     <div class="left-part">
       <h1 class="title">{{ dayOfTheWeek[actualDay] + ' ' + actualDate }}</h1>
       <div class="task-count">
-        <p class="number">{{ taskNumber }}</p>
+        <div class="number" :style="{ width: numberWidthCh }" :class="{ 'no-width-transition': !initialized }">
+          <Transition :name="transitionName">
+            <span :key="taskNumber" class="digit">{{ taskNumber }}</span>
+          </Transition>
+        </div>
         <p class="text">task</p>
         <p class="plural" :class="{ show: taskNumber > 1 }">s</p>
       </div>
@@ -27,8 +31,12 @@
   import switchBetweenSections from '~/composables/SwitchBetweenSections';
   import PlusIcon from '~/assets/icons/plus.svg?component';
   import SettingsIcon from '~/assets/icons/settings.svg?component';
+  import gsap from 'gsap';
 
   const taskNumber = ref<number>(0);
+  const transitionName = ref<string>('none');
+  const initialized = ref<boolean>(false);
+  const numberWidthCh = computed(() => `${Math.max(1, String(taskNumber.value).length)}ch`);
   const events = useGlobalEvents();
 
   const actualDay: number = new Date().getDay();
@@ -39,7 +47,9 @@
     await updateTaskNumber();
 
     events.on(ICustomEvents.taskCreated, async () => {
-      await updateTaskNumber();
+      gsap.delayedCall(1, async () => {
+        await updateTaskNumber();
+      });
     });
 
     events.on(ICustomEvents.taskDeleted, async () => {
@@ -48,7 +58,20 @@
   });
 
   const updateTaskNumber = async () => {
-    taskNumber.value = (await ChromeStorageHelper.getInstance().getTodos()).length;
+    const newCount = (await ChromeStorageHelper.getInstance().getTodos()).length;
+
+    if (!initialized.value) {
+      transitionName.value = 'none';
+    } else if (newCount > taskNumber.value) {
+      transitionName.value = 'count-up';
+    } else if (newCount < taskNumber.value) {
+      transitionName.value = 'count-down';
+    } else {
+      transitionName.value = 'none';
+    }
+
+    taskNumber.value = newCount;
+    initialized.value = true;
   };
 </script>
 
@@ -78,7 +101,7 @@
 
       .task-count {
         position: relative;
-        margin-left: 1px;
+        margin-left: 0;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
@@ -86,10 +109,24 @@
         font-size: 13px;
         font-variation-settings: 'wght' 500;
         color: rgba($color-white, 0.55);
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: 'tnum' 1;
 
         .number {
           position: relative;
-          min-width: 8px;
+          overflow: hidden;
+          display: inline-block;
+          text-align: left;
+          transition: width $transition-time $default-ease;
+          will-change: width;
+
+          &.no-width-transition {
+            transition: none;
+          }
+
+          .digit {
+            display: block;
+          }
         }
 
         .text {
@@ -169,6 +206,63 @@
           color: $color-white;
         }
       }
+    }
+
+    .count-up-enter-active,
+    .count-up-leave-active,
+    .count-down-enter-active,
+    .count-down-leave-active {
+      transition:
+        transform calc($transition-time * 1.25) $default-ease,
+        opacity calc($transition-time * 1.25) $default-ease;
+      will-change: transform, opacity;
+    }
+
+    .count-up-enter-from {
+      transform: translate3d(0, 115%, 0);
+      opacity: 0;
+    }
+    .count-up-enter-to {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+    .count-up-leave-from {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+    .count-up-leave-to {
+      transform: translate3d(0, -115%, 0);
+      opacity: 0;
+    }
+
+    .count-down-enter-from {
+      transform: translate3d(0, -115%, 0);
+      opacity: 0;
+    }
+    .count-down-enter-to {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+    .count-down-leave-from {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+    .count-down-leave-to {
+      transform: translate3d(0, 115%, 0);
+      opacity: 0;
+    }
+
+    .count-up-leave-active,
+    .count-down-leave-active {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .none-enter-active,
+    .none-leave-active {
+      transition: none;
     }
   }
 </style>

@@ -191,13 +191,13 @@
         justify-content: flex-start;
         align-items: flex-start;
         flex-grow: 1;
-        gap: 5px;
+        gap: 6px;
 
         .category-name {
           position: relative;
-          padding: 3px 5px;
+          padding: 4px 6px;
           border-radius: 4px;
-          font-size: 8px;
+          font-size: 9px;
           font-variation-settings: 'wght' 480;
           user-select: none;
         }

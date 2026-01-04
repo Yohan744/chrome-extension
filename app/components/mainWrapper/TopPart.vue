@@ -117,6 +117,7 @@
           overflow: hidden;
           display: inline-block;
           text-align: left;
+          white-space: nowrap;
           transition: width $transition-time $default-ease;
           will-change: width;
 

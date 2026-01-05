@@ -138,14 +138,18 @@
       height: 50px;
       width: 100%;
       border-radius: 7px;
-      border: none;
+      border: 1px solid rgba($color-border, 0.065);
       background: rgba($color-gray, 0.35);
       font-size: 14px;
       font-variation-settings: 'wght' 475;
+      transition: border $transition-time $default-ease;
 
       &:focus {
-        border: none;
         outline: none;
+      }
+
+      @include has-hover {
+        border: 1px solid rgba($color-border, 0.15);
       }
 
       &::placeholder {

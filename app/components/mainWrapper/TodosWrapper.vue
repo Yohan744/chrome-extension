@@ -49,8 +49,9 @@
   };
 
   onMounted(async () => {
-    events.on(ICustomEvents.taskCreated, async () => {
+    events.on(ICustomEvents.taskCreated, async taskId => {
       await updateTodos();
+      console.log(taskId);
     });
 
     events.on(ICustomEvents.taskDeleted, async todoId => {

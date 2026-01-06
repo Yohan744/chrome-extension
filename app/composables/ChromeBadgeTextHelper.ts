@@ -17,12 +17,12 @@ class ChromeBadgeHelper {
     const todosCount = (await ChromeStorageHelper.getInstance().getTodos()).length;
     this.updateBadgeText(todosCount);
 
-    events.on(ICustomEvents.taskCreated, async () => {
+    events.on(ICustomEvents.animationEventForTaskCreated, async () => {
       const taskCount = (await ChromeStorageHelper.getInstance().getTodos()).length;
       this.updateBadgeText(taskCount);
     });
 
-    events.on(ICustomEvents.taskDeleted, async () => {
+    events.on(ICustomEvents.animationEventForTaskDeleted, async () => {
       const taskCount = (await ChromeStorageHelper.getInstance().getTodos()).length;
       this.updateBadgeText(taskCount);
     });

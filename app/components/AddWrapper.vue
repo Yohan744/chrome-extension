@@ -74,14 +74,17 @@
 
     if (!category) return;
 
+    const taskId = crypto.randomUUID();
+
     await storage.addTodo({
-      id: crypto.randomUUID(),
+      id: taskId,
       task: task.value,
       categoryId: category.id,
       order: order
     });
 
-    events.trigger(ICustomEvents.taskCreated);
+    events.trigger(ICustomEvents.taskCreated, taskId);
+    events.trigger(ICustomEvents.animationEventForTaskCreated);
     isTaskAlreadyCreated.value = true;
     switchSectionAndCleanUpAddWrapper('main');
   };

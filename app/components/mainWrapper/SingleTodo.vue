@@ -93,7 +93,10 @@
       scale: 0.65,
       opacity: 0,
       duration: 1,
-      ease: 'power2.inOut'
+      ease: 'power2.inOut',
+      onComplete: () => {
+        events.trigger(ICustomEvents.animationEventForTaskDeleted);
+      }
     });
 
     const vars = {

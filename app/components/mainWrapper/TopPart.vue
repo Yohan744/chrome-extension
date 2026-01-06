@@ -31,7 +31,6 @@
   import switchBetweenSections from '~/composables/SwitchBetweenSections';
   import PlusIcon from '~/assets/icons/plus.svg?component';
   import SettingsIcon from '~/assets/icons/settings.svg?component';
-  import gsap from 'gsap';
 
   const taskNumber = ref<number>(0);
   const transitionName = ref<string>('none');
@@ -46,13 +45,11 @@
   onMounted(async () => {
     await updateTaskNumber();
 
-    events.on(ICustomEvents.taskCreated, async () => {
-      gsap.delayedCall(1, async () => {
-        await updateTaskNumber();
-      });
+    events.on(ICustomEvents.animationEventForTaskCreated, async () => {
+      await updateTaskNumber();
     });
 
-    events.on(ICustomEvents.taskDeleted, async () => {
+    events.on(ICustomEvents.animationEventForTaskDeleted, async () => {
       await updateTaskNumber();
     });
   });

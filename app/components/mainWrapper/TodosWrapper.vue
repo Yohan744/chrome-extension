@@ -51,7 +51,9 @@
   onMounted(async () => {
     events.on(ICustomEvents.taskCreated, async taskId => {
       await updateTodos();
-      console.log(taskId);
+      gsap.delayedCall(0, () => {
+        animateTodoApparition(getTodoElementById(taskId as string) as HTMLElement);
+      });
     });
 
     events.on(ICustomEvents.taskDeleted, async todoId => {
@@ -99,7 +101,7 @@
     document.querySelector('body')?.classList.add('grabbing-cursor');
   };
 
-  const onDragMove = (id: string, currentY: number) => {
+  const onDragMove = async (id: string, currentY: number) => {
     if (dragState.draggingId !== id) return;
 
     const deltaY = currentY - dragState.lastY;
@@ -142,7 +144,9 @@
     dragState.lastY = currentY;
     dragState.canDrag = false;
 
-    nextTick(() => {
+    await nextTick();
+
+    gsap.delayedCall(0, () => {
       Flip.from(state, {
         duration: 0.7,
         absolute: false,
@@ -180,6 +184,57 @@
 
   const updateTodos = async () => {
     todos.value = await ChromeStorageHelper.getInstance().getTodos();
+  };
+
+  const animateTodoApparition = (todoElement: HTMLElement) => {
+    if (!todoElement) return;
+
+    const hasEnoughSpaceToScroll = wrapperRef.value
+      ? wrapperRef.value.scrollHeight > wrapperRef.value.clientHeight - 75
+      : false;
+
+    const tl = gsap.timeline({
+      force3D: true,
+      overwrite: true,
+      onComplete: () => {
+        tl.kill();
+      }
+    });
+
+    if (hasEnoughSpaceToScroll) {
+      tl.set(wrapperRef.value, {
+        scrollTo: { y: 'max' }
+      });
+    }
+
+    tl.set(todoElement, {
+      opacity: 0,
+      scale: 0,
+      y: '50px'
+    });
+
+    tl.to(todoElement, {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      delay: 1.25,
+      duration: 10.05,
+      ease: 'power3.out',
+      onComplete: () => {
+        events.trigger(ICustomEvents.animationEventForTaskCreated);
+      }
+    });
+
+    const duration = Math.min(Math.max(todos.value.length * 0.15, 1.25), 2);
+
+    if (hasEnoughSpaceToScroll) {
+      tl.to(wrapperRef.value, {
+        scrollTo: { y: 0 },
+        delay: 0.45,
+        duration: duration,
+        ease: 'power3.inOut'
+      });
+    }
   };
 
   const handleTodoDeletion = (todoId: string) => {

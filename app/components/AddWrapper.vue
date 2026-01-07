@@ -84,7 +84,6 @@
     });
 
     events.trigger(ICustomEvents.taskCreated, taskId);
-    events.trigger(ICustomEvents.animationEventForTaskCreated);
     isTaskAlreadyCreated.value = true;
     switchSectionAndCleanUpAddWrapper('main');
   };

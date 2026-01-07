@@ -161,6 +161,7 @@
     align-items: center;
     gap: 10px;
     opacity: 1;
+    transform-origin: center top;
     will-change: margin, transform, opacity;
     transition: opacity calc($transition-time * 2) $default-ease;
 

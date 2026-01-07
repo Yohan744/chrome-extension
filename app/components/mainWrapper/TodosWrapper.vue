@@ -107,7 +107,7 @@
     if (dragState.draggingId !== id) return;
 
     const deltaY = currentY - dragState.lastY;
-    const threshold = 60;
+    const threshold = 65;
 
     if (Math.abs(deltaY) < threshold || !dragState.canDrag) return;
 
@@ -163,7 +163,7 @@
           scrollToTodo(id, direction, todoTempElement.clientHeight);
         },
         onUpdate: function () {
-          if (this.progress() >= 0.75 && !dragState.canDrag) {
+          if (this.progress() >= 0.6 && !dragState.canDrag) {
             dragState.lastY = currentY;
             dragState.canDrag = true;
           }

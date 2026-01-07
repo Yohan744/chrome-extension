@@ -29,6 +29,7 @@
   const todos = ref<ITodoType[]>(await ChromeStorageHelper.getInstance().getTodos());
   const wrapperRef = ref<HTMLElement | null>(null);
   const lastDeletedTodoId = ref<string | null>(null);
+  let creationTl: gsap.core.Timeline | null = null;
 
   const dragState = reactive({
     draggingId: null as string | null,
@@ -51,6 +52,7 @@
   onMounted(async () => {
     events.on(ICustomEvents.taskCreated, async taskId => {
       await updateTodos();
+      await nextTick();
       gsap.delayedCall(0, () => {
         animateTodoApparition(getTodoElementById(taskId as string) as HTMLElement);
       });
@@ -189,50 +191,57 @@
   const animateTodoApparition = (todoElement: HTMLElement) => {
     if (!todoElement) return;
 
-    const hasEnoughSpaceToScroll = wrapperRef.value
-      ? wrapperRef.value.scrollHeight > wrapperRef.value.clientHeight - 75
-      : false;
+    const wrapper = wrapperRef.value;
+    const hasEnoughSpaceToScroll = wrapper ? wrapper.scrollHeight > wrapper.clientHeight - 75 : false;
 
-    const tl = gsap.timeline({
+    if (creationTl) {
+      creationTl.kill();
+      creationTl = null;
+      gsap.set(wrapper, { scrollTo: { y: 0 } });
+      wrapper?.scrollTo(0, 0);
+    }
+
+    if (wrapper) gsap.killTweensOf(wrapper);
+    gsap.killTweensOf(todoElement);
+
+    if (hasEnoughSpaceToScroll && wrapper) {
+      gsap.set(wrapper, { scrollTo: { y: 'max' } });
+    }
+
+    creationTl = gsap.timeline({
       force3D: true,
       overwrite: true,
       onComplete: () => {
-        tl.kill();
+        creationTl?.kill();
+        creationTl = null;
       }
     });
 
-    if (hasEnoughSpaceToScroll) {
-      tl.set(wrapperRef.value, {
-        scrollTo: { y: 'max' }
-      });
-    }
-
-    tl.set(todoElement, {
+    creationTl.set(todoElement, {
       opacity: 0,
-      scale: 0,
-      y: '50px'
+      scale: 0
     });
 
-    tl.to(todoElement, {
+    creationTl.to(todoElement, {
       opacity: 1,
       scale: 1,
-      y: 0,
-      delay: 1.25,
-      duration: 10.05,
+      delay: 1.3,
+      duration: 1.05,
       ease: 'power3.out',
-      onComplete: () => {
+      onStart: () => {
         events.trigger(ICustomEvents.animationEventForTaskCreated);
       }
     });
 
-    const duration = Math.min(Math.max(todos.value.length * 0.15, 1.25), 2);
+    const duration = Math.min(Math.max(todos.value.length * 0.125, 1), 2.15);
 
-    if (hasEnoughSpaceToScroll) {
-      tl.to(wrapperRef.value, {
-        scrollTo: { y: 0 },
-        delay: 0.45,
+    if (hasEnoughSpaceToScroll && wrapper) {
+      creationTl.to(wrapper, {
+        scrollTo: { y: 0, autoKill: false },
+        delay: 0.1,
         duration: duration,
-        ease: 'power3.inOut'
+        ease: 'power3.inOut',
+        overwrite: true
       });
     }
   };

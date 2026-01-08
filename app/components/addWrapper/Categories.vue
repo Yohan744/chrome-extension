@@ -71,6 +71,7 @@
     if (!categoryID || !categoryWidth || !iconElement || !textElement) return;
 
     isAnimatingCategoryDeletion.value = true;
+    selectedCategory.value = null;
 
     gsap.set(category, {
       width: `${categoryWidth}px`,
@@ -114,8 +115,10 @@
       category,
       {
         marginRight: `-9px`,
+        marginTop: '-9px',
         width: 0,
-        duration: 1,
+        height: 0,
+        duration: 1.15,
         ease: 'power2.out'
       },
       0.65
@@ -279,7 +282,7 @@
         filter: grayscale(0);
         opacity: 1;
         clip-path: inset(0 0 0 0 round 7px);
-        will-change: opacity, filter, clip-path, margin, width, padding;
+        will-change: opacity, filter, clip-path, margin, width, height, padding;
         transition:
           filter $transition-time $default-ease,
           opacity $transition-time $default-ease;

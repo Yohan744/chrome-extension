@@ -41,6 +41,7 @@
   const selectedCategory = ref<HTMLElement | null>(null);
   const WrapperRef = ref<HTMLElement | null>(null);
   const isAnimatingCategoryDeletion = ref(false);
+  const isAnimatingCategoryApparition = ref(false);
   const events = useGlobalEvents();
 
   const props = defineProps<{
@@ -131,19 +132,32 @@
       scale: 0
     });
 
-    const tl = gsap.timeline({
-      overwrite: true,
-      force3D: true,
-      onComplete: () => {
-        tl.kill();
-      }
-    });
-
     const hasEnoughSpaceToScroll = WrapperRef.value
       ? WrapperRef.value.scrollHeight > WrapperRef.value.clientHeight
       : false;
 
-    if (hasEnoughSpaceToScroll) {
+    if (isAnimatingCategoryApparition.value) {
+      if (hasEnoughSpaceToScroll)
+        gsap.to(WrapperRef.value, {
+          scrollTo: { y: 'max' },
+          overwrite: true,
+          duration: 0.65
+        });
+    }
+
+    const tl = gsap.timeline({
+      overwrite: false,
+      force3D: true,
+      onStart: () => {
+        isAnimatingCategoryApparition.value = true;
+      },
+      onComplete: () => {
+        tl.kill();
+        isAnimatingCategoryApparition.value = false;
+      }
+    });
+
+    if (hasEnoughSpaceToScroll && !isAnimatingCategoryApparition.value) {
       tl.to(
         WrapperRef.value,
         {

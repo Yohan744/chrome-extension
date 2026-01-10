@@ -22,12 +22,18 @@
 
       <button
         class="create"
-        :class="{ active: categoryName !== '' && !checkIfCategoryAlreadyExists(categoryName) }"
+        :class="{
+          active: categoryName !== '' && !checkIfCategoryAlreadyExists(categoryName) && allCategories.length < 51
+        }"
         @click="handleCategoryCreation"
       >
         Create
       </button>
     </div>
+
+    <p class="warning-text" :class="{ visible: allCategories.length >= 51 }">
+      The limit of 50 categories has been exceeded
+    </p>
   </div>
 </template>
 
@@ -119,7 +125,8 @@
       !iconSelected.value ||
       !categoryName.value ||
       categoryName.value === '' ||
-      checkIfCategoryAlreadyExists(categoryName.value)
+      checkIfCategoryAlreadyExists(categoryName.value) ||
+      allCategories.value.length >= 51
     )
       return;
 
@@ -237,6 +244,29 @@
           filter: grayscale(0);
           pointer-events: all;
         }
+      }
+    }
+
+    .warning-text {
+      position: absolute;
+      margin: 0 auto;
+      bottom: -18px;
+      left: 50%;
+      width: 100%;
+      text-align: center;
+      font-size: 9px;
+      color: #e30b0b;
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+      transform: translate3d(-50%, 0, 0) scale(0.875);
+      transition:
+        opacity calc($transition-time * 1.25) $default-ease,
+        transform calc($transition-time * 1.25) $default-ease;
+
+      &.visible {
+        opacity: 1;
+        transform: translate3d(-50%, 0, 0) scale(1);
       }
     }
   }

@@ -90,6 +90,26 @@ class ChromeStorageHelper {
   //   return await storageGet();
   // }
 
+  public async getStorageUsage(): Promise<{ total: number; byKey: Record<string, number> }> {
+    const s = getChromeStorage();
+    if (!s) return { total: 0, byKey: {} };
+
+    const total = await new Promise<number>(resolve => {
+      s.getBytesInUse(null, bytes => resolve(bytes));
+    });
+
+    const keys = ['todos', 'categories'];
+    const byKey: Record<string, number> = {};
+
+    for (const key of keys) {
+      byKey[key] = await new Promise<number>(resolve => {
+        s.getBytesInUse(key, bytes => resolve(bytes));
+      });
+    }
+
+    return { total, byKey };
+  }
+
   //////////////////////////////////////////////////////////////////////////////////
 
   public async getTodos(): Promise<ITodoType[]> {

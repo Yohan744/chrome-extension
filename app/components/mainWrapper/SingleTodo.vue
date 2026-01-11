@@ -13,7 +13,7 @@
         <p class="task">{{ props.todoItem.task }}</p>
       </div>
 
-      <div class="drag-handle" @mousedown="onDragStart">
+      <div class="drag-handle" :class="{ disableDragCursor: props.isForCustomCategory }" @mousedown="onDragStart">
         <GrabHandleIcon />
       </div>
 
@@ -210,9 +210,9 @@
           position: relative;
           width: 90%;
           word-break: break-word;
-          font-size: 16px;
-          line-height: 1.35;
-          font-variation-settings: 'wght' 530;
+          font-size: 15px;
+          line-height: 1.325;
+          font-variation-settings: 'wght' 515;
 
           &::selection {
             background: var(--selection-bg);
@@ -237,8 +237,12 @@
           opacity: 0.15;
         }
 
-        &:active {
+        &:active:not(.disableDragCursor) {
           cursor: grabbing;
+        }
+
+        &.disableDragCursor {
+          cursor: default;
         }
 
         svg {

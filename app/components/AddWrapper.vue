@@ -7,6 +7,7 @@
         ref="taskInputRef"
         class="task-input"
         type="text"
+        maxlength="75"
         autocomplete="off"
         placeholder="Task Title"
         @input="handleInput"

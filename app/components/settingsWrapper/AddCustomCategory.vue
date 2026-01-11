@@ -31,7 +31,7 @@
       </button>
     </div>
 
-    <p class="warning-text" :class="{ visible: allCategories.length >= 51 }">
+    <p class="warning-text" :class="{ visible: allCategories.length >= 51 && categoryName !== '' }">
       The limit of 50 categories has been exceeded
     </p>
   </div>
@@ -259,14 +259,14 @@
       opacity: 0;
       pointer-events: none;
       user-select: none;
-      transform: translate3d(-50%, 0, 0) scale(0.875);
+      transform: translate3d(-50%, 0, 0) scale(0.875) rotateX(90deg);
       transition:
         opacity calc($transition-time * 1.25) $default-ease,
         transform calc($transition-time * 1.25) $default-ease;
 
       &.visible {
         opacity: 1;
-        transform: translate3d(-50%, 0, 0) scale(1);
+        transform: translate3d(-50%, 0, 0) scale(1) rotateX(0);
       }
     }
   }

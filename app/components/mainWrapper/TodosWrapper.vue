@@ -56,9 +56,6 @@
       gsap.delayedCall(0, () => {
         animateTodoApparition(getTodoElementById(taskId as string) as HTMLElement);
       });
-      const usage = await ChromeStorageHelper.getInstance().getStorageUsage();
-      console.log('Total:', usage.total, '/ 102400 bytes');
-      console.log('Par clé:', usage.byKey);
     });
 
     events.on(ICustomEvents.taskDeleted, async todoId => {

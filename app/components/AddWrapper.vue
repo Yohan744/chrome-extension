@@ -23,6 +23,8 @@
       @add-category-clicked="switchSectionAndCleanUpAddWrapper('settings')"
     />
 
+    <p class="warning-text" :class="{ visible: actualByteSize >= 7800 }">The storage limit has been reached</p>
+
     <button class="create-task-button" :class="{ active: canCreateTask }" @click="handleTaskCreation">
       Create task
     </button>
@@ -49,8 +51,16 @@
   const addWrapperRef = ref<InstanceType<typeof Categories> | null>(null);
   const task = ref<string | null>(null);
   const actualCategory = ref<string | null>(null);
+  const actualByteSize = ref<number>(0);
+
   const canCreateTask = computed(() => {
-    return actualCategory.value !== null && task.value !== null && task.value !== '' && !isTaskAlreadyCreated.value;
+    return (
+      actualCategory.value !== null &&
+      task.value !== null &&
+      task.value !== '' &&
+      !isTaskAlreadyCreated.value &&
+      actualByteSize.value <= 7800
+    );
   });
 
   const handleInput = (e: Event) => {
@@ -68,7 +78,14 @@
   };
 
   const handleTaskCreation = async () => {
-    if (!actualCategory.value || !task.value || task.value === '' || isTaskAlreadyCreated.value) return;
+    if (
+      !actualCategory.value ||
+      !task.value ||
+      task.value === '' ||
+      isTaskAlreadyCreated.value ||
+      actualByteSize.value > 7800
+    )
+      return;
 
     const category: ICategoryType | null = await storage.getCategoryByName(actualCategory.value);
     const order = (await storage.getBiggestOrderNumberInTodos()) + 1;
@@ -90,8 +107,9 @@
   };
 
   const switchSectionAndCleanUpAddWrapper = (sectionName: 'main' | 'settings') => {
-    switchBetweenSections(sectionName, () => {
+    switchBetweenSections(sectionName, async () => {
       cleanAddWrapper();
+      await updateStorageUsage();
     });
   };
 
@@ -103,10 +121,21 @@
     addWrapperRef.value?.cleanUpCategoriesSelection();
   };
 
+  const updateStorageUsage = async () => {
+    const usage = await ChromeStorageHelper.getInstance().getStorageUsage();
+    if (usage) actualByteSize.value = (usage?.byKey['todos'] as number) || 0;
+  };
+
   onMounted(async () => {
+    await updateStorageUsage();
+
     events.on(ICustomEvents.switchSectionStart, async showSectionName => {
       if (showSectionName !== 'add') return;
       taskInputRef.value?.focus();
+    });
+
+    events.on(ICustomEvents.taskDeleted, async () => {
+      await updateStorageUsage();
     });
   });
 </script>
@@ -165,6 +194,29 @@
       margin-top: 30px;
       font-size: 17px;
       font-variation-settings: 'wght' 600;
+    }
+
+    .warning-text {
+      position: absolute;
+      margin: 0 auto;
+      bottom: 80px;
+      left: 50%;
+      width: 100%;
+      text-align: center;
+      font-size: 11px;
+      color: $color-red;
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+      transform: translate3d(-50%, 0, 0) scale(0.875) rotateX(90deg);
+      transition:
+        opacity calc($transition-time * 1.25) $default-ease,
+        transform calc($transition-time * 1.25) $default-ease;
+
+      &.visible {
+        opacity: 1;
+        transform: translate3d(-50%, 0, 0) scale(1) rotateX(0);
+      }
     }
 
     .create-task-button {

@@ -255,7 +255,7 @@
       width: 100%;
       text-align: center;
       font-size: 9px;
-      color: #e30b0b;
+      color: $color-red;
       opacity: 0;
       pointer-events: none;
       user-select: none;

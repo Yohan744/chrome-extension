@@ -129,7 +129,7 @@
   onMounted(async () => {
     await updateStorageUsage();
 
-    events.on(ICustomEvents.switchSectionStart, async showSectionName => {
+    events.on(ICustomEvents.switchSectionEnd, async showSectionName => {
       if (showSectionName !== 'add') return;
       taskInputRef.value?.focus();
     });

@@ -35,9 +35,6 @@ const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: (
   isAnimating = true;
 
   const tl = gsap.timeline({
-    onStart: () => {
-      events.trigger(ICustomEvents.switchSectionStart, show as string);
-    },
     onComplete: () => {
       isAnimating = false;
       sectionToHide.classList.remove('active');
@@ -72,7 +69,12 @@ const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: (
       opacity: 1,
       pointerEvents: 'all',
       duration: 0.95,
-      ease: 'power1.out'
+      ease: 'power1.out',
+      onStart: () => {
+        gsap.delayedCall(0.15, () => {
+          events.trigger(ICustomEvents.switchSectionEnd, show as string);
+        });
+      }
     },
     0.65
   );

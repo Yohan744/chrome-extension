@@ -70,6 +70,12 @@
     events.on(ICustomEvents.migrationDone, async () => {
       await updateTodos();
     });
+
+    events.on(ICustomEvents.switchSectionEnd, async showSectionName => {
+      if (showSectionName === 'main' || !wrapperRef.value) return;
+      gsap.killTweensOf(wrapperRef.value);
+      wrapperRef.value.scrollTo(0, 0);
+    });
   });
 
   const scrollToTodo = (id: string, direction: -1 | 1 = 1, todoSwapHeight: number) => {

@@ -1,7 +1,7 @@
 <template>
   <div class="single-todo" :data-id="props.todoItem.id">
     <TodoCheckbox ref="todoCheckboxRef" :color="primaryColor" :text-color="textColor" @checked="handleCheckboxClick" />
-    <div class="right-part-todo" :style="{ '--selection-bg': primaryColor }">
+    <div class="right-part-todo" :style="{ '--selection-bg': primaryColor, '--selection-text': textColor }">
       <div class="icon-wrapper" :style="wrapperStyle">
         <Icon :icon-name="category?.iconName" :color="primaryColor" />
       </div>
@@ -216,7 +216,7 @@
 
           &::selection {
             background: var(--selection-bg);
-            color: $color-white;
+            color: var(--selection-text);
           }
         }
       }

@@ -14,11 +14,12 @@
 
       <div class="task-wrapper">
         <p
+          ref="categoryNameRef"
           class="category-name"
           :style="{ background: primaryColor, color: textColor }"
           :class="{ customCategory: props.isForCustomCategory }"
         >
-          {{ category?.name || 'Other' }}
+          {{ props.isForCustomCategory ? customCategoryName : category?.name || 'Other' }}
         </p>
         <p class="task">{{ props.todoItem.task }}</p>
       </div>
@@ -51,6 +52,8 @@
   const events = useGlobalEvents();
   const isAnimating = ref<boolean>(false);
   const todoCheckboxRef = ref<InstanceType<typeof TodoCheckbox> | null>(null);
+  const categoryNameRef = ref<HTMLElement | null>(null);
+  const customCategoryName = ref<string>('custom category');
 
   const category = ref<ICategoryType | null>(
     await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId)
@@ -143,6 +146,10 @@
     window.addEventListener('mouseup', onMouseUp);
   };
 
+  const handleNewCategoryName = (name: string) => {
+    customCategoryName.value = name || 'custom category';
+  };
+
   onMounted(async () => {
     if (!props.isForCustomCategory) return;
 
@@ -156,6 +163,10 @@
 
     events.on(ICustomEvents.cleanCustomCategoryTodo, () => {
       todoCheckboxRef.value?.uncheck();
+    });
+
+    events.on(ICustomEvents.newInputForCustomCategoryName, name => {
+      handleNewCategoryName(name as string);
     });
   });
 </script>

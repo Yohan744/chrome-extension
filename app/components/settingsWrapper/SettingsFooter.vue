@@ -32,26 +32,20 @@
         content: '';
         bottom: -3px;
         left: 0;
-        transform-origin: right;
+        transform-origin: 100% 0;
         transform: scaleX(0);
-        opacity: 0;
-        height: 1px;
+        height: 0.1em;
         width: 100%;
         background: rgba($color-white, 0.75);
-        transition:
-          transform $transition-time $default-ease,
-          opacity $transition-time $default-ease,
-          background $transition-time $default-ease;
+        transition: transform calc($transition-time * 0.65) $default-ease;
       }
 
       @include has-hover {
         color: rgba($color-white, 1);
 
         &:before {
-          opacity: 1;
-          transform-origin: left;
+          transform-origin: 0 0;
           transform: scaleX(1);
-          background: rgba($color-white, 1);
         }
       }
     }

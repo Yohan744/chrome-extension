@@ -168,10 +168,13 @@
         @include light-border;
         cursor: pointer;
         background: rgba($color-gray, 0.9);
-        transition: background $transition-time $default-ease;
+        transition:
+          background $transition-time $default-ease,
+          border $transition-time $default-ease;
 
         @include has-hover {
           background: rgba($color-gray, 0.6);
+          border: 1px solid rgba($color-border, 0.2);
         }
 
         svg {

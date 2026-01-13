@@ -1,13 +1,23 @@
 <template>
   <div class="single-todo" :data-id="props.todoItem.id">
-    <TodoCheckbox ref="todoCheckboxRef" :color="primaryColor" :text-color="textColor" @checked="handleCheckboxClick" />
+    <TodoCheckbox
+      ref="todoCheckboxRef"
+      :color="primaryColor"
+      :text-color="textColor"
+      :is-disabled="props.isForCustomCategory"
+      @checked="handleCheckboxClick"
+    />
     <div class="right-part-todo" :style="{ '--selection-bg': primaryColor, '--selection-text': textColor }">
       <div class="icon-wrapper" :style="wrapperStyle">
         <Icon :icon-name="category?.iconName" :color="primaryColor" />
       </div>
 
       <div class="task-wrapper">
-        <p class="category-name" :style="{ background: primaryColor, color: textColor }">
+        <p
+          class="category-name"
+          :style="{ background: primaryColor, color: textColor }"
+          :class="{ customCategory: props.isForCustomCategory }"
+        >
           {{ category?.name || 'Other' }}
         </p>
         <p class="task">{{ props.todoItem.task }}</p>
@@ -204,6 +214,12 @@
           font-size: 9px;
           font-variation-settings: 'wght' 480;
           user-select: none;
+          white-space: nowrap;
+
+          &.customCategory {
+            will-change: width;
+            transition: width $transition-time $default-ease;
+          }
         }
 
         .task {
@@ -233,8 +249,10 @@
         opacity: 0.6;
         transition: opacity $transition-time $default-ease;
 
-        @include has-hover {
-          opacity: 0.15;
+        &:not(.disableDragCursor) {
+          @include has-hover {
+            opacity: 0.15;
+          }
         }
 
         &:active:not(.disableDragCursor) {

@@ -13,13 +13,14 @@
   const props = defineProps<{
     color: string;
     textColor: string;
+    isDisabled?: boolean;
   }>();
 
   const inputRef = ref<HTMLInputElement | null>(null);
   const isChecked = ref<boolean>(false);
 
   const handleClick = (e: MouseEvent) => {
-    if (!inputRef.value || !inputRef.value.checked || !e.target) return;
+    if (!inputRef.value || !inputRef.value.checked || !e.target || props.isDisabled) return;
     emit('checked', e.target);
     isChecked.value = true;
   };

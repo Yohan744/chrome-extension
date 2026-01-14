@@ -148,6 +148,9 @@
 
   const handleNewCategoryName = (name: string) => {
     customCategoryName.value = name || 'custom category';
+    console.log(customCategoryName.value.length);
+    if (categoryNameRef.value)
+      categoryNameRef.value.style.width = `calc(${customCategoryName.value.length + 'ch'} + 12px)`;
   };
 
   onMounted(async () => {
@@ -168,6 +171,9 @@
     events.on(ICustomEvents.newInputForCustomCategoryName, name => {
       handleNewCategoryName(name as string);
     });
+
+    if (categoryNameRef.value)
+      categoryNameRef.value.style.width = `calc(${customCategoryName.value.length + 'ch'} + 12px)`;
   });
 </script>
 

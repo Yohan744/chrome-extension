@@ -13,13 +13,8 @@
       </div>
 
       <div class="task-wrapper">
-        <p
-          ref="categoryNameRef"
-          class="category-name"
-          :style="{ background: primaryColor, color: textColor }"
-          :class="{ customCategory: props.isForCustomCategory }"
-        >
-          {{ props.isForCustomCategory ? customCategoryName : category?.name || 'Other' }}
+        <p class="category-name" :style="{ background: primaryColor, color: textColor }">
+          {{ category?.name || 'Other' }}
         </p>
         <p class="task">{{ props.todoItem.task }}</p>
       </div>
@@ -52,8 +47,6 @@
   const events = useGlobalEvents();
   const isAnimating = ref<boolean>(false);
   const todoCheckboxRef = ref<InstanceType<typeof TodoCheckbox> | null>(null);
-  const categoryNameRef = ref<HTMLElement | null>(null);
-  const customCategoryName = ref<string>('custom category');
 
   const category = ref<ICategoryType | null>(
     await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId)
@@ -146,13 +139,6 @@
     window.addEventListener('mouseup', onMouseUp);
   };
 
-  const handleNewCategoryName = (name: string) => {
-    customCategoryName.value = name || 'custom category';
-    console.log(customCategoryName.value.length);
-    if (categoryNameRef.value)
-      categoryNameRef.value.style.width = `calc(${customCategoryName.value.length + 'ch'} + 12px)`;
-  };
-
   onMounted(async () => {
     if (!props.isForCustomCategory) return;
 
@@ -167,13 +153,6 @@
     events.on(ICustomEvents.cleanCustomCategoryTodo, () => {
       todoCheckboxRef.value?.uncheck();
     });
-
-    events.on(ICustomEvents.newInputForCustomCategoryName, name => {
-      handleNewCategoryName(name as string);
-    });
-
-    if (categoryNameRef.value)
-      categoryNameRef.value.style.width = `calc(${customCategoryName.value.length + 'ch'} + 12px)`;
   });
 </script>
 
@@ -232,11 +211,9 @@
           font-variation-settings: 'wght' 480;
           user-select: none;
           white-space: nowrap;
-
-          &.customCategory {
-            will-change: width;
-            transition: width $transition-time $default-ease;
-          }
+          transition:
+            background $transition-time $default-ease,
+            color $transition-time $default-ease;
         }
 
         .task {

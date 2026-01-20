@@ -9,6 +9,5 @@ export const ICustomEvents = {
   updatedCustomCategory: 'updated-custom-category',
   newCategoryCreated: 'new-category-created',
   categoryDeleted: 'category-deleted',
-  cleanCustomCategoryTodo: 'clean-custom-category-todo',
-  newInputForCustomCategoryName: 'new-input-for-custom-category-name'
+  cleanCustomCategoryTodo: 'clean-custom-category-todo'
 };

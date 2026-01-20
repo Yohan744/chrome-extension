@@ -103,7 +103,6 @@
       .replace(/\s+/g, ' ');
 
     categoryName.value = target.value.trim();
-    events.trigger(ICustomEvents.newInputForCustomCategoryName, categoryName.value);
   };
 
   const checkIfCategoryAlreadyExists = (name: string) => {

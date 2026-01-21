@@ -30,6 +30,7 @@
   import Icon from '~/components/Icon.vue';
   import { IIcons } from '~/constants/IIcons';
   import ChromeStorageHelper from '~/composables/ChromeStorageHelper';
+  import gsap from 'gsap';
 
   const icons = IIcons;
   const events = useGlobalEvents();
@@ -40,16 +41,60 @@
     category: ICategoryType | null;
   }>();
 
+  const animateIconUpdate = () => {
+    const tl = gsap.timeline({
+      overwrite: true,
+      force3D: true,
+      onComplete: () => {
+        tl.kill();
+      }
+    });
+
+    tl.fromTo(
+      '.main-wrapper .btn-wrapper .btn .icon',
+      {
+        scale: 1,
+        rotate: 0
+      },
+      {
+        scale: 0,
+        rotate: 70,
+        duration: 0.5,
+        ease: 'power2.inOut'
+      }
+    );
+
+    tl.fromTo(
+      '.main-wrapper .btn-wrapper .btn .icon',
+      {
+        scale: 0,
+        rotate: -70
+      },
+      {
+        scale: 1,
+        rotate: 0,
+        duration: 0.65,
+        ease: 'power2.inOut'
+      },
+      '-=0.125'
+    );
+  };
+
   const handleIconClick = async (e: MouseEvent) => {
     if (!props.category || !e.target) return;
 
     const target = e.target as HTMLElement;
     const iconName = target.children[0]?.getAttribute('data-icon');
     if (!iconName || iconName === props.category.iconName) return;
-    await ChromeStorageHelper.getInstance().updateCategory(props.category.id, { iconName: iconName });
-    events.trigger(ICustomEvents.updatedCustomCategory);
-    emits('iconSelected', iconName);
-    emits('updateCategory');
+    events.trigger(ICustomEvents.updatedCustomCategoryIcon);
+    animateIconUpdate();
+    setTimeout(async () => {
+      if (!props.category) return;
+      await ChromeStorageHelper.getInstance().updateCategory(props.category.id, { iconName: iconName });
+      events.trigger(ICustomEvents.updatedCustomCategory);
+      emits('iconSelected', iconName);
+      emits('updateCategory');
+    }, 500);
   };
 </script>
 

@@ -6,6 +6,7 @@ export const ICustomEvents = {
   taskDeleted: 'task-deleted',
   animationEventForTaskDeleted: 'animation-event-for-task-deleted',
   switchSectionEnd: 'sectionSwitchEnd',
+  updatedCustomCategoryIcon: 'updated-custom-category-icon',
   updatedCustomCategory: 'updated-custom-category',
   newCategoryCreated: 'new-category-created',
   categoryDeleted: 'category-deleted',

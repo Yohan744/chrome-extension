@@ -139,6 +139,45 @@
     window.addEventListener('mouseup', onMouseUp);
   };
 
+  const animateIconUpdate = () => {
+    const tl = gsap.timeline({
+      overwrite: true,
+      force3D: true,
+      onComplete: () => {
+        tl.kill();
+      }
+    });
+
+    tl.fromTo(
+      '.single-todo .right-part-todo .icon-wrapper .icon',
+      {
+        scale: 1,
+        rotate: 0
+      },
+      {
+        scale: 0,
+        rotate: 70,
+        duration: 0.5,
+        ease: 'power2.inOut'
+      }
+    );
+
+    tl.fromTo(
+      '.single-todo .right-part-todo .icon-wrapper .icon',
+      {
+        scale: 0,
+        rotate: -70
+      },
+      {
+        scale: 1,
+        rotate: 0,
+        duration: 0.65,
+        ease: 'power2.inOut'
+      },
+      '-=0.125'
+    );
+  };
+
   onMounted(async () => {
     if (!props.isForCustomCategory) return;
 
@@ -148,6 +187,10 @@
 
     events.on(ICustomEvents.updatedCustomCategory, async () => {
       category.value = await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId);
+    });
+
+    events.on(ICustomEvents.updatedCustomCategoryIcon, () => {
+      animateIconUpdate();
     });
 
     events.on(ICustomEvents.cleanCustomCategoryTodo, () => {

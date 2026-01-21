@@ -34,6 +34,7 @@
 
   const icons = IIcons;
   const events = useGlobalEvents();
+  const isAnimating = ref<boolean>(false);
 
   const emits = defineEmits(['iconSelected', 'updateCategory']);
 
@@ -46,6 +47,7 @@
       overwrite: true,
       force3D: true,
       onComplete: () => {
+        isAnimating.value = false;
         tl.kill();
       }
     });
@@ -81,13 +83,14 @@
   };
 
   const handleIconClick = async (e: MouseEvent) => {
-    if (!props.category || !e.target) return;
+    if (!props.category || !e.target || isAnimating.value) return;
 
     const target = e.target as HTMLElement;
     const iconName = target.children[0]?.getAttribute('data-icon');
     if (!iconName || iconName === props.category.iconName) return;
     events.trigger(ICustomEvents.updatedCustomCategoryIcon);
     animateIconUpdate();
+    isAnimating.value = true;
     setTimeout(async () => {
       if (!props.category) return;
       await ChromeStorageHelper.getInstance().updateCategory(props.category.id, { iconName: iconName });

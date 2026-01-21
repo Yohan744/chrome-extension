@@ -87,7 +87,6 @@
     padding: 8px;
     z-index: z('popUp-btn');
     cursor: pointer;
-    transition: background $transition-time $default-ease;
     background: rgba($color-gray, 0.4);
 
     .color {
@@ -95,6 +94,7 @@
       height: 100%;
       width: 100%;
       border-radius: 3px;
+      transition: background $transition-time $default-ease;
     }
   }
 

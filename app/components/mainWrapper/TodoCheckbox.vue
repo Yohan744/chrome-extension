@@ -73,12 +73,13 @@
       fill: none;
       background: transparent;
       transition:
-        border $transition-time $easePower4Out,
-        background $transition-time $easePower4Out,
-        stroke-dashoffset calc($transition-time * 1.25) $easePower4Out;
+        border $transition-time $default-ease,
+        background $transition-time $default-ease,
+        stroke-dashoffset calc($transition-time * 1.25) $default-ease;
 
       polyline {
         transform: scale(0.775) translate(2px, 1px);
+        transition: stroke $transition-time $default-ease;
       }
     }
   }

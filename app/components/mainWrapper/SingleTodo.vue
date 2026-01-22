@@ -67,15 +67,13 @@
 
     if (!todoElementHeight) return;
 
+    isAnimating.value = true;
+
     const todoOrderNumber = await ChromeStorageHelper.getInstance().getTodoOrderById(todoId);
     const biggestTodoOrder = await ChromeStorageHelper.getInstance().getBiggestOrderNumberInTodos();
     const isLastTodo = todoOrderNumber === biggestTodoOrder;
     const parentElement = todoElement.parentElement;
     const hasEnoughSpaceToScroll = parentElement ? parentElement.scrollHeight > parentElement.clientHeight + 75 : false;
-
-    await ChromeStorageHelper.getInstance().deleteTodo(todoId);
-    isAnimating.value = true;
-    emit('delete-todo', todoId);
 
     gsap.set(todoElement, {
       scale: 1,
@@ -90,8 +88,10 @@
       onComplete: () => {
         tl.kill();
         todoElement.remove();
-        events.trigger(ICustomEvents.taskDeleted, todoId);
         isAnimating.value = false;
+        emit('delete-todo', todoId);
+        events.trigger(ICustomEvents.taskDeleted, todoId);
+        ChromeStorageHelper.getInstance().deleteTodo(todoId);
       }
     });
 
@@ -116,7 +116,7 @@
       ease: 'power4.out'
     };
 
-    tl.to(todoElement, vars, '-=0.35');
+    tl.to(todoElement, vars, '-=0.25');
   };
 
   const emit = defineEmits(['drag-start', 'drag-move', 'drag-end', 'delete-todo']);

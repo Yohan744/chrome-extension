@@ -1,5 +1,5 @@
 <template>
-  <div class="single-todo" :data-id="props.todoItem.id">
+  <div class="single-todo" :class="{ customCategory: props.isForCustomCategory }" :data-id="props.todoItem.id">
     <TodoCheckbox
       ref="todoCheckboxRef"
       :color="primaryColor"
@@ -209,10 +209,14 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    opacity: 1;
+    opacity: 0;
     transform-origin: 50% 50%;
     will-change: margin, transform, opacity;
     transition: opacity calc($transition-time * 2) $default-ease;
+
+    &.customCategory {
+      opacity: 1;
+    }
 
     .right-part-todo {
       position: relative;

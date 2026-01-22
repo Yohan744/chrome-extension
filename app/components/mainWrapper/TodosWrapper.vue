@@ -49,7 +49,56 @@
     return wrapperRef.value?.querySelector(`[data-id="${id}"]`) ?? null;
   };
 
+  const animateAllTodosOnInit = () => {
+    const todoElements = getTodoElements();
+    if (todoElements.length === 0) return;
+
+    const el = todoElements[0] as HTMLElement;
+    const computedStyle = window.getComputedStyle(el);
+    const transition = computedStyle.getPropertyValue('transition');
+
+    gsap.set(todoElements, {
+      transition: 'none'
+    });
+
+    gsap.fromTo(
+      wrapperRef.value,
+      {
+        opacity: 0
+      },
+      {
+        opacity: 1,
+        delay: 0.5,
+        duration: 1.25,
+        ease: 'linear'
+      }
+    );
+
+    gsap.fromTo(
+      todoElements,
+      {
+        opacity: 0,
+        y: '40px'
+      },
+      {
+        opacity: 1,
+        y: 0,
+        delay: 0.5,
+        stagger: 0.2,
+        duration: 1.25,
+        ease: 'back.out(3)',
+        onComplete: () => {
+          gsap.set(todoElements, {
+            transition: transition
+          });
+        }
+      }
+    );
+  };
+
   onMounted(async () => {
+    animateAllTodosOnInit();
+
     events.on(ICustomEvents.taskCreated, async taskId => {
       await updateTodos();
       await nextTick();
@@ -260,6 +309,7 @@
 <style scoped lang="scss">
   .todos-wrapper {
     position: relative;
+    padding-top: 20px;
     height: auto;
     width: 100%;
     display: flex;

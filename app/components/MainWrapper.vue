@@ -13,7 +13,7 @@
 <style scoped lang="scss">
   #main-wrapper {
     position: absolute;
-    gap: 30px;
+    gap: 10px;
     padding: 30px 20px 20px;
     inset: 0;
     height: 100%;

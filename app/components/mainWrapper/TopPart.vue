@@ -14,11 +14,11 @@
     </div>
 
     <div class="right-part">
-      <button class="settings" @click="switchBetweenSections('settings')">
+      <button ref="settingsButtonRef" class="settings" @click="switchBetweenSections('settings')">
         <SettingsIcon />
       </button>
 
-      <button class="add" @click="switchBetweenSections('add')">
+      <button ref="addButtonRef" class="add" @click="switchBetweenSections('add')">
         <PlusIcon />
       </button>
     </div>
@@ -31,12 +31,15 @@
   import switchBetweenSections from '~/composables/SwitchBetweenSections';
   import PlusIcon from '~/assets/icons/plus.svg?component';
   import SettingsIcon from '~/assets/icons/settings.svg?component';
+  import gsap from 'gsap';
 
   const taskNumber = ref<number>(0);
   const transitionName = ref<string>('none');
   const initialized = ref<boolean>(false);
   const numberWidthCh = computed(() => `${Math.max(1, String(taskNumber.value).length)}ch`);
   const events = useGlobalEvents();
+  const settingsButtonRef = ref<HTMLElement | null>(null);
+  const addButtonRef = ref<HTMLElement | null>(null);
 
   const actualDay: number = new Date().getDay();
   const actualDate: number = new Date().getDate();
@@ -44,6 +47,7 @@
 
   onMounted(async () => {
     await updateTaskNumber();
+    animateOnInit();
 
     events.on(ICustomEvents.animationEventForTaskCreated, async () => {
       await updateTaskNumber();
@@ -69,6 +73,38 @@
 
     taskNumber.value = newCount;
     initialized.value = true;
+  };
+
+  const animateOnInit = () => {
+    if (!settingsButtonRef.value || !addButtonRef.value) return;
+
+    const computedStyle = window.getComputedStyle(addButtonRef.value);
+    const transition = computedStyle.getPropertyValue('transition');
+
+    gsap.set(addButtonRef.value, {
+      transition: 'none'
+    });
+
+    gsap.fromTo(
+      [settingsButtonRef.value, addButtonRef.value],
+      {
+        opacity: 0,
+        scale: 0
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        delay: 0.15,
+        stagger: 0.1625,
+        duration: 1.2,
+        ease: 'back.inOut(2)',
+        onComplete: () => {
+          gsap.set(addButtonRef.value, {
+            transition: transition
+          });
+        }
+      }
+    );
   };
 </script>
 
@@ -167,6 +203,7 @@
         @include center;
         @include light-border;
         cursor: pointer;
+        opacity: 0;
         background: rgba($color-gray, 0.9);
         transition:
           background $transition-time $default-ease,
@@ -193,11 +230,11 @@
         background: linear-gradient(120deg, $color-blue-violet 0%, $color-magenta 50%);
         @include center;
         cursor: pointer;
-        opacity: 1;
+        opacity: 0;
         transition: opacity $transition-time $default-ease;
 
         @include has-hover {
-          opacity: 0.75;
+          opacity: 0.75 !important;
         }
 
         svg {

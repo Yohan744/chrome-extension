@@ -91,7 +91,6 @@
         isAnimating.value = false;
         emit('delete-todo', todoId);
         events.trigger(ICustomEvents.taskDeleted, todoId);
-        ChromeStorageHelper.getInstance().deleteTodo(todoId);
       }
     });
 
@@ -101,7 +100,10 @@
       duration: 1,
       ease: 'power2.inOut',
       onComplete: () => {
-        events.trigger(ICustomEvents.animationEventForTaskDeleted);
+        (async () => {
+          await ChromeStorageHelper.getInstance().deleteTodo(todoId);
+          events.trigger(ICustomEvents.animationEventForTaskDeleted);
+        })();
       }
     });
 

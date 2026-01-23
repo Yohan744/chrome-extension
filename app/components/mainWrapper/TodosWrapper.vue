@@ -61,6 +61,10 @@
       transition: 'none'
     });
 
+    gsap.set(wrapperRef.value, {
+      overflow: 'hidden'
+    });
+
     gsap.fromTo(
       wrapperRef.value,
       {
@@ -69,7 +73,7 @@
       {
         opacity: 1,
         delay: 0.5,
-        duration: 1.25,
+        duration: 1,
         ease: 'linear'
       }
     );
@@ -83,13 +87,17 @@
       {
         opacity: 1,
         y: 0,
-        delay: 0.5,
-        stagger: 0.2,
-        duration: 1.25,
-        ease: 'back.out(3)',
+        delay: 0.3,
+        stagger: 0.1625,
+        duration: 1.2,
+        ease: 'back.inOut(2)',
         onComplete: () => {
           gsap.set(todoElements, {
             transition: transition
+          });
+
+          gsap.set(wrapperRef.value, {
+            overflow: 'hidden auto'
           });
         }
       }

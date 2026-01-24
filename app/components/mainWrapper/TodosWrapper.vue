@@ -72,7 +72,7 @@
       },
       {
         opacity: 1,
-        delay: 0.5,
+        delay: 0.8,
         duration: 1,
         ease: 'linear'
       }
@@ -82,16 +82,18 @@
       todoElements,
       {
         opacity: 0,
-        y: '40px'
+        scale: 0.95,
+        y: '70px'
       },
       {
         opacity: 1,
+        scale: 1,
         y: 0,
-        delay: 0.3,
-        stagger: 0.1625,
-        duration: 1.2,
+        delay: 0.7,
+        stagger: 0.2,
+        duration: 0.8,
         force3D: true,
-        ease: 'back.inOut(2.5)',
+        ease: 'back.out(1.65)',
         onComplete: () => {
           gsap.set(todoElements, {
             transition: transition

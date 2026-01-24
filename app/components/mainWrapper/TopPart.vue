@@ -2,8 +2,13 @@
   <div class="top-part">
     <div class="left-part">
       <h1 ref="titleRef" class="title">{{ dayOfTheWeek[actualDay] + ' ' + actualDate }}</h1>
-      <div class="task-count">
-        <div class="number" :style="{ width: numberWidthCh }" :class="{ 'no-width-transition': !initialized }">
+      <div ref="taskCountRef" class="task-count">
+        <div
+          ref="numberRef"
+          class="number"
+          :style="{ width: numberWidthCh }"
+          :class="{ 'no-width-transition': !initialized }"
+        >
           <Transition :name="transitionName">
             <span :key="taskNumber" class="digit">{{ taskNumber }}</span>
           </Transition>
@@ -42,6 +47,8 @@
   const settingsButtonRef = ref<HTMLElement | null>(null);
   const addButtonRef = ref<HTMLElement | null>(null);
   const titleRef = ref<HTMLElement | null>(null);
+  const taskCountRef = ref<HTMLElement | null>(null);
+  const numberRef = ref<HTMLElement | null>(null);
 
   const actualDay: number = new Date().getDay();
   const actualDate: number = new Date().getDate();
@@ -95,10 +102,10 @@
       console.log(e);
     }
 
-    const text = new SplitText(titleRef.value, { type: 'chars' });
+    const title = new SplitText(titleRef.value, { type: 'chars' });
 
     gsap.fromTo(
-      text.chars,
+      title.chars,
       {
         opacity: 0,
         scale: 0,
@@ -114,12 +121,44 @@
         force3D: true,
         ease: 'back.out(1.65)',
         onComplete: () => {
-          text.revert();
+          title.revert();
         }
       }
     );
 
     gsap.set(titleRef.value, {
+      opacity: 1
+    });
+
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    const taskCount = new SplitText(taskCountRef.value, { type: 'chars, words' });
+
+    gsap.fromTo(
+      taskCount.chars,
+      {
+        opacity: 0,
+        scale: 0,
+        y: '12px'
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        stagger: 0.04,
+        delay: 0.225,
+        duration: 0.6,
+        force3D: true,
+        ease: 'back.out(1.35)',
+        onComplete: () => {
+          gsap.set(numberRef.value, {
+            overflow: 'hidden'
+          });
+        }
+      }
+    );
+
+    gsap.set(taskCountRef.value, {
       opacity: 1
     });
 
@@ -136,16 +175,18 @@
       [settingsButtonRef.value, addButtonRef.value],
       {
         opacity: 0,
-        scale: 0
+        scale: 0,
+        y: '25px'
       },
       {
         opacity: 1,
         scale: 1,
-        delay: 0.35,
+        y: 0,
+        delay: 0.45,
         stagger: 0.1625,
-        duration: 1.2,
+        duration: 0.8,
         force3D: true,
-        ease: 'back.inOut(2.5)',
+        ease: 'back.out(1.65)',
         onComplete: () => {
           gsap.set(addButtonRef.value, {
             transition: transition
@@ -198,7 +239,6 @@
 
         .number {
           position: relative;
-          overflow: hidden;
           display: inline-block;
           text-align: left;
           white-space: nowrap;

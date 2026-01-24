@@ -90,7 +90,8 @@
         delay: 0.3,
         stagger: 0.1625,
         duration: 1.2,
-        ease: 'back.inOut(2)',
+        force3D: true,
+        ease: 'back.inOut(2.5)',
         onComplete: () => {
           gsap.set(todoElements, {
             transition: transition

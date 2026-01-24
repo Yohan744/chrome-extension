@@ -1,7 +1,7 @@
 <template>
   <div class="top-part">
     <div class="left-part">
-      <h1 class="title">{{ dayOfTheWeek[actualDay] + ' ' + actualDate }}</h1>
+      <h1 ref="titleRef" class="title">{{ dayOfTheWeek[actualDay] + ' ' + actualDate }}</h1>
       <div class="task-count">
         <div class="number" :style="{ width: numberWidthCh }" :class="{ 'no-width-transition': !initialized }">
           <Transition :name="transitionName">
@@ -32,6 +32,7 @@
   import PlusIcon from '~/assets/icons/plus.svg?component';
   import SettingsIcon from '~/assets/icons/settings.svg?component';
   import gsap from 'gsap';
+  import { SplitText } from 'gsap/SplitText';
 
   const taskNumber = ref<number>(0);
   const transitionName = ref<string>('none');
@@ -40,6 +41,7 @@
   const events = useGlobalEvents();
   const settingsButtonRef = ref<HTMLElement | null>(null);
   const addButtonRef = ref<HTMLElement | null>(null);
+  const titleRef = ref<HTMLElement | null>(null);
 
   const actualDay: number = new Date().getDay();
   const actualDate: number = new Date().getDate();
@@ -47,6 +49,7 @@
 
   onMounted(async () => {
     await updateTaskNumber();
+    await nextTick();
     animateOnInit();
 
     events.on(ICustomEvents.animationEventForTaskCreated, async () => {
@@ -75,8 +78,52 @@
     initialized.value = true;
   };
 
-  const animateOnInit = () => {
+  const animateOnInit = async () => {
     if (!settingsButtonRef.value || !addButtonRef.value) return;
+
+    if (typeof window !== 'undefined') {
+      gsap.registerPlugin(SplitText);
+    }
+
+    try {
+      if (document?.fonts?.ready) {
+        await document.fonts.ready;
+      } else {
+        await new Promise(res => setTimeout(res, 1));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
+    const text = new SplitText(titleRef.value, { type: 'chars' });
+
+    gsap.fromTo(
+      text.chars,
+      {
+        opacity: 0,
+        scale: 0,
+        y: '23px'
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        stagger: 0.04,
+        delay: 0.1,
+        duration: 0.8,
+        force3D: true,
+        ease: 'back.out(1.65)',
+        onComplete: () => {
+          text.revert();
+        }
+      }
+    );
+
+    gsap.set(titleRef.value, {
+      opacity: 1
+    });
+
+    ///////////////////////////////////////////////////////////////////////////////////
 
     const computedStyle = window.getComputedStyle(addButtonRef.value);
     const transition = computedStyle.getPropertyValue('transition');
@@ -94,10 +141,11 @@
       {
         opacity: 1,
         scale: 1,
-        delay: 0.15,
+        delay: 0.35,
         stagger: 0.1625,
         duration: 1.2,
-        ease: 'back.inOut(2)',
+        force3D: true,
+        ease: 'back.inOut(2.5)',
         onComplete: () => {
           gsap.set(addButtonRef.value, {
             transition: transition
@@ -130,6 +178,8 @@
         font-size: 24px;
         font-variation-settings: 'wght' 800;
         color: $color-white;
+        opacity: 0;
+        transform-origin: center bottom;
       }
 
       .task-count {
@@ -144,6 +194,7 @@
         color: rgba($color-white, 0.55);
         font-variant-numeric: tabular-nums;
         font-feature-settings: 'tnum' 1;
+        opacity: 0;
 
         .number {
           position: relative;

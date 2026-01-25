@@ -69,8 +69,8 @@
 
       .button {
         position: relative;
-        height: 30px;
-        width: 72px;
+        height: 28px;
+        width: 64px;
         @include center();
         border: none;
         background: linear-gradient(120deg, $color-blue-violet 0%, $color-orchid 70%);
@@ -79,7 +79,7 @@
         font-size: 10px;
         font-variation-settings: 'wght' 550;
         color: $color-white;
-        opacity: 0.35;
+        opacity: 0.175;
         filter: grayscale(1);
         pointer-events: none;
         transition:

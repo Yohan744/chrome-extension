@@ -49,16 +49,14 @@
   const titleRef = ref<HTMLElement | null>(null);
   const taskCountRef = ref<HTMLElement | null>(null);
   const numberRef = ref<HTMLElement | null>(null);
+  const splitTitle = ref<SplitText | null>(null);
+  const taskCountSplit = ref<SplitText | null>(null);
 
   const actualDay: number = new Date().getDay();
   const actualDate: number = new Date().getDate();
   const dayOfTheWeek: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   onMounted(async () => {
-    await updateTaskNumber();
-    await nextTick();
-    animateOnInit();
-
     events.on(ICustomEvents.animationEventForTaskCreated, async () => {
       await updateTaskNumber();
     });
@@ -66,6 +64,16 @@
     events.on(ICustomEvents.animationEventForTaskDeleted, async () => {
       await updateTaskNumber();
     });
+
+    events.on(ICustomEvents.migrationDone, async () => {
+      await updateTaskNumber();
+      await nextTick();
+      await animateOnInit();
+    });
+
+    await updateTaskNumber();
+    await nextTick();
+    await animateOnInit();
   });
 
   const updateTaskNumber = async () => {
@@ -102,10 +110,12 @@
       console.log(e);
     }
 
-    const title = new SplitText(titleRef.value, { type: 'chars' });
+    if (!splitTitle.value) {
+      splitTitle.value = new SplitText(titleRef.value, { type: 'chars' });
+    }
 
     gsap.fromTo(
-      title.chars,
+      splitTitle.value.chars,
       {
         opacity: 0,
         scale: 0,
@@ -119,9 +129,10 @@
         delay: 0.1,
         duration: 0.8,
         force3D: true,
+        overwrite: true,
         ease: 'back.out(1.65)',
         onComplete: () => {
-          title.revert();
+          splitTitle.value?.revert();
         }
       }
     );
@@ -132,10 +143,12 @@
 
     ///////////////////////////////////////////////////////////////////////////////////
 
-    const taskCount = new SplitText(taskCountRef.value, { type: 'chars, words' });
+    if (!taskCountSplit.value) {
+      taskCountSplit.value = new SplitText(taskCountRef.value, { type: 'chars, words' });
+    }
 
     gsap.fromTo(
-      taskCount.chars,
+      taskCountSplit.value.chars,
       {
         opacity: 0,
         scale: 0,
@@ -149,6 +162,7 @@
         delay: 0.225,
         duration: 0.6,
         force3D: true,
+        overwrite: true,
         ease: 'back.out(1.35)',
         onComplete: () => {
           gsap.set(numberRef.value, {
@@ -186,6 +200,7 @@
         stagger: 0.1625,
         duration: 0.8,
         force3D: true,
+        overwrite: true,
         ease: 'back.out(1.65)',
         onComplete: () => {
           gsap.set(addButtonRef.value, {

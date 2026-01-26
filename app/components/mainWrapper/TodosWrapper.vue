@@ -74,6 +74,7 @@
         opacity: 1,
         delay: 0.8,
         duration: 1,
+        overwrite: true,
         ease: 'linear'
       }
     );
@@ -93,6 +94,7 @@
         stagger: 0.2,
         duration: 0.8,
         force3D: true,
+        overwrite: true,
         ease: 'back.out(1.65)',
         onComplete: () => {
           gsap.set(todoElements, {
@@ -108,8 +110,6 @@
   };
 
   onMounted(async () => {
-    animateAllTodosOnInit();
-
     events.on(ICustomEvents.taskCreated, async taskId => {
       await updateTodos();
       await nextTick();
@@ -129,6 +129,10 @@
 
     events.on(ICustomEvents.migrationDone, async () => {
       await updateTodos();
+      await nextTick();
+      setTimeout(() => {
+        animateAllTodosOnInit();
+      }, 10);
     });
 
     events.on(ICustomEvents.switchSectionEnd, async showSectionName => {
@@ -136,6 +140,8 @@
       gsap.killTweensOf(wrapperRef.value);
       wrapperRef.value.scrollTo(0, 0);
     });
+
+    animateAllTodosOnInit();
   });
 
   const scrollToTodo = (id: string, direction: -1 | 1 = 1, todoSwapHeight: number) => {

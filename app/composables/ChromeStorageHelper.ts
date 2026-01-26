@@ -252,9 +252,6 @@ class ChromeStorageHelper {
 
     events.trigger(ICustomEvents.migrationDone);
 
-    console.log(`Migrated ${oldItems.length} old todos.`);
-    console.log(`Removed old keys: ${oldKeys.join(', ')}`);
-
     return { migrated: oldItems.length, removedKeys: oldKeys };
   }
 }

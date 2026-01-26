@@ -26,6 +26,11 @@ class ChromeBadgeHelper {
       const taskCount = (await ChromeStorageHelper.getInstance().getTodos()).length;
       this.updateBadgeText(taskCount);
     });
+
+    events.on(ICustomEvents.migrationDone, async () => {
+      const taskCount = (await ChromeStorageHelper.getInstance().getTodos()).length;
+      this.updateBadgeText(taskCount);
+    });
   }
 
   public updateBadgeText(value: number) {

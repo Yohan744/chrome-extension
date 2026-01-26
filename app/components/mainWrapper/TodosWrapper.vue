@@ -123,6 +123,10 @@
       if (lastDeletedTodoId.value === todoId) lastDeletedTodoId.value = null;
     });
 
+    events.on(ICustomEvents.categoryDeleted, async () => {
+      await updateTodos();
+    });
+
     events.on(ICustomEvents.storageInitiated, async () => {
       await updateTodos();
     });

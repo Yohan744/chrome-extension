@@ -181,6 +181,10 @@
   };
 
   onMounted(async () => {
+    events.on(ICustomEvents.categoryDeleted, async () => {
+      category.value = await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId);
+    });
+
     if (!props.isForCustomCategory) return;
 
     events.on(ICustomEvents.storageInitiated, async () => {

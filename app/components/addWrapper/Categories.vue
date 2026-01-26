@@ -83,12 +83,14 @@
       overwrite: true,
       force3D: true,
       onComplete: () => {
-        tl.kill();
-        category.remove();
-        cleanUpCategoriesSelection(false);
-        isAnimatingCategoryDeletion.value = false;
-        ChromeStorageHelper.getInstance().deleteCategory(categoryID);
-        events.trigger(ICustomEvents.categoryDeleted, categoryID);
+        (async () => {
+          tl.kill();
+          category.remove();
+          cleanUpCategoriesSelection(false);
+          isAnimatingCategoryDeletion.value = false;
+          await ChromeStorageHelper.getInstance().deleteCategory(categoryID);
+          events.trigger(ICustomEvents.categoryDeleted, categoryID);
+        })();
       }
     });
 

@@ -28,4 +28,3 @@ if (n) {
 }
 
 fs.writeFileSync(indexPath, html, 'utf8');
-console.log('Post-build fix applied: importmap + NUXT config externalized.');

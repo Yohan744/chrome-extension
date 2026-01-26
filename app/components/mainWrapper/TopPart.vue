@@ -100,14 +100,10 @@
       gsap.registerPlugin(SplitText);
     }
 
-    try {
-      if (document?.fonts?.ready) {
-        await document.fonts.ready;
-      } else {
-        await new Promise(res => setTimeout(res, 1));
-      }
-    } catch (e) {
-      console.log(e);
+    if (document?.fonts?.ready) {
+      await document.fonts.ready;
+    } else {
+      await new Promise(res => setTimeout(res, 1));
     }
 
     if (!splitTitle.value) {

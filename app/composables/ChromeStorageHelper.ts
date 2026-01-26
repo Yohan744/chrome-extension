@@ -228,7 +228,6 @@ class ChromeStorageHelper {
     }
 
     if (oldItems.length === 0) {
-      console.log('rien à migrer');
       return { migrated: 0, removedKeys: [] };
     }
 

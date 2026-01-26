@@ -181,7 +181,7 @@
       }
 
       @include has-hover {
-        border: 1px solid rgba($color-border, 0.1625);
+        border: 1px solid rgba($color-border, 0.18);
       }
 
       &::placeholder {

@@ -79,7 +79,7 @@
       z-index: z('popUp-btn');
 
       @include has-hover {
-        opacity: 0.75;
+        opacity: 0.7;
       }
     }
 

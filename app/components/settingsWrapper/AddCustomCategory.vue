@@ -200,9 +200,11 @@
           width: 100%;
           border-radius: 7px;
           border: none;
+          opacity: 1;
           background: rgba($color-gray, 0.44);
           font-size: 12px;
           font-variation-settings: 'wght' 475;
+          transition: opacity $transition-time $default-ease;
 
           &:focus {
             border: none;
@@ -211,6 +213,10 @@
 
           &::placeholder {
             color: rgba($color-white, 0.35);
+          }
+
+          @include has-hover {
+            opacity: 0.8;
           }
         }
       }

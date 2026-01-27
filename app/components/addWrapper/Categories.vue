@@ -281,6 +281,7 @@
       align-items: center;
       scroll-behavior: smooth;
       scrollbar-width: none;
+      outline: none;
       -ms-overflow-style: none;
       overflow-x: hidden;
       overflow-y: scroll;

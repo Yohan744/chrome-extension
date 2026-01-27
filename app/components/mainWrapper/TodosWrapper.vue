@@ -29,7 +29,9 @@
   const todos = ref<ITodoType[]>(await ChromeStorageHelper.getInstance().getTodos());
   const wrapperRef = ref<HTMLElement | null>(null);
   const lastDeletedTodoId = ref<string | null>(null);
+  const isAnimatingApparition = ref<boolean>(true);
   let creationTl: gsap.core.Timeline | null = null;
+  const todosAnimationTween = ref<gsap.core.Tween | null>(null);
 
   const dragState = reactive({
     draggingId: null as string | null,
@@ -61,10 +63,6 @@
       transition: 'none'
     });
 
-    gsap.set(wrapperRef.value, {
-      overflow: 'hidden'
-    });
-
     gsap.fromTo(
       wrapperRef.value,
       {
@@ -79,7 +77,7 @@
       }
     );
 
-    gsap.fromTo(
+    todosAnimationTween.value = gsap.fromTo(
       todoElements,
       {
         opacity: 0,
@@ -97,12 +95,9 @@
         overwrite: true,
         ease: 'back.out(1.65)',
         onComplete: () => {
+          isAnimatingApparition.value = false;
           gsap.set(todoElements, {
             transition: transition
-          });
-
-          gsap.set(wrapperRef.value, {
-            overflow: 'hidden auto'
           });
         }
       }
@@ -143,6 +138,8 @@
       if (showSectionName === 'main' || !wrapperRef.value) return;
       gsap.killTweensOf(wrapperRef.value);
       wrapperRef.value.scrollTo(0, 0);
+      if (!isAnimatingApparition.value) return;
+      todosAnimationTween.value?.progress(1).kill();
     });
 
     animateAllTodosOnInit();

@@ -53,7 +53,7 @@ const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: (
     {
       opacity: 0,
       pointerEvents: 'none',
-      duration: 0.7,
+      duration: 0.6,
       ease: 'power1.out'
     },
     0
@@ -68,7 +68,7 @@ const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: (
     {
       opacity: 1,
       pointerEvents: 'all',
-      duration: 0.95,
+      duration: 1,
       ease: 'power1.out',
       onStart: () => {
         gsap.delayedCall(0.15, () => {
@@ -76,7 +76,7 @@ const switchBetweenSections = (show: 'main' | 'add' | 'settings', onComplete?: (
         });
       }
     },
-    0.65
+    0.5
   );
 };
 

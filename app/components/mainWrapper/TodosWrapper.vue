@@ -301,15 +301,15 @@
     creationTl.to(todoElement, {
       opacity: 1,
       scale: 1,
-      delay: 1.3,
-      duration: 1.05,
-      ease: 'power3.out',
+      delay: 0.9,
+      duration: 0.9,
+      ease: 'power2.out',
       onStart: () => {
         events.trigger(ICustomEvents.animationEventForTaskCreated);
       }
     });
 
-    const duration = Math.min(Math.max(todos.value.length * 0.125, 1), 2.15);
+    const duration = Math.min(Math.max(todos.value.length * 0.11, 0.8), 2.1);
 
     if (hasEnoughSpaceToScroll && wrapper) {
       creationTl.to(wrapper, {

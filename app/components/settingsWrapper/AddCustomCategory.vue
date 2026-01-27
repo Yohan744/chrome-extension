@@ -60,7 +60,7 @@
 
   const fakeTodo = ref<ITodoType>({
     id: 'custom-category',
-    task: 'Hello world',
+    task: 'An amazing task !',
     categoryId: 'custom-category',
     order: 999
   });

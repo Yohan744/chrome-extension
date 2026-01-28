@@ -1,7 +1,7 @@
 {
   "name": "To do list - Keep it simple",
   "short_name": "To-Do List",
-  "description": "Just a simple to do list extension with a simple design.",
+  "description": "A simple but powerful Chrome to-do list to organize tasks your way.",
   "version": "2.0",
   "manifest_version": 3,
   "icons": {

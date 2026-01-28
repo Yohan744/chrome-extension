@@ -33,7 +33,7 @@ export default defineNuxtConfig({
         },
         { name: 'author', content: 'Yohan Quinquis' },
         { name: 'keywords', content: 'to do, todo, task, list, extension, chrome, firefox, simple' },
-        { name: 'description', content: 'Just a simple to do list extension with a simple design.' },
+        { name: 'description', content: 'A simple but powerful Chrome to-do list to organize tasks your way.' },
         { name: 'format-detection', content: 'telephone=no' },
         { name: 'msapplication-TileColor', content: '#ffffff' },
         { name: 'theme-color', content: '#ffffff' },
@@ -41,12 +41,12 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: '/' },
         { property: 'og:title', content: 'To do list - Keep it simple' },
-        { property: 'og:description', content: 'Just a simple to do list extension with a simple design.' },
+        { property: 'og:description', content: 'A simple but powerful Chrome to-do list to organize tasks your way.' },
 
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:url', content: '/' },
         { name: 'twitter:title', content: 'To do list - Keep it simple' },
-        { name: 'twitter:description', content: 'Just a simple to do list extension with a simple design.' },
+        { name: 'twitter:description', content: 'A simple but powerful Chrome to-do list to organize tasks your way.' },
         { name: 'apple-mobile-web-app-title', content: 'To do list - Keep it simple' },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }

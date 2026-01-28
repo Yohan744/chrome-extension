@@ -42,13 +42,11 @@ export default defineNuxtConfig({
         { property: 'og:url', content: '/' },
         { property: 'og:title', content: 'To do list - Keep it simple' },
         { property: 'og:description', content: 'Just a simple to do list extension with a simple design.' },
-        { property: 'og:image', content: '/sharing.webp' },
 
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:url', content: '/' },
         { name: 'twitter:title', content: 'To do list - Keep it simple' },
         { name: 'twitter:description', content: 'Just a simple to do list extension with a simple design.' },
-        { name: 'twitter:image', content: '/sharing.webp' },
         { name: 'apple-mobile-web-app-title', content: 'To do list - Keep it simple' },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }

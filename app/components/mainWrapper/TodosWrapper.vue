@@ -40,7 +40,7 @@
     startY: 0,
     lastY: 0,
     lastDirection: null as -1 | 1 | null,
-    canDrag: true as boolean
+    canDrag: false as boolean
   });
 
   const sortedTodos = computed(() => {
@@ -98,6 +98,7 @@
         ease: 'back.out(1.65)',
         onComplete: () => {
           isAnimatingApparition.value = false;
+          dragState.canDrag = true;
           gsap.set(todoElements, {
             transition: transition
           });
@@ -326,14 +327,12 @@
     if (todosDeletingCount.value > 0) {
       todosDeletingCount.value--;
       await nextTick();
-      console.log('then:', todosDeletingCount.value);
       if (todosDeletingCount.value === 0) dragState.canDrag = true;
     }
   };
 
   const handleStartTodoDeletion = () => {
     todosDeletingCount.value++;
-    console.log('todosDeletingCount:', todosDeletingCount.value);
     dragState.canDrag = false;
   };
 </script>

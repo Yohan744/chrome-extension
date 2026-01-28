@@ -58,12 +58,6 @@ class ChromeStorageHelper {
     return ChromeStorageHelper.instance;
   }
 
-  // public async clearAllStorage(): Promise<void> {
-  //   const s = getChromeStorage();
-  //   if (!s) return;
-  //   await s.clear();
-  // }
-
   public async initDefaultStorage(): Promise<void> {
     const { todos, categories } = await storageGet<{ todos?: ITodoType[]; categories?: ICategoryType[] }>([
       'todos',
@@ -85,10 +79,6 @@ class ChromeStorageHelper {
 
     events.trigger(ICustomEvents.storageInitiated);
   }
-
-  // public async getAllStorage(): Promise<{ todos: ITodoType[]; categories: ICategoryType[] }> {
-  //   return await storageGet();
-  // }
 
   public async getStorageUsage(): Promise<{ total: number; byKey: Record<string, number> }> {
     const s = getChromeStorage();

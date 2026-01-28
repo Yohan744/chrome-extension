@@ -34,7 +34,7 @@ const defaultCategoriesData: ICategoryType[] = [
   },
   {
     id: 'custom-category',
-    name: 'custom category',
+    name: 'Custom category',
     iconName: 'folder-open',
     color: IColors.neonMint
   }

@@ -56,9 +56,10 @@
   const textColor = computed(() => category.value?.color.textColor || '#07060f');
   const darkerBg = computed(() => `color-mix(in hsl, ${primaryColor.value} 40%, black)`);
   const wrapperStyle = computed(() => ({ background: darkerBg.value }));
+  const isTaskDeleted = ref<boolean>(false);
 
   const handleCheckboxClick = async (target: HTMLElement) => {
-    if (!target || isAnimating.value) return;
+    if (!target || isAnimating.value || isTaskDeleted.value) return;
     const todoElement = target.closest('.single-todo') as HTMLElement;
     const todoId = todoElement?.getAttribute('data-id');
     if (!todoId || !todoElement || todoId === 'custom-category') return;
@@ -68,6 +69,7 @@
     if (!todoElementHeight) return;
 
     isAnimating.value = true;
+    isTaskDeleted.value = true;
 
     const todoOrderNumber = await ChromeStorageHelper.getInstance().getTodoOrderById(todoId);
     const biggestTodoOrder = await ChromeStorageHelper.getInstance().getBiggestOrderNumberInTodos();
@@ -125,6 +127,8 @@
 
   const onDragStart = (event: MouseEvent) => {
     event.preventDefault();
+    if (isTaskDeleted.value) return;
+
     emit('drag-start', props.todoItem.id, event.clientY);
 
     const onMouseMove = (e: MouseEvent) => {

@@ -1,5 +1,5 @@
 <template>
-  <h4 class="add-custom-category-title">Add custom category</h4>
+  <h4 class="add-custom-category-title">Create category</h4>
 
   <div class="wrapper">
     <SingleTodo :todo-item="fakeTodo" :is-for-custom-category="true" />
@@ -60,7 +60,7 @@
 
   const fakeTodo = ref<ITodoType>({
     id: 'custom-category',
-    task: 'An amazing task !',
+    task: 'An amazing task',
     categoryId: 'custom-category',
     order: 999
   });

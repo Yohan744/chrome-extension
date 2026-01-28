@@ -70,6 +70,7 @@
 
     isAnimating.value = true;
     isTaskDeleted.value = true;
+    emit('on-start-delete-todo');
 
     const todoOrderNumber = await ChromeStorageHelper.getInstance().getTodoOrderById(todoId);
     const biggestTodoOrder = await ChromeStorageHelper.getInstance().getBiggestOrderNumberInTodos();
@@ -91,7 +92,7 @@
         tl.kill();
         todoElement.remove();
         isAnimating.value = false;
-        emit('delete-todo', todoId);
+        emit('on-delete-todo', todoId);
         events.trigger(ICustomEvents.taskDeleted, todoId);
       }
     });
@@ -123,7 +124,7 @@
     tl.to(todoElement, vars, '-=0.25');
   };
 
-  const emit = defineEmits(['drag-start', 'drag-move', 'drag-end', 'delete-todo']);
+  const emit = defineEmits(['drag-start', 'drag-move', 'drag-end', 'on-delete-todo', 'on-start-delete-todo']);
 
   const onDragStart = (event: MouseEvent) => {
     event.preventDefault();
@@ -296,8 +297,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        cursor: grab;
-        opacity: 0.6;
+        cursor: default;
+        opacity: 0;
         transition: opacity $transition-time $default-ease;
 
         &:not(.disableDragCursor) {
@@ -330,6 +331,13 @@
         width: 8px;
         border-radius: 0 7px 7px 0;
         transition: background $transition-time $default-ease;
+      }
+    }
+
+    &.canDrag {
+      .drag-handle {
+        opacity: 0.6;
+        cursor: grab;
       }
     }
   }

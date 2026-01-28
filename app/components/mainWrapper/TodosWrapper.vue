@@ -4,11 +4,12 @@
       v-for="todo in sortedTodos"
       :key="todo.id"
       :todo-item="todo"
-      :class="{ 'is-dragging': dragState.draggingId === todo.id }"
+      :class="{ 'is-dragging': dragState.draggingId === todo.id, canDrag: dragState.canDrag }"
       @drag-start="onDragStart"
       @drag-move="onDragMove"
       @drag-end="onDragEnd"
-      @delete-todo="handleTodoDeletion"
+      @on-delete-todo="handleTodoDeletion"
+      @on-start-delete-todo="handleStartTodoDeletion"
     />
   </div>
 </template>
@@ -32,6 +33,7 @@
   const isAnimatingApparition = ref<boolean>(true);
   let creationTl: gsap.core.Timeline | null = null;
   const todosAnimationTween = ref<gsap.core.Tween | null>(null);
+  const todosDeletingCount = ref<number>(0);
 
   const dragState = reactive({
     draggingId: null as string | null,
@@ -169,7 +171,7 @@
   };
 
   const onDragStart = (id: string, startY: number) => {
-    if (lastDeletedTodoId.value !== null) return;
+    if (lastDeletedTodoId.value !== null || !dragState.canDrag) return;
     dragState.draggingId = id;
     dragState.startY = startY;
     dragState.lastY = startY;
@@ -319,8 +321,20 @@
     }
   };
 
-  const handleTodoDeletion = (todoId: string) => {
+  const handleTodoDeletion = async (todoId: string) => {
     lastDeletedTodoId.value = todoId;
+    if (todosDeletingCount.value > 0) {
+      todosDeletingCount.value--;
+      await nextTick();
+      console.log('then:', todosDeletingCount.value);
+      if (todosDeletingCount.value === 0) dragState.canDrag = true;
+    }
+  };
+
+  const handleStartTodoDeletion = () => {
+    todosDeletingCount.value++;
+    console.log('todosDeletingCount:', todosDeletingCount.value);
+    dragState.canDrag = false;
   };
 </script>
 

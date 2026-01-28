@@ -35,5 +35,9 @@ body,
 
   &.grabbing-cursor {
     cursor: grabbing !important;
+
+    * {
+      cursor: grabbing !important;
+    }
   }
 }

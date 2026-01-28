@@ -276,10 +276,10 @@
           margin-left: 0;
           width: 7px;
           opacity: 0;
-          transform: translate3d(0, 4px, 0);
+          transform: translate3d(0, 6px, 0);
           transition:
-            opacity $transition-time $default-ease,
-            transform $transition-time $default-ease;
+            opacity calc($transition-time * 1.25) $default-ease,
+            transform calc($transition-time * 1.25) $default-ease;
 
           &.show {
             opacity: 1;

@@ -1,0 +1,19 @@
+@use 'eases';
+@use 'sass:map';
+
+$transition-time: 0.85s;
+$default-ease: eases.$easePower3Out;
+
+$global-height: 525px;
+$global-width: 375px;
+
+$z-index: (
+  'popUp-content': 30,
+  'popUp-background': 25,
+  'popUp-btn': 20,
+  'footer': 10
+);
+
+@function z($key) {
+  @return map.get($z-index, $key);
+}

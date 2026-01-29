@@ -65,12 +65,10 @@
 
   const handleInput = (e: Event) => {
     const target = e.target as HTMLInputElement;
-    const inputValue = target.value;
-
-    task.value = DOMPurify.sanitize(inputValue)
+    target.value = DOMPurify.sanitize(target.value)
       .replace(/<[^>]*>/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
+      .replace(/\s+/g, ' ');
+    task.value = target.value.trim();
   };
 
   const handleCategorySelected = (categoryName: string | null) => {

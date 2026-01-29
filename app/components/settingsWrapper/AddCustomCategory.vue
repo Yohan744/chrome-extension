@@ -101,7 +101,6 @@
     target.value = DOMPurify.sanitize(target.value)
       .replace(/<[^>]*>/g, '')
       .replace(/\s+/g, ' ');
-
     categoryName.value = target.value.trim();
   };
 

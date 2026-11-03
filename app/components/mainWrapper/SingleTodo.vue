@@ -100,7 +100,7 @@
     tl.to(todoElement, {
       scale: 0.65,
       opacity: 0,
-      duration: 1,
+      duration: 0.85,
       ease: 'power2.inOut',
       onComplete: () => {
         (async () => {
@@ -117,11 +117,11 @@
           : `0 0 -${todoElementHeight + 15}px`
         : `0 0 -${todoElementHeight + 15}px`,
       scaleY: 0,
-      duration: 1.25,
+      duration: 0.85,
       ease: 'power4.out'
     };
 
-    tl.to(todoElement, vars, '-=0.25');
+    tl.to(todoElement, vars, '-=0.2');
   };
 
   const emit = defineEmits(['drag-start', 'drag-move', 'drag-end', 'on-delete-todo', 'on-start-delete-todo']);
@@ -178,7 +178,7 @@
       {
         scale: 1,
         rotate: 0,
-        duration: 0.65,
+        duration: 0.6,
         ease: 'power2.inOut'
       },
       '-=0.125'

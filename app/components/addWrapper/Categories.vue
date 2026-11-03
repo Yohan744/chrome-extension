@@ -98,7 +98,7 @@
       [textElement, iconElement],
       {
         opacity: 0,
-        duration: 0.7,
+        duration: 0.65,
         ease: 'power1.out'
       },
       0
@@ -108,7 +108,7 @@
       category,
       {
         clipPath: 'inset(0 100% 0 0 round 7px)',
-        duration: 1.15,
+        duration: 1,
         ease: 'power2.out'
       },
       0.15
@@ -121,10 +121,10 @@
         marginTop: '-9px',
         width: 0,
         height: 0,
-        duration: 1.15,
+        duration: 1,
         ease: 'power2.out'
       },
-      0.65
+      0.6
     );
   };
 
@@ -143,7 +143,7 @@
         gsap.to(WrapperRef.value, {
           scrollTo: { y: 'max' },
           overwrite: true,
-          duration: 0.65
+          duration: 0.5
         });
     }
 
@@ -164,7 +164,7 @@
         WrapperRef.value,
         {
           scrollTo: { y: 'max' },
-          duration: 0.85,
+          duration: 0.8,
           ease: 'power2.inOut'
         },
         0
@@ -176,20 +176,20 @@
       {
         opacity: 1,
         scale: 1,
-        duration: 0.75,
+        duration: 0.7,
         ease: 'power3.out'
       },
-      hasEnoughSpaceToScroll ? 0.85 : 0
+      hasEnoughSpaceToScroll ? 0.75 : 0
     );
 
     tl.to(
       WrapperRef.value,
       {
         scrollTo: { y: 0 },
-        duration: 0.6,
+        duration: 0.5,
         ease: 'power2.inOut'
       },
-      hasEnoughSpaceToScroll ? 1.85 : 0
+      hasEnoughSpaceToScroll ? 1.6 : 0
     );
   };
 

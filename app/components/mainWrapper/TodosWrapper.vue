@@ -72,7 +72,7 @@
       },
       {
         opacity: 1,
-        delay: 0.8,
+        delay: 0.65,
         duration: 1,
         overwrite: true,
         ease: 'linear'
@@ -90,12 +90,12 @@
         opacity: 1,
         scale: 1,
         y: 0,
-        delay: 0.7,
-        stagger: 0.2,
+        delay: 0.6,
+        stagger: 0.175,
         duration: 0.8,
         force3D: true,
         overwrite: true,
-        ease: 'back.out(1.65)',
+        ease: 'back.out(1.5)',
         onComplete: () => {
           isAnimatingApparition.value = false;
           dragState.canDrag = true;
@@ -301,15 +301,15 @@
     creationTl.to(todoElement, {
       opacity: 1,
       scale: 1,
-      delay: 0.9,
-      duration: 0.9,
+      delay: 0.75,
+      duration: 0.8,
       ease: 'power2.out',
       onStart: () => {
         events.trigger(ICustomEvents.animationEventForTaskCreated);
       }
     });
 
-    const duration = Math.min(Math.max(todos.value.length * 0.11, 0.8), 2.1);
+    const duration = Math.min(Math.max(todos.value.length * 0.11, 0.7), 2);
 
     if (hasEnoughSpaceToScroll && wrapper) {
       creationTl.to(wrapper, {

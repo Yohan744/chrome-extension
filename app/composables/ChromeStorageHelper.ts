@@ -137,6 +137,15 @@ class ChromeStorageHelper {
     return todo ? todo.order || 0 : null;
   }
 
+  public async getLastSeenVersion(): Promise<string | null> {
+    const { lastSeenVersion } = await storageGet<{ lastSeenVersion?: string }>(['lastSeenVersion']);
+    return lastSeenVersion ?? null;
+  }
+
+  public async setLastSeenVersion(version: string): Promise<void> {
+    await storageSet({ lastSeenVersion: version });
+  }
+
   public async updateTodo(id: ITodoType['id'], updates: Partial<ITodoType>): Promise<ITodoType[]> {
     const current = await this.getTodos();
     const next = current.map(t => (t.id === id ? { ...t, ...updates } : t));

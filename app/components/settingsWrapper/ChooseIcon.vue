@@ -56,12 +56,12 @@
       '.main-wrapper .btn-wrapper .btn .icon',
       {
         scale: 1,
-        rotate: 0
+        opacity: 1
       },
       {
-        scale: 0,
-        rotate: 70,
-        duration: 0.5,
+        scale: 0.65,
+        opacity: 0,
+        duration: 0.4,
         ease: 'power2.inOut'
       }
     );
@@ -69,16 +69,16 @@
     tl.fromTo(
       '.main-wrapper .btn-wrapper .btn .icon',
       {
-        scale: 0,
-        rotate: -70
+        scale: 0.65,
+        opacity: 0
       },
       {
         scale: 1,
-        rotate: 0,
-        duration: 0.65,
+        opacity: 1,
+        duration: 0.45,
         ease: 'power2.inOut'
       },
-      '-=0.125'
+      '-=0.075'
     );
   };
 
@@ -97,7 +97,7 @@
       events.trigger(ICustomEvents.updatedCustomCategory);
       emits('iconSelected', iconName);
       emits('updateCategory');
-    }, 500);
+    }, 400);
   };
 </script>
 

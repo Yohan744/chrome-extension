@@ -21,7 +21,7 @@
           class="task"
           :contenteditable="isEditing ? 'plaintext-only' : 'false'"
           spellcheck="false"
-          @dblclick="startEdit"
+          @mousedown="onTaskMouseDown"
           @keydown.enter.prevent="saveEdit"
           @keydown.esc.prevent="cancelEdit"
           @blur="cancelEdit"
@@ -81,6 +81,18 @@
     range.collapse(false);
     sel?.removeAllRanges();
     sel?.addRange(range);
+  };
+
+  let lastMouseDownTime = 0;
+
+  const onTaskMouseDown = (event: MouseEvent) => {
+    if (isEditing.value) return;
+    const now = Date.now();
+    if (now - lastMouseDownTime < 350) {
+      event.preventDefault();
+      startEdit();
+    }
+    lastMouseDownTime = now;
   };
 
   const startEdit = () => {
@@ -242,12 +254,12 @@
       '.single-todo .right-part-todo .icon-wrapper .icon',
       {
         scale: 1,
-        rotate: 0
+        opacity: 1
       },
       {
-        scale: 0,
-        rotate: 70,
-        duration: 0.5,
+        scale: 0.65,
+        opacity: 0,
+        duration: 0.4,
         ease: 'power2.inOut'
       }
     );
@@ -255,16 +267,16 @@
     tl.fromTo(
       '.single-todo .right-part-todo .icon-wrapper .icon',
       {
-        scale: 0,
-        rotate: -70
+        scale: 0.65,
+        opacity: 0
       },
       {
         scale: 1,
-        rotate: 0,
-        duration: 0.6,
+        opacity: 1,
+        duration: 0.45,
         ease: 'power2.inOut'
       },
-      '-=0.125'
+      '-=0.075'
     );
   };
 
@@ -377,6 +389,7 @@
           &[contenteditable='plaintext-only'] {
             outline: none;
             cursor: text;
+            caret-color: var(--selection-bg);
           }
         }
       }

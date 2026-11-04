@@ -55,7 +55,10 @@
 
   const animateAllTodosOnInit = () => {
     const todoElements = getTodoElements();
-    if (todoElements.length === 0) return;
+    if (todoElements.length === 0) {
+      dragState.canDrag = true;
+      return;
+    }
 
     const el = todoElements[0] as HTMLElement;
     const computedStyle = window.getComputedStyle(el);
@@ -72,7 +75,7 @@
       },
       {
         opacity: 1,
-        delay: 0.8,
+        delay: 0.65,
         duration: 1,
         overwrite: true,
         ease: 'linear'
@@ -90,12 +93,12 @@
         opacity: 1,
         scale: 1,
         y: 0,
-        delay: 0.7,
-        stagger: 0.2,
+        delay: 0.6,
+        stagger: 0.175,
         duration: 0.8,
         force3D: true,
         overwrite: true,
-        ease: 'back.out(1.65)',
+        ease: 'back.out(1.5)',
         onComplete: () => {
           isAnimatingApparition.value = false;
           dragState.canDrag = true;
@@ -119,6 +122,12 @@
     events.on(ICustomEvents.taskDeleted, async todoId => {
       await updateTodos();
       if (lastDeletedTodoId.value === todoId) lastDeletedTodoId.value = null;
+    });
+
+    events.on(ICustomEvents.taskUpdated, payload => {
+      const { id, task } = payload as { id: string; task: string };
+      const todo = todos.value.find(t => t.id === id);
+      if (todo) todo.task = task;
     });
 
     events.on(ICustomEvents.categoryDeleted, async () => {
@@ -301,15 +310,15 @@
     creationTl.to(todoElement, {
       opacity: 1,
       scale: 1,
-      delay: 0.9,
-      duration: 0.9,
+      delay: 0.75,
+      duration: 0.8,
       ease: 'power2.out',
       onStart: () => {
         events.trigger(ICustomEvents.animationEventForTaskCreated);
       }
     });
 
-    const duration = Math.min(Math.max(todos.value.length * 0.11, 0.8), 2.1);
+    const duration = Math.min(Math.max(todos.value.length * 0.11, 0.7), 2);
 
     if (hasEnoughSpaceToScroll && wrapper) {
       creationTl.to(wrapper, {

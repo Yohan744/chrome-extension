@@ -16,7 +16,19 @@
         <p class="category-name" :style="{ background: primaryColor, color: textColor }">
           {{ category?.name || 'Other' }}
         </p>
-        <p class="task">{{ props.todoItem.task }}</p>
+        <p
+          ref="editableRef"
+          class="task"
+          :contenteditable="isEditing ? 'plaintext-only' : 'false'"
+          spellcheck="false"
+          @mousedown="onTaskMouseDown"
+          @keydown.enter.prevent="saveEdit"
+          @keydown.esc.prevent="cancelEdit"
+          @blur="cancelEdit"
+          @input="onEditInput"
+        >
+          {{ localTask }}
+        </p>
       </div>
 
       <div class="drag-handle" :class="{ disableDragCursor: props.isForCustomCategory }" @mousedown="onDragStart">
@@ -47,6 +59,88 @@
   const events = useGlobalEvents();
   const isAnimating = ref<boolean>(false);
   const todoCheckboxRef = ref<InstanceType<typeof TodoCheckbox> | null>(null);
+
+  const localTask = ref<string>(props.todoItem.task);
+  const isEditing = ref<boolean>(false);
+  const editableRef = ref<HTMLElement | null>(null);
+
+  watch(
+    () => props.todoItem.task,
+    newTask => {
+      if (!isEditing.value) localTask.value = newTask;
+    }
+  );
+
+  const sanitize = (value: string) => value.replace(/[\r\n]+/g, '').replace(/\s{2,}/g, ' ');
+
+  const placeCursorAtEnd = () => {
+    if (!editableRef.value) return;
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.selectNodeContents(editableRef.value);
+    range.collapse(false);
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+  };
+
+  let lastMouseDownTime = 0;
+
+  const onTaskMouseDown = (event: MouseEvent) => {
+    if (isEditing.value) return;
+    const now = Date.now();
+    if (now - lastMouseDownTime < 350) {
+      event.preventDefault();
+      startEdit();
+    }
+    lastMouseDownTime = now;
+  };
+
+  const startEdit = () => {
+    if (isTaskDeleted.value || isAnimating.value || props.isForCustomCategory) return;
+    isEditing.value = true;
+    document.addEventListener('mousedown', onOutsideMouseDown, true);
+    nextTick(() => {
+      editableRef.value?.focus();
+      placeCursorAtEnd();
+    });
+  };
+
+  const cancelEdit = () => {
+    if (!isEditing.value) return;
+    isEditing.value = false;
+    document.removeEventListener('mousedown', onOutsideMouseDown, true);
+    if (editableRef.value) editableRef.value.innerText = localTask.value;
+  };
+
+  const onOutsideMouseDown = (e: MouseEvent) => {
+    if (editableRef.value && !editableRef.value.contains(e.target as Node)) {
+      cancelEdit();
+    }
+  };
+
+  const onEditInput = () => {
+    if (!editableRef.value) return;
+    const raw = editableRef.value.innerText;
+    const cleaned = sanitize(raw).slice(0, 75);
+    if (cleaned !== raw) {
+      editableRef.value.innerText = cleaned;
+      placeCursorAtEnd();
+    }
+  };
+
+  const saveEdit = async () => {
+    if (!editableRef.value) return;
+    const trimmed = sanitize(editableRef.value.innerText.trim());
+    if (!trimmed || trimmed === localTask.value) {
+      cancelEdit();
+      return;
+    }
+    localTask.value = trimmed;
+    isEditing.value = false;
+    document.removeEventListener('mousedown', onOutsideMouseDown, true);
+    await ChromeStorageHelper.getInstance().updateTodo(props.todoItem.id, { task: trimmed });
+    events.trigger(ICustomEvents.taskUpdated, { id: props.todoItem.id, task: trimmed });
+  };
 
   const category = ref<ICategoryType | null>(
     await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId)
@@ -100,7 +194,7 @@
     tl.to(todoElement, {
       scale: 0.65,
       opacity: 0,
-      duration: 1,
+      duration: 0.85,
       ease: 'power2.inOut',
       onComplete: () => {
         (async () => {
@@ -117,11 +211,11 @@
           : `0 0 -${todoElementHeight + 15}px`
         : `0 0 -${todoElementHeight + 15}px`,
       scaleY: 0,
-      duration: 1.25,
+      duration: 0.85,
       ease: 'power4.out'
     };
 
-    tl.to(todoElement, vars, '-=0.25');
+    tl.to(todoElement, vars, '-=0.2');
   };
 
   const emit = defineEmits(['drag-start', 'drag-move', 'drag-end', 'on-delete-todo', 'on-start-delete-todo']);
@@ -129,6 +223,7 @@
   const onDragStart = (event: MouseEvent) => {
     event.preventDefault();
     if (isTaskDeleted.value) return;
+    cancelEdit();
 
     emit('drag-start', props.todoItem.id, event.clientY);
 
@@ -159,12 +254,12 @@
       '.single-todo .right-part-todo .icon-wrapper .icon',
       {
         scale: 1,
-        rotate: 0
+        opacity: 1
       },
       {
-        scale: 0,
-        rotate: 70,
-        duration: 0.5,
+        scale: 0.65,
+        opacity: 0,
+        duration: 0.4,
         ease: 'power2.inOut'
       }
     );
@@ -172,20 +267,24 @@
     tl.fromTo(
       '.single-todo .right-part-todo .icon-wrapper .icon',
       {
-        scale: 0,
-        rotate: -70
+        scale: 0.65,
+        opacity: 0
       },
       {
         scale: 1,
-        rotate: 0,
-        duration: 0.65,
+        opacity: 1,
+        duration: 0.45,
         ease: 'power2.inOut'
       },
-      '-=0.125'
+      '-=0.075'
     );
   };
 
   onMounted(async () => {
+    events.on(ICustomEvents.switchSectionEnd, () => {
+      cancelEdit();
+    });
+
     events.on(ICustomEvents.categoryDeleted, async () => {
       category.value = await ChromeStorageHelper.getInstance().getCategoryById(props.todoItem.categoryId);
     });
@@ -285,6 +384,12 @@
           &::selection {
             background: var(--selection-bg);
             color: var(--selection-text);
+          }
+
+          &[contenteditable='plaintext-only'] {
+            outline: none;
+            cursor: text;
+            caret-color: var(--selection-bg);
           }
         }
       }

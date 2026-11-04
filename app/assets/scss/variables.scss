@@ -8,6 +8,8 @@ $global-height: 525px;
 $global-width: 375px;
 
 $z-index: (
+  'whatsNew-content': 55,
+  'whatsNew-overlay': 50,
   'popUp-content': 30,
   'popUp-background': 25,
   'popUp-btn': 20,

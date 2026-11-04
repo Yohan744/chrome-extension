@@ -55,7 +55,10 @@
 
   const animateAllTodosOnInit = () => {
     const todoElements = getTodoElements();
-    if (todoElements.length === 0) return;
+    if (todoElements.length === 0) {
+      dragState.canDrag = true;
+      return;
+    }
 
     const el = todoElements[0] as HTMLElement;
     const computedStyle = window.getComputedStyle(el);
@@ -119,6 +122,12 @@
     events.on(ICustomEvents.taskDeleted, async todoId => {
       await updateTodos();
       if (lastDeletedTodoId.value === todoId) lastDeletedTodoId.value = null;
+    });
+
+    events.on(ICustomEvents.taskUpdated, payload => {
+      const { id, task } = payload as { id: string; task: string };
+      const todo = todos.value.find(t => t.id === id);
+      if (todo) todo.task = task;
     });
 
     events.on(ICustomEvents.categoryDeleted, async () => {

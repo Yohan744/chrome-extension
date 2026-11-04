@@ -137,6 +137,13 @@ class ChromeStorageHelper {
     return todo ? todo.order || 0 : null;
   }
 
+  public async updateTodo(id: ITodoType['id'], updates: Partial<ITodoType>): Promise<ITodoType[]> {
+    const current = await this.getTodos();
+    const next = current.map(t => (t.id === id ? { ...t, ...updates } : t));
+    await this.setTodos(next);
+    return next;
+  }
+
   public async updateTodosOrder(todos: ITodoType[]): Promise<void> {
     const orderedTodos = todos.map((todo, index) => ({
       ...todo,
